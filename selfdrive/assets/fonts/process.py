@@ -27,10 +27,37 @@ def _languages():
     return json.load(f)
 
 
+def _gb2312_level_1() -> set[str]:
+  """Return the 3 755 GB2312 Level-1 (常用字) chars — covers >99% of modern Chinese."""
+  chars: set[str] = set()
+  for cp in range(0x4E00, 0xA000):
+    ch = chr(cp)
+    try:
+      enc = ch.encode("gb2312")
+    except UnicodeEncodeError:
+      continue
+    # Level 1 is high byte 0xB0-0xD7 in GB2312 encoding
+    if len(enc) == 2 and 0xB0 <= enc[0] <= 0xD7:
+      chars.add(ch)
+  return chars
+
+
+# CJK punctuation, kana, halfwidth/fullwidth forms — always wanted in the SC atlas.
+_CJK_SC_EXTRA_RANGES = (
+  range(0x3000, 0x3040),  # CJK symbols & punctuation
+  range(0x3040, 0x30A0),  # Hiragana
+  range(0x30A0, 0x3100),  # Katakana
+  range(0xFF00, 0xFFF0),  # Halfwidth/Fullwidth forms
+)
+
+
 def _char_sets():
   base = set(map(chr, range(32, 127))) | set(EXTRA_CHARS)
   unifont = set(base)
   cjk_sc = set(base)
+  cjk_sc.update(_gb2312_level_1())
+  for r in _CJK_SC_EXTRA_RANGES:
+    cjk_sc.update(chr(cp) for cp in r)
 
   for language, code in _languages().items():
     unifont.update(language)
@@ -110,8 +137,10 @@ def _process_font(font_path: Path, codepoints: tuple[int, ...]):
 
   font_size = {
     "unifont.otf": 16,  # unifont is only 16x8 or 16x16 pixels per glyph
-    "NotoSansSC-Regular.otf": 100,  # CJK subset; 100 px keeps atlas <= ~4096x4096
-    "NotoSansSC-Bold.otf": 100,
+    # NotoSansSC at 80px holds the GB2312 Level-1 + kana + halfwidth subset
+    # in an 8192x4096 atlas (~64 MB GRAY_ALPHA per weight).
+    "NotoSansSC-Regular.otf": 80,
+    "NotoSansSC-Bold.otf": 80,
   }.get(font_path.name, 200)
 
   data = font_path.read_bytes()
@@ -124,6 +153,7 @@ def _process_font(font_path: Path, codepoints: tuple[int, ...]):
 
   rects_ptr = rl.ffi.new("Rectangle **")
   image = rl.gen_image_font_atlas(glyphs, rects_ptr, len(codepoints), font_size, GLYPH_PADDING, 0)
+  print(f"  {font_path.name}: {len(codepoints)} codepoints → atlas {image.width}x{image.height}")
   if image.width == 0 or image.height == 0:
     raise RuntimeError("raylib returned an empty atlas")
 
