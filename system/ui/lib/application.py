@@ -103,6 +103,8 @@ class FontWeight(StrEnum):
   SEMI_BOLD = "Inter-SemiBold.fnt"
   UNIFONT = "unifont.fnt"
   AUDIOWIDE = "Audiowide-Regular.fnt"
+  CJK_SC_NORMAL = "NotoSansSC-Regular.fnt"
+  CJK_SC_BOLD = "NotoSansSC-Bold.fnt"
 
   # Small UI fonts
   DISPLAY_REGULAR = "Inter-Regular.fnt"
@@ -110,8 +112,42 @@ class FontWeight(StrEnum):
   DISPLAY = "Inter-Bold.fnt"
 
 
-def font_fallback(font: rl.Font) -> rl.Font:
-  """Fall back to unifont for languages that require it."""
+# When zh-CHS is active, route every Inter-family weight to the matching
+# Noto Sans SC weight. AUDIOWIDE/UNIFONT/CJK_SC_* fall through to identity.
+_CJK_SC_FALLBACK: dict[FontWeight, FontWeight] = {
+  FontWeight.NORMAL: FontWeight.CJK_SC_NORMAL,
+  FontWeight.MEDIUM: FontWeight.CJK_SC_NORMAL,
+  FontWeight.ROMAN: FontWeight.CJK_SC_NORMAL,
+  FontWeight.DISPLAY_REGULAR: FontWeight.CJK_SC_NORMAL,
+  FontWeight.BOLD: FontWeight.CJK_SC_BOLD,
+  FontWeight.SEMI_BOLD: FontWeight.CJK_SC_BOLD,
+  FontWeight.DISPLAY: FontWeight.CJK_SC_BOLD,
+}
+# Fonts that should NOT be remapped at all (already CJK-capable or special-purpose).
+_CJK_SC_PASSTHROUGH = {FontWeight.UNIFONT, FontWeight.AUDIOWIDE, FontWeight.CJK_SC_NORMAL, FontWeight.CJK_SC_BOLD}
+
+
+def font_fallback(font: rl.Font, text: str = "") -> rl.Font:
+  """Fall back to a language-appropriate font for CJK languages.
+
+  When zh-CHS is active, Inter-family weights are routed to NotoSansSC. The SC
+  subset doesn't cover Hangul/Thai/etc., so if `text` contains codepoints outside
+  the cjk_sc atlas, fall back to UNIFONT to preserve legibility (e.g. Wi-Fi SSIDs
+  with Korean characters while UI is in zh-CHS).
+  """
+  lang = multilang.language
+  if lang == "zh-CHS":
+    weight = gui_app._font_weights_by_id.get(font.texture.id)
+    if weight is None or weight in _CJK_SC_PASSTHROUGH:
+      return font
+    target = _CJK_SC_FALLBACK.get(weight)
+    if target is None:
+      return font
+    # If the text contains chars NotoSansSC can't render, prefer unifont coverage
+    # over a NotoSansSC "missing glyph" box.
+    if text and gui_app._cjk_sc_codepoints and not all(ord(c) in gui_app._cjk_sc_codepoints for c in text):
+      return gui_app.font(FontWeight.UNIFONT)
+    return gui_app.font(target)
   if multilang.requires_unifont():
     return gui_app.font(FontWeight.UNIFONT)
   return font
@@ -201,6 +237,16 @@ class GuiApplication(GuiApplicationExt):
     self._set_log_callback()
 
     self._fonts: dict[FontWeight, rl.Font] = {}
+    # Map texture.id -> FontWeight so font_fallback() can recover the requested weight
+    # from an arbitrary rl.Font (pyray may wrap/copy Font objects).
+    self._font_weights_by_id: dict[int, FontWeight] = {}
+    # Codepoints rendered by NotoSansSC (cjk_sc atlas). Used to fall back to unifont
+    # for chars NotoSansSC SubsetOTF doesn't cover (e.g. Hangul, Thai) when zh-CHS
+    # is active; preserves legibility for non-zh-CHS CJK content like Wi-Fi SSIDs.
+    self._cjk_sc_codepoints: frozenset[int] = frozenset()
+    # Map texture.id -> FontWeight so font_fallback() can recover the requested weight
+    # from an arbitrary rl.Font (pyray may wrap/copy Font objects).
+    self._font_weights_by_id: dict[int, FontWeight] = {}
     self._width = width if width is not None else GuiApplication._default_width()
     self._height = height if height is not None else GuiApplication._default_height()
 
@@ -557,6 +603,8 @@ class GuiApplication(GuiApplicationExt):
     for font in self._fonts.values():
       rl.unload_font(font)
     self._fonts = {}
+    self._font_weights_by_id = {}
+    self._cjk_sc_codepoints = frozenset()
 
     if self._render_texture is not None:
       rl.unload_render_texture(self._render_texture)
@@ -687,14 +735,26 @@ class GuiApplication(GuiApplicationExt):
     return self._height
 
   def _load_fonts(self):
+    cjk_sc_codepoints: set[int] = set()
     for font_weight_file in FontWeight:
       with as_file(FONT_DIR) as fspath:
         fnt_path = fspath / font_weight_file
         font = rl.load_font(fnt_path.as_posix())
-        if font_weight_file != FontWeight.UNIFONT:
+        # Skip mipmaps/trilinear for bitmap-style fonts (UNIFONT) and for the CJK SC
+        # subset atlases — they're already rasterized at their target size and don't
+        # benefit from mipmaps; skipping ~33% texture memory each.
+        if font_weight_file not in (FontWeight.UNIFONT, FontWeight.CJK_SC_NORMAL, FontWeight.CJK_SC_BOLD):
           rl.gen_texture_mipmaps(font.texture)
           rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
         self._fonts[font_weight_file] = font
+        self._font_weights_by_id[font.texture.id] = font_weight_file
+        # Snapshot codepoints loaded into NotoSansSC atlases so font_fallback can
+        # decide per-string whether to drop back to unifont for missing glyphs.
+        if font_weight_file in (FontWeight.CJK_SC_NORMAL, FontWeight.CJK_SC_BOLD):
+          glyph_count = font.glyph_count if hasattr(font, "glyph_count") else font.glyphCount
+          for i in range(glyph_count):
+            cjk_sc_codepoints.add(int(font.glyphs[i].value))
+    self._cjk_sc_codepoints = frozenset(cjk_sc_codepoints)
     rl.gui_set_font(self._fonts[FontWeight.NORMAL])
 
   def _set_styles(self):
@@ -710,7 +770,7 @@ class GuiApplication(GuiApplicationExt):
       rl._orig_draw_text_ex = rl.draw_text_ex
 
     def _draw_text_ex_scaled(font, text, position, font_size, spacing, tint):
-      font = font_fallback(font)
+      font = font_fallback(font, text)
       return rl._orig_draw_text_ex(font, text, position, font_size * FONT_SCALE, spacing, tint)
 
     rl.draw_text_ex = _draw_text_ex_scaled

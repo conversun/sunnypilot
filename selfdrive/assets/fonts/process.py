@@ -11,7 +11,13 @@ LANGUAGES_FILE = TRANSLATIONS_DIR / "languages.json"
 
 GLYPH_PADDING = 6
 EXTRA_CHARS = "–‑✓×°§•X⚙✕◀▶✔⌫⇧␣○●↳çêüñ–‑✓×°§•€£¥"
-UNIFONT_LANGUAGES = {"th", "zh-CHT", "zh-CHS", "ko", "ja"}
+# Languages whose primary atlas is unifont (16 px bitmap GNU Unifont).
+# zh-CHS is intentionally NOT here — it has its own NotoSansSC atlas; the
+# CJK_SC_LANGUAGES branch below still seeds the unifont atlas with zh-CHS chars
+# so font_fallback can drop back to unifont for codepoints NotoSansSC lacks.
+UNIFONT_LANGUAGES = {"th", "zh-CHT", "ko", "ja"}
+CJK_SC_LANGUAGES = {"zh-CHS"}
+CJK_SC_FONT_PREFIX = "NotoSansSC"
 
 
 def _languages():
@@ -24,17 +30,30 @@ def _languages():
 def _char_sets():
   base = set(map(chr, range(32, 127))) | set(EXTRA_CHARS)
   unifont = set(base)
+  cjk_sc = set(base)
 
   for language, code in _languages().items():
     unifont.update(language)
+    if code in CJK_SC_LANGUAGES:
+      cjk_sc.update(language)
     po_path = TRANSLATIONS_DIR / f"app_{code}.po"
     try:
       chars = set(po_path.read_text(encoding="utf-8"))
     except FileNotFoundError:
       continue
-    (unifont if code in UNIFONT_LANGUAGES else base).update(chars)
+    if code in CJK_SC_LANGUAGES:
+      cjk_sc.update(chars)
+      unifont.update(chars)
+    elif code in UNIFONT_LANGUAGES:
+      unifont.update(chars)
+    else:
+      base.update(chars)
 
-  return tuple(sorted(ord(c) for c in base)), tuple(sorted(ord(c) for c in unifont))
+  return (
+    tuple(sorted(ord(c) for c in base)),
+    tuple(sorted(ord(c) for c in unifont)),
+    tuple(sorted(ord(c) for c in cjk_sc)),
+  )
 
 
 def _glyph_metrics(glyphs, rects, codepoints):
@@ -91,6 +110,8 @@ def _process_font(font_path: Path, codepoints: tuple[int, ...]):
 
   font_size = {
     "unifont.otf": 16,  # unifont is only 16x8 or 16x16 pixels per glyph
+    "NotoSansSC-Regular.otf": 100,  # CJK subset; 100 px keeps atlas <= ~4096x4096
+    "NotoSansSC-Bold.otf": 100,
   }.get(font_path.name, 200)
 
   data = font_path.read_bytes()
@@ -118,12 +139,17 @@ def _process_font(font_path: Path, codepoints: tuple[int, ...]):
 
 
 def main():
-  base_cp, unifont_cp = _char_sets()
+  base_cp, unifont_cp, cjk_sc_cp = _char_sets()
   fonts = sorted(FONT_DIR.glob("*.ttf")) + sorted(FONT_DIR.glob("*.otf"))
   for font in fonts:
     if "emoji" in font.name.lower():
       continue
-    glyphs = unifont_cp if font.stem.lower().startswith("unifont") else base_cp
+    if font.stem.lower().startswith("unifont"):
+      glyphs = unifont_cp
+    elif font.stem.startswith(CJK_SC_FONT_PREFIX):
+      glyphs = cjk_sc_cp
+    else:
+      glyphs = base_cp
     _process_font(font, glyphs)
   return 0
 
