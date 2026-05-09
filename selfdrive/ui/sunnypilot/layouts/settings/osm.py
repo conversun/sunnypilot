@@ -85,8 +85,13 @@ class OSMLayout(Widget):
     if MAP_PATH.exists():
       shutil.rmtree(MAP_PATH)
 
-    for param in ("OsmDownloadedDate", "OsmLocal", "OsmLocationName", "OsmLocationTitle", "OsmStateName", "OsmStateTitle"):
+    for param in ("OsmDownloadedDate", "OsmLocal", "OsmLocationName", "OsmLocationTitle", "OsmStateName", "OsmStateTitle", "OSMDownloadProgress"):
       ui_state.params.remove(param)
+    # Also clear mem_params so a half-finished download from a prior session does not
+    # auto-resume after the user explicitly asked to wipe everything.
+    self._mem_params.remove("OSMDownloadLocations")
+    self._mem_params.remove("OSMDownloadBounds")
+    ui_state.params.put_bool("OsmDbUpdatesCheck", False)
 
     self._delete_maps_btn.action_item.set_enabled(True)
     self._delete_maps_btn.action_item.set_text(tr("DELETE"))
@@ -164,8 +169,13 @@ class OSMLayout(Widget):
     key = "OsmLocation" if region_type == "Country" else "OsmState"
     current = ui_state.params.get(f"{key}Name") or ""
 
-    title_label = "Select Province" if (region_type == "State" and country == CHINA_NATION_REF) else f"Select {region_type}"
-    dialog = TreeOptionDialog(tr(title_label), [TreeFolder(folder="", nodes=locations)], current_ref=current, search_prompt="Perform a search")
+    if region_type == "Country":
+      dialog_title = tr("Select Country")
+    elif country == CHINA_NATION_REF:
+      dialog_title = tr("Select Province")
+    else:
+      dialog_title = tr("Select State")
+    dialog = TreeOptionDialog(dialog_title, [TreeFolder(folder="", nodes=locations)], current_ref=current, search_prompt="Perform a search")
     dialog.on_exit = lambda res: self._handle_region_selection(region_type, locations, key, res, dialog.selection_ref)
     gui_app.push_widget(dialog)
 

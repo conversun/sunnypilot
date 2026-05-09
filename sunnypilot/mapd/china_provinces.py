@@ -28,8 +28,9 @@ tiles via GROUP_AREA_BOX_DEGREES, so sub-degree precision here is irrelevant.
 Note on Taiwan: mapd's stock nation menu already exposes "TW" as a top-level
 country, so it is reachable from the existing Country picker without going
 through this list. It is also included here for completeness so users who
-think of it as a province can find it under China; selecting it via either
-path produces the same download.
+think of it as a province can find it under China. The two paths download
+slightly different bboxes (the entry below is wider than mapd's stock TW
+bbox), but both cover the island; pick whichever fits your mental model.
 """
 
 

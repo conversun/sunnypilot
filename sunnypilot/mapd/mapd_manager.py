@@ -108,11 +108,17 @@ def update_osm_db() -> None:
       # Chinese provinces are not in mapd v1.12.0's built-in STATE_BOXES, so route the
       # selection through OSMDownloadBounds (the bbox-based escape hatch in mapd's
       # download.go). mapd downloads exactly this bbox and labels the job 'CUSTOM'.
+      #
+      # mapd v1.12.0 has a quirk: DownloadIfTriggered() initialises
+      # progress.LocationDetails as an empty map, and DownloadBounds(_, "CUSTOM")
+      # then dereferences progress.LocationDetails["CUSTOM"].TotalFiles unguarded.
+      # If we set OSMDownloadBounds without also seeding a "CUSTOM" entry through
+      # the locations branch, mapd nil-pointer-panics. Seed it via OSMDownloadLocations:
+      # an unknown state code logs a harmless warning, but AddLocationDetailsToProgress
+      # creates the LocationDetails entry the bounds branch needs.
       params.put("OsmDownloadedDate", str(datetime.now().timestamp()))
       params.put_bool("OsmDbUpdatesCheck", False)
-      # Clear the named-location pathway so mapd does not also try to look up the
-      # province ref (which it cannot find) on the same poll.
-      mem_params.put("OSMDownloadLocations", "")
+      mem_params.put("OSMDownloadLocations", {"nations": [], "states": ["CUSTOM"]})
       mem_params.put("OSMDownloadBounds", json.dumps(cn_bbox))
       print(f"Downloading map for CN.{state}: {json.dumps(cn_bbox)}")
     else:
