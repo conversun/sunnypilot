@@ -29,6 +29,8 @@ from openpilot.system.ui.sunnypilot.widgets.list_view import ListItemSP
 from openpilot.system.ui.sunnypilot.widgets.tree_dialog import TreeFolder, TreeNode, TreeOptionDialog
 from openpilot.system.ui.sunnypilot.widgets.progress_bar import progress_item
 
+from openpilot.sunnypilot.mapd.china_provinces import CHINA_NATION_REF, CHINA_PROVINCES
+
 MAP_PATH = Path(Paths.mapd_root()) / "offline"
 
 
@@ -51,7 +53,11 @@ class OSMLayout(Widget):
     self._progress = progress_item(tr("Downloading Map"))
     self._update_btn = ListItemSP(tr("Database Update"), action_item=NoElideButtonAction(tr("CHECK"), enabled=True), callback=self._update_db)
     self._country_btn = ListItemSP(tr("Country"), action_item=NoElideButtonAction(tr("SELECT"), enabled=True), callback=lambda: self._select_region("Country"))
-    self._state_btn = ListItemSP(tr("State"), action_item=NoElideButtonAction(tr("SELECT"), enabled=True), callback=lambda: self._select_region("State"))
+    self._state_btn = ListItemSP(
+      lambda: tr("Province") if ui_state.params.get("OsmLocationName") == CHINA_NATION_REF else tr("State"),
+      action_item=NoElideButtonAction(tr("SELECT"), enabled=True),
+      callback=lambda: self._select_region("State"),
+    )
 
     self.items = [self._mapd_version, self._delete_maps_btn, self._progress, self._update_btn, self._country_btn, self._state_btn]
 
@@ -109,7 +115,7 @@ class OSMLayout(Widget):
   def _handle_region_selection(self, region_type, locations, key, res, ref):
     if res != DialogResult.CONFIRM or not ref:
       if region_type == "State" and res == DialogResult.CANCEL:
-        if ui_state.params.get("OsmLocationName") == "US" and not ui_state.params.get("OsmStateName"):
+        if ui_state.params.get("OsmLocationName") in ("US", CHINA_NATION_REF) and not ui_state.params.get("OsmStateName"):
           ui_state.params.remove("OsmLocationName")
           ui_state.params.remove("OsmLocationTitle")
           ui_state.params.remove("OsmLocal")
@@ -125,22 +131,32 @@ class OSMLayout(Widget):
     name = next((n.data['display_name'] for n in locations if n.ref == ref), ref)
     ui_state.params.put(f"{key}Title", name)
 
-    if ref == "US" and region_type == "Country":
+    if ref in ("US", CHINA_NATION_REF) and region_type == "Country":
       self._select_region("State")
     else:
       self._update_db()
 
   def _do_select_region(self, region_type, btn):
-    base_url = "https://raw.githubusercontent.com/pfeiferj/openpilot-mapd/main/"
-    url = base_url + ("nation_bounding_boxes.json" if region_type == "Country" else "us_states_bounding_boxes.json")
-    try:
-      data = requests.get(url, timeout=10).json()
-      locations = sorted([TreeNode(ref=k, data={'display_name': v['full_name']}) for k, v in data.items()], key=lambda n: n.data['display_name'])
-    except Exception:
-      locations = []
+    country = ui_state.params.get("OsmLocationName") or ""
 
-    if region_type == "State":
-      locations.insert(0, TreeNode(ref="All", data={'display_name': tr("All states (~6.0 GB)")}))
+    if region_type == "State" and country == CHINA_NATION_REF:
+      # Chinese provinces are not in pfeiferj/mapd's static state list; build the picker
+      # from our embedded table so it works offline and avoids 404s on the upstream JSON.
+      locations = sorted(
+        [TreeNode(ref=ref, data={'display_name': name}) for ref, name, _ in CHINA_PROVINCES],
+        key=lambda n: n.data['display_name'],
+      )
+    else:
+      base_url = "https://raw.githubusercontent.com/pfeiferj/openpilot-mapd/main/"
+      url = base_url + ("nation_bounding_boxes.json" if region_type == "Country" else "us_states_bounding_boxes.json")
+      try:
+        data = requests.get(url, timeout=10).json()
+        locations = sorted([TreeNode(ref=k, data={'display_name': v['full_name']}) for k, v in data.items()], key=lambda n: n.data['display_name'])
+      except Exception:
+        locations = []
+
+      if region_type == "State":
+        locations.insert(0, TreeNode(ref="All", data={'display_name': tr("All states (~6.0 GB)")}))
 
     btn.action_item.set_enabled(True)
     btn.action_item.set_text(tr("SELECT"))
@@ -148,15 +164,16 @@ class OSMLayout(Widget):
     key = "OsmLocation" if region_type == "Country" else "OsmState"
     current = ui_state.params.get(f"{key}Name") or ""
 
-    dialog = TreeOptionDialog(tr(f"Select {region_type}"), [TreeFolder(folder="", nodes=locations)], current_ref=current, search_prompt="Perform a search")
+    title_label = "Select Province" if (region_type == "State" and country == CHINA_NATION_REF) else f"Select {region_type}"
+    dialog = TreeOptionDialog(tr(title_label), [TreeFolder(folder="", nodes=locations)], current_ref=current, search_prompt="Perform a search")
     dialog.on_exit = lambda res: self._handle_region_selection(region_type, locations, key, res, dialog.selection_ref)
     gui_app.push_widget(dialog)
 
   def _update_labels(self):
-    downloading = bool(self._mem_params.get("OSMDownloadLocations"))
+    downloading = bool(self._mem_params.get("OSMDownloadLocations") or self._mem_params.get("OSMDownloadBounds"))
     self._country_btn.set_enabled(not downloading)
     self._state_btn.set_enabled(not downloading)
-    self._state_btn.set_visible(ui_state.params.get("OsmLocationName") == "US")
+    self._state_btn.set_visible(ui_state.params.get("OsmLocationName") in ("US", CHINA_NATION_REF))
     self._update_btn.set_visible(bool(ui_state.params.get("OsmLocationName")))
 
     self._country_btn.action_item.set_value(ui_state.params.get("OsmLocationTitle") or "")

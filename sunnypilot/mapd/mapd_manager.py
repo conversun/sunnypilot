@@ -20,6 +20,7 @@ from openpilot.sunnypilot.mapd.live_map_data.osm_map_data import OsmMapData
 from openpilot.system.hardware.hw import Paths
 from openpilot.sunnypilot.mapd import MAPD_PATH
 from openpilot.sunnypilot.mapd.mapd_installer import VERSION, update_installed_version
+from openpilot.sunnypilot.mapd.china_provinces import CHINA_NATION_REF, get_province_bbox
 
 # PFEIFER - MAPD {{
 params = Params()
@@ -102,8 +103,21 @@ def update_osm_db() -> None:
     cleanup_old_osm_data(get_files_for_cleanup())
     country = params.get("OsmLocationName", return_default=True)
     state = params.get("OsmStateName", return_default=True)
-    filtered_nations, filtered_states = filter_nations_and_states([country], [state])
-    request_refresh_osm_location_data(filtered_nations, filtered_states)
+    cn_bbox = get_province_bbox(state) if country == CHINA_NATION_REF else None
+    if cn_bbox is not None:
+      # Chinese provinces are not in mapd v1.12.0's built-in STATE_BOXES, so route the
+      # selection through OSMDownloadBounds (the bbox-based escape hatch in mapd's
+      # download.go). mapd downloads exactly this bbox and labels the job 'CUSTOM'.
+      params.put("OsmDownloadedDate", str(datetime.now().timestamp()))
+      params.put_bool("OsmDbUpdatesCheck", False)
+      # Clear the named-location pathway so mapd does not also try to look up the
+      # province ref (which it cannot find) on the same poll.
+      mem_params.put("OSMDownloadLocations", "")
+      mem_params.put("OSMDownloadBounds", json.dumps(cn_bbox))
+      print(f"Downloading map for CN.{state}: {json.dumps(cn_bbox)}")
+    else:
+      filtered_nations, filtered_states = filter_nations_and_states([country], [state])
+      request_refresh_osm_location_data(filtered_nations, filtered_states)
 
   if not mem_params.get("OSMDownloadBounds"):
     mem_params.put("OSMDownloadBounds", "")
