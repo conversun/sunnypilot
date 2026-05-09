@@ -127,27 +127,15 @@ _CJK_SC_FALLBACK: dict[FontWeight, FontWeight] = {
 _CJK_SC_PASSTHROUGH = {FontWeight.UNIFONT, FontWeight.AUDIOWIDE, FontWeight.CJK_SC_NORMAL, FontWeight.CJK_SC_BOLD}
 
 
-def font_fallback(font: rl.Font, text: str = "") -> rl.Font:
-  """Fall back to a language-appropriate font for CJK languages.
-
-  When zh-CHS is active, Inter-family weights are routed to NotoSansSC. The SC
-  subset doesn't cover Hangul/Thai/etc., so if `text` contains codepoints outside
-  the cjk_sc atlas, fall back to UNIFONT to preserve legibility (e.g. Wi-Fi SSIDs
-  with Korean characters while UI is in zh-CHS).
-  """
+def font_fallback(font: rl.Font) -> rl.Font:
+  """Fall back to a language-appropriate font for CJK languages."""
   lang = multilang.language
   if lang == "zh-CHS":
     weight = gui_app._font_weights_by_id.get(font.texture.id)
     if weight is None or weight in _CJK_SC_PASSTHROUGH:
       return font
     target = _CJK_SC_FALLBACK.get(weight)
-    if target is None:
-      return font
-    # If the text contains chars NotoSansSC can't render, prefer unifont coverage
-    # over a NotoSansSC "missing glyph" box.
-    if text and gui_app._cjk_sc_codepoints and not all(ord(c) in gui_app._cjk_sc_codepoints for c in text):
-      return gui_app.font(FontWeight.UNIFONT)
-    return gui_app.font(target)
+    return gui_app.font(target) if target is not None else font
   if multilang.requires_unifont():
     return gui_app.font(FontWeight.UNIFONT)
   return font
@@ -237,13 +225,6 @@ class GuiApplication(GuiApplicationExt):
     self._set_log_callback()
 
     self._fonts: dict[FontWeight, rl.Font] = {}
-    # Map texture.id -> FontWeight so font_fallback() can recover the requested weight
-    # from an arbitrary rl.Font (pyray may wrap/copy Font objects).
-    self._font_weights_by_id: dict[int, FontWeight] = {}
-    # Codepoints rendered by NotoSansSC (cjk_sc atlas). Used to fall back to unifont
-    # for chars NotoSansSC SubsetOTF doesn't cover (e.g. Hangul, Thai) when zh-CHS
-    # is active; preserves legibility for non-zh-CHS CJK content like Wi-Fi SSIDs.
-    self._cjk_sc_codepoints: frozenset[int] = frozenset()
     # Map texture.id -> FontWeight so font_fallback() can recover the requested weight
     # from an arbitrary rl.Font (pyray may wrap/copy Font objects).
     self._font_weights_by_id: dict[int, FontWeight] = {}
@@ -604,7 +585,6 @@ class GuiApplication(GuiApplicationExt):
       rl.unload_font(font)
     self._fonts = {}
     self._font_weights_by_id = {}
-    self._cjk_sc_codepoints = frozenset()
 
     if self._render_texture is not None:
       rl.unload_render_texture(self._render_texture)
@@ -735,7 +715,6 @@ class GuiApplication(GuiApplicationExt):
     return self._height
 
   def _load_fonts(self):
-    cjk_sc_codepoints: set[int] = set()
     for font_weight_file in FontWeight:
       with as_file(FONT_DIR) as fspath:
         fnt_path = fspath / font_weight_file
@@ -748,14 +727,8 @@ class GuiApplication(GuiApplicationExt):
           rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
         self._fonts[font_weight_file] = font
         self._font_weights_by_id[font.texture.id] = font_weight_file
-        # Snapshot codepoints loaded into NotoSansSC atlases so font_fallback can
-        # decide per-string whether to drop back to unifont for missing glyphs.
-        if font_weight_file in (FontWeight.CJK_SC_NORMAL, FontWeight.CJK_SC_BOLD):
-          glyph_count = font.glyph_count if hasattr(font, "glyph_count") else font.glyphCount
-          for i in range(glyph_count):
-            cjk_sc_codepoints.add(int(font.glyphs[i].value))
-    self._cjk_sc_codepoints = frozenset(cjk_sc_codepoints)
-    rl.gui_set_font(self._fonts[FontWeight.NORMAL])
+    # Set the raygui default font through font_fallback so e.g. zh-CHS picks NotoSansSC.
+    rl.gui_set_font(font_fallback(self._fonts[FontWeight.NORMAL]))
 
   def _set_styles(self):
     rl.gui_set_style(rl.GuiControl.DEFAULT, rl.GuiControlProperty.BORDER_WIDTH, 0)
