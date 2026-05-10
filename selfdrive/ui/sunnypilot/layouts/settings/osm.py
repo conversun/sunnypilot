@@ -99,7 +99,7 @@ class OSMLayout(Widget):
 
   def _on_confirm_delete_maps(self):
     self._delete_maps_btn.action_item.set_enabled(False)
-    self._delete_maps_btn.action_item.set_text("DELETING...")
+    self._delete_maps_btn.action_item.set_text(tr("DELETING..."))
     threading.Thread(target=self._do_delete_maps).start()
 
   def _delete_maps(self):
@@ -175,7 +175,7 @@ class OSMLayout(Widget):
       dialog_title = tr("Select Province")
     else:
       dialog_title = tr("Select State")
-    dialog = TreeOptionDialog(dialog_title, [TreeFolder(folder="", nodes=locations)], current_ref=current, search_prompt="Perform a search")
+    dialog = TreeOptionDialog(dialog_title, [TreeFolder(folder="", nodes=locations)], current_ref=current, search_prompt=tr("Perform a search"))
     dialog.on_exit = lambda res: self._handle_region_selection(region_type, locations, key, res, dialog.selection_ref)
     gui_app.push_widget(dialog)
 
@@ -206,17 +206,17 @@ class OSMLayout(Widget):
         progress_perc = 0.0
 
       if failed:
-        text = "0% - Downloading Maps"
+        text = tr("{}% - Downloading Maps").format(0)
         btn_text = tr("Error: Invalid download. Retry.")
         self._current_percent = 0.0
       elif total > 0 and downloading:
         self._current_percent = progress_perc
         perc_int = int(progress_perc)
-        text = f"{perc_int}% - Downloading Maps"
+        text = tr("{}% - Downloading Maps").format(perc_int)
         btn_text = f"{done}/{total} ({perc_int}%)"
       else:
         self._current_percent = 0.0
-        text = "0% - Downloading Maps"
+        text = tr("{}% - Downloading Maps").format(0)
         btn_text = tr("Downloading Maps...")
 
       self._progress.action_item.update(self._current_percent, text, show_progress=total > 0 and downloading and not failed)
