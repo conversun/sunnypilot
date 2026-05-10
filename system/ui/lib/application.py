@@ -5,6 +5,7 @@ import os
 import queue
 import time
 import signal
+import re
 import sys
 import pyray as rl
 import threading
@@ -125,12 +126,22 @@ _CJK_SC_FALLBACK: dict[FontWeight, FontWeight] = {
 }
 # Fonts that should NOT be remapped at all (already CJK-capable or special-purpose).
 _CJK_SC_PASSTHROUGH = {FontWeight.UNIFONT, FontWeight.AUDIOWIDE, FontWeight.CJK_SC_NORMAL, FontWeight.CJK_SC_BOLD}
+# Codepoint ranges that Inter cannot render and that require the HarmonyOS Sans SC atlas:
+# CJK punctuation, kana, ideographs, halfwidth/fullwidth forms.
+_CJK_RE = re.compile(r"[\u2e80-\u2fff\u3000-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\ufe30-\ufe4f\uff00-\uffef]")
 
 
-def font_fallback(font: rl.Font) -> rl.Font:
-  """Fall back to a language-appropriate font for CJK languages."""
+def font_fallback(font: rl.Font, text: str = "") -> rl.Font:
+  """Fall back to a language-appropriate font for CJK languages.
+
+  When `text` is provided and contains no CJK codepoints, the original font is
+  returned so pure-ASCII strings (numbers, English labels) keep Inter's crisp
+  vector-quality scaling instead of being downgraded to the 72 px CJK atlas.
+  """
   lang = multilang.language
   if lang == "zh-CHS":
+    if text and not _CJK_RE.search(text):
+      return font
     weight = gui_app._font_weights_by_id.get(font.texture.id)
     if weight is None or weight in _CJK_SC_PASSTHROUGH:
       return font
@@ -719,10 +730,11 @@ class GuiApplication(GuiApplicationExt):
       with as_file(FONT_DIR) as fspath:
         fnt_path = fspath / font_weight_file
         font = rl.load_font(fnt_path.as_posix())
-        # Skip mipmaps/trilinear for bitmap-style fonts (UNIFONT) and for the CJK SC
-        # subset atlases — they're already rasterized at their target size and don't
-        # benefit from mipmaps; skipping ~33% texture memory each.
-        if font_weight_file not in (FontWeight.UNIFONT, FontWeight.CJK_SC_NORMAL, FontWeight.CJK_SC_BOLD):
+        # Skip mipmaps/trilinear only for the bitmap-style UNIFONT, whose pixel-grid
+        # design would be smudged by mipmaps. Smooth fonts — including the CJK SC
+        # subset atlas — need mipmaps + trilinear; otherwise raylib's default POINT
+        # filter renders scaled text as a visible pixel grid ("点阵" look).
+        if font_weight_file != FontWeight.UNIFONT:
           rl.gen_texture_mipmaps(font.texture)
           rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
         self._fonts[font_weight_file] = font
@@ -743,7 +755,7 @@ class GuiApplication(GuiApplicationExt):
       rl._orig_draw_text_ex = rl.draw_text_ex
 
     def _draw_text_ex_scaled(font, text, position, font_size, spacing, tint):
-      font = font_fallback(font)
+      font = font_fallback(font, text)
       return rl._orig_draw_text_ex(font, text, position, font_size * FONT_SCALE, spacing, tint)
 
     rl.draw_text_ex = _draw_text_ex_scaled
