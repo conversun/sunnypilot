@@ -12,12 +12,12 @@ LANGUAGES_FILE = TRANSLATIONS_DIR / "languages.json"
 GLYPH_PADDING = 6
 EXTRA_CHARS = "–‑✓×°§•X⚙✕◀▶✔⌫⇧␣○●↳çêüñ–‑✓×°§•€£¥"
 # Languages whose primary atlas is unifont (16 px bitmap GNU Unifont).
-# zh-CHS is intentionally NOT here — it has its own NotoSansSC atlas; the
+# zh-CHS is intentionally NOT here — it has its own HarmonyOS Sans SC atlas; the
 # CJK_SC_LANGUAGES branch below still seeds the unifont atlas with zh-CHS chars
-# so font_fallback can drop back to unifont for codepoints NotoSansSC lacks.
+# so font_fallback can drop back to unifont for codepoints HarmonyOS Sans SC lacks.
 UNIFONT_LANGUAGES = {"th", "zh-CHT", "ko", "ja"}
 CJK_SC_LANGUAGES = {"zh-CHS"}
-CJK_SC_FONT_PREFIX = "NotoSansSC"
+CJK_SC_FONT_PREFIX = "HarmonyOS_Sans_SC"
 
 
 def _languages():
@@ -137,10 +137,11 @@ def _process_font(font_path: Path, codepoints: tuple[int, ...]):
 
   font_size = {
     "unifont.otf": 16,  # unifont is only 16x8 or 16x16 pixels per glyph
-    # NotoSansSC at 80px holds the GB2312 Level-1 + kana + halfwidth subset
-    # in an 8192x4096 atlas (~64 MB GRAY_ALPHA per weight).
-    "NotoSansSC-Regular.otf": 80,
-    "NotoSansSC-Bold.otf": 80,
+    # HarmonyOS Sans SC at 72px holds the GB2312 Level-1 + kana + halfwidth subset
+    # in an 8192x4096 atlas (~33 MB GRAY_ALPHA per weight). 72px (vs NotoSansSC's 80px)
+    # compensates for HarmonyOS Sans's larger glyph metrics to keep atlas size parity.
+    "HarmonyOS_Sans_SC_Regular.ttf": 72,
+    "HarmonyOS_Sans_SC_Bold.ttf": 72,
   }.get(font_path.name, 200)
 
   data = font_path.read_bytes()

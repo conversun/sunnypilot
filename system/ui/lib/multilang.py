@@ -16,8 +16,8 @@ TRANSLATIONS_DIR = UI_DIR.joinpath("translations")
 LANGUAGES_FILE = TRANSLATIONS_DIR.joinpath("languages.json")
 
 # Languages whose primary font fallback is unifont (16 px bitmap GNU Unifont).
-# zh-CHS is intentionally NOT here — it uses NotoSansSC as primary, with unifont
-# only as a per-text secondary fallback for chars NotoSansSC doesn't cover.
+# zh-CHS is intentionally NOT here — it uses HarmonyOS Sans SC as primary, with unifont
+# only as a per-text secondary fallback for chars HarmonyOS Sans SC doesn't cover.
 UNIFONT_LANGUAGES = [
   "th",
   "zh-CHT",

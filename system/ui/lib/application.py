@@ -103,8 +103,8 @@ class FontWeight(StrEnum):
   SEMI_BOLD = "Inter-SemiBold.fnt"
   UNIFONT = "unifont.fnt"
   AUDIOWIDE = "Audiowide-Regular.fnt"
-  CJK_SC_NORMAL = "NotoSansSC-Regular.fnt"
-  CJK_SC_BOLD = "NotoSansSC-Bold.fnt"
+  CJK_SC_NORMAL = "HarmonyOS_Sans_SC_Regular.fnt"
+  CJK_SC_BOLD = "HarmonyOS_Sans_SC_Bold.fnt"
 
   # Small UI fonts
   DISPLAY_REGULAR = "Inter-Regular.fnt"
@@ -113,7 +113,7 @@ class FontWeight(StrEnum):
 
 
 # When zh-CHS is active, route every Inter-family weight to the matching
-# Noto Sans SC weight. AUDIOWIDE/UNIFONT/CJK_SC_* fall through to identity.
+# HarmonyOS Sans SC weight. AUDIOWIDE/UNIFONT/CJK_SC_* fall through to identity.
 _CJK_SC_FALLBACK: dict[FontWeight, FontWeight] = {
   FontWeight.NORMAL: FontWeight.CJK_SC_NORMAL,
   FontWeight.MEDIUM: FontWeight.CJK_SC_NORMAL,
@@ -727,7 +727,7 @@ class GuiApplication(GuiApplicationExt):
           rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
         self._fonts[font_weight_file] = font
         self._font_weights_by_id[font.texture.id] = font_weight_file
-    # Set the raygui default font through font_fallback so e.g. zh-CHS picks NotoSansSC.
+    # Set the raygui default font through font_fallback so e.g. zh-CHS picks HarmonyOS Sans SC.
     rl.gui_set_font(font_fallback(self._fonts[FontWeight.NORMAL]))
 
   def _set_styles(self):
