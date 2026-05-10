@@ -526,7 +526,7 @@ msgstr "脱离以重置校准"
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/device.py
 msgid "Disengage to {}"
-msgstr "退出辅助以执行：{}"
+msgstr "脱离以执行：{}"
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/mads_settings.py
 msgid "Disengage: ALC will disengage when the brake pedal is pressed."
@@ -2506,7 +2506,7 @@ msgstr "监管信息"
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/toggles.py
 msgid "relaxed"
-msgstr "舒缓"
+msgstr "从容"
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/device.py
 msgid "reset"
@@ -2534,7 +2534,7 @@ msgid ""
 "training guide"
 msgstr ""
 "查看\n"
-"培训指南"
+"训练指南"
 
 #: openpilot/selfdrive/ui/layouts/settings/device.py
 msgid "right"
@@ -2751,7 +2751,7 @@ msgstr "更新 sunnypilot"
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/device.py
 msgid "upgrade to prime"
-msgstr "升级 Prime"
+msgstr "升级至 Prime"
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/toggles.py
 msgid "use metric units"
