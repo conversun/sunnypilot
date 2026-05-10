@@ -9,7 +9,7 @@ from enum import IntEnum
 from openpilot.system.ui.widgets import Widget
 from openpilot.system.ui.lib.multilang import tr
 from openpilot.system.ui.widgets.scroller_tici import Scroller
-from openpilot.system.ui.sunnypilot.widgets.list_view import option_item_sp
+from openpilot.system.ui.sunnypilot.widgets.list_view import option_item_sp, toggle_item_sp
 from openpilot.sunnypilot.system.params_migration import ONROAD_BRIGHTNESS_TIMER_VALUES
 
 
@@ -61,10 +61,16 @@ class DisplayLayout(Widget):
                                     f"{value} s" if value < 60 else f"{int(value/60)} m"),
       inline=True
     )
+    self._hide_firehose_prompt = toggle_item_sp(
+      title=lambda: tr("Hide Firehose Prompt"),
+      description=lambda: tr("Hide the Firehose prompt on the home screen. The prompt will not be rendered when this is enabled."),
+      param="HideFirehosePrompt",
+    )
     items = [
       self._onroad_brightness,
       self._onroad_brightness_timer,
       self._interactivity_timeout,
+      self._hide_firehose_prompt,
     ]
     return items
 

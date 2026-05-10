@@ -354,6 +354,14 @@ msgstr "高"
 msgid "Hidden Network"
 msgstr "隐藏网络"
 
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/display.py
+msgid "Hide Firehose Prompt"
+msgstr "隐藏 Firehose 提示"
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/display.py
+msgid "Hide the Firehose prompt on the home screen. The prompt will not be rendered when this is enabled."
+msgstr "隐藏首页的 Firehose 提示。启用后该提示将完全不再渲染。"
+
 #: openpilot/selfdrive/ui/layouts/settings/software.py
 msgid "INSTALL"
 msgstr "安装"
