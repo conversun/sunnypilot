@@ -447,7 +447,7 @@ Next steps:
        --whitelist-procs controlsd \\
        --whitelist-cars MAZDA \\
        ${ROUTE_ID}
-  4. Fill in T21_followup_log.md with results
+  4. Document results alongside the route artifacts
 EOF
   log "Metadata written to: $META_FILE"
 else
@@ -463,7 +463,7 @@ log "  Checkpoint:   CP-${CP_LABEL}"
 log "  Route ID:     ${ROUTE_ID}"
 log "  Output dir:   ${CAPTURE_DIR}"
 log ""
-log "Attach the route ID and output directory path to your T21_followup_log.md."
+log "Save the route ID and output directory path alongside the route artifacts for follow-up."
 log ""
 log "To open in cabana:"
 log "  https://connect.comma.ai  (search for route ID: ${ROUTE_ID})"
