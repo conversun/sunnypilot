@@ -1,7 +1,17 @@
 # ROADMAP.md — Mazda GEN2+TI Port Forward Plan
 
 **Current tag:** `v0.11.1-mazda3-2019.0.2`  
-**Last updated:** 2026-05-09
+**Last updated:** 2026-05-09 (status table refreshed 2026-05-11 — see note below)
+
+> [!NOTE]
+> This roadmap was written at port `v0.0.2`. Since then, opendbc commit
+> `d81e56a6 mazda: enable GEN2 alpha longitudinal control` and
+> `47d7ffe4 mazda: GEN2 long PI tuning — kp=0 anti-jerk` landed in the
+> submodule, which moves item P1 (longitudinal control) from "To-Do"
+> to "Implemented behind alpha-long toggle". The Current Status table
+> below has been updated; the P1 section is kept as historical context.
+> For the current authoritative state see
+> [`docs/HARDWARE_TI2.md`](../HARDWARE_TI2.md).
 
 ---
 
@@ -12,7 +22,7 @@
 | Code complete | Yes — all 8 waves done |
 | Safety pytest | 79/0/15 LOCAL_PASS |
 | On-vehicle | Not yet driven (CP-A pending) |
-| Longitudinal control | Disabled (`alphaLongitudinalAvailable = False`) |
+| Longitudinal control | **Alpha** — `alphaLongitudinalAvailable = True` for GEN2; `openpilotLongitudinalControl` flips on when user enables alpha-long toggle (non-release branch only). Off by default; defaults to stock-ACC pass-through with MITM hold/resume. |
 | Lateral control | Code complete; tuning params from source fork, not yet validated on v0.11 World Model |
 | TI fault handling | Fixed in v0.0.2 (transient/permanent split) |
 

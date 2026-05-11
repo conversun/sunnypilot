@@ -182,9 +182,9 @@ bad accel frames. Triage matrices for each checkpoint live in
 | Feature | Status |
 |---|---|
 | Lateral control via TI2 | **Code complete, unvalidated on v0.11 World Model** — `NON_LINEAR_TORQUE_PARAMS` was tuned on an older WM; expect possible retune |
-| Standstill ACC hold/resume | **Active** via MITM of stock ACC frame (D-008) |
-| `openpilotLongitudinalControl` | **False** for `MAZDA_3_2019` in this branch; full ACC plumbing is a P1 follow-up |
-| `alphaLongitudinalAvailable` | **False** until ACCEL_CMD plumbing is ported |
+| Standstill ACC hold/resume | **Active** when alpha-long is OFF (stock ACC pass-through with MITM hold/resume — see D-008) |
+| `alphaLongitudinalAvailable` | **True** for `MAZDA_3_2019` (and any GEN2). The toggle is exposed in non-release branches such as this community branch. |
+| `openpilotLongitudinalControl` | **Off by default; on when the user enables alpha-long.** When on, carcontroller writes `ACCEL_CMD = clip(accel*200 + 2000, 1300, 2400)` into `MAZDA_2019_ACC` frame on bus 2, replacing the stock cam frame. Panda safety enforces `MAZDA_2019_LONG_LIMITS` (max=2400, min=1300, inactive=2000). |
 | `steerFaultPermanent` for GEN2 | **Not wired** — the code always returns `False`. **You are the fault detector.** |
 | TI2 fault handling | INIT(1)/STANDBY(2) auto-recover; only ERROR(4)/CRITICAL_ERROR(5) latch (D-010) |
 
