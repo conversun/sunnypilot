@@ -11,12 +11,16 @@ POT_FILE = os.path.join(str(TRANSLATIONS_DIR), "app.pot")
 
 def update_translations():
   files = []
+  selfdrived_dir = os.path.join(BASEDIR, "selfdrive", "selfdrived")
+  sp_selfdrived_dir = os.path.join(BASEDIR, "sunnypilot", "selfdrive", "selfdrived")
   for root, _, filenames in chain(os.walk(SYSTEM_UI_DIR),
                                   os.walk(os.path.join(UI_DIR, "widgets")),
                                   os.walk(os.path.join(UI_DIR, "layouts")),
                                   os.walk(os.path.join(UI_DIR, "onroad")),
                                   os.walk(os.path.join(UI_DIR, "sunnypilot")),
-                                  os.walk(os.path.join(UI_DIR, "mici"))):
+                                  os.walk(os.path.join(UI_DIR, "mici")),
+                                  os.walk(selfdrived_dir),
+                                  os.walk(sp_selfdrived_dir)):
     for filename in filenames:
       if filename.endswith(".py"):
         files.append(os.path.relpath(os.path.join(root, filename), BASEDIR))
