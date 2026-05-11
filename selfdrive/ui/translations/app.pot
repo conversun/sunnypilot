@@ -2,6 +2,400 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
+#: system/ui/tici_reset.py
+msgid "System reset triggered. Press confirm to erase all content and settings. Press cancel to resume boot."
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
+#: system/ui/tici_reset.py
+#: system/ui/widgets/confirm_dialog.py
+#: system/ui/widgets/keyboard.py
+#: system/ui/widgets/network.py
+#: system/ui/widgets/option_dialog.py
+msgid "Cancel"
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/vehicle/platform_selector.py
+#: system/ui/tici_reset.py
+msgid "Confirm"
+msgstr ""
+
+#: openpilot/selfdrive/ui/layouts/settings/device.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/software.py
+#: system/ui/tici_reset.py
+#: system/ui/tici_updater.py
+msgid "Reboot"
+msgstr ""
+
+#: system/ui/tici_reset.py
+msgid "System Reset"
+msgstr ""
+
+#: system/ui/tici_reset.py
+msgid "Are you sure you want to reset your device?"
+msgstr ""
+
+#: system/ui/tici_reset.py
+msgid ""
+"Resetting device...\n"
+"This may take up to a minute."
+msgstr ""
+
+#: system/ui/tici_reset.py
+msgid "Reset failed. Reboot to try again."
+msgstr ""
+
+#: system/ui/tici_reset.py
+msgid "Unable to mount data partition. Partition may be corrupted. Press confirm to erase and reset your device."
+msgstr ""
+
+#: system/ui/mici_updater.py
+msgid "loading"
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
+#: system/ui/mici_updater.py
+msgid "downloading"
+msgstr ""
+
+#: system/ui/mici_updater.py
+msgid ""
+"download\n"
+"& install"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/onboarding.py
+#: system/ui/mici_setup.py
+#: system/ui/mici_updater.py
+msgid "next"
+msgstr ""
+
+#: system/ui/mici_updater.py
+msgid "update failed"
+msgstr ""
+
+#: system/ui/mici_updater.py
+msgid "update required"
+msgstr ""
+
+#: system/ui/mici_updater.py
+msgid ""
+"the download size\n"
+"is approximately 1 GB"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid "reset failed"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid "reboot to try again"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid "resetting device"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid ""
+"this may take up to\n"
+"a minute..."
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid ""
+"reset &\n"
+"erase"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid "cancel"
+msgstr ""
+
+#: system/ui/mici_reset.py
+#: system/ui/mici_setup.py
+msgid ""
+"reboot\n"
+"device"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid "factory reset"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid ""
+"resetting erases\n"
+"all user content & data"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid ""
+"this may take up to\n"
+"a minute{dots}"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid "Resetting erases all user content & data."
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid ""
+"user data partition\n"
+"could not be mounted"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid ""
+"For a deeper reset, go to\n"
+"https://flash.comma.ai"
+msgstr ""
+
+#: system/ui/mici_reset.py
+msgid ""
+"reset triggered by\n"
+"tapping the screen"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "start"
+msgstr ""
+
+#: openpilot/selfdrive/ui/layouts/settings/software.py
+#: system/ui/mici_setup.py
+msgid "downloading..."
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid ""
+"connect to\n"
+"internet"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "swipe down to go back"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid ""
+"connect to\n"
+"continue"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "install openpilot"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid ""
+"slide to install\n"
+"openpilot"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid ""
+"slide to install\n"
+"custom software"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "choose software"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "custom software URL..."
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid ""
+"caution: installing\n"
+"3rd party software"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "• It has not been tested by comma."
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "• It may not comply with safety standards."
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "• It may damage your device and/or vehicle."
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid ""
+"how to restore to a\n"
+"factory state later"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid ""
+"waiting for\n"
+"internet..."
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "Incompatible sunnypilot version."
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
+#: system/ui/mici_setup.py
+msgid "download failed"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid ""
+"swipe down to go\n"
+"back and try again"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "No custom software found at this URL: {url}"
+msgstr ""
+
+#: system/ui/mici_setup.py
+msgid "Invalid URL: {url}"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/settings/developer.py
+#: system/ui/tici_updater.py
+msgid "Loading..."
+msgstr ""
+
+#: system/ui/tici_setup.py
+#: system/ui/tici_updater.py
+msgid "Downloading..."
+msgstr ""
+
+#: system/ui/tici_updater.py
+msgid "An operating system update is required. Connect your device to Wi-Fi for the fastest update experience. The download size is approximately 1GB."
+msgstr ""
+
+#: system/ui/tici_setup.py
+#: system/ui/tici_updater.py
+msgid "Connect to Wi-Fi"
+msgstr ""
+
+#: system/ui/tici_updater.py
+msgid "Install"
+msgstr ""
+
+#: openpilot/selfdrive/ui/layouts/onboarding.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/onboarding.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_policy.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_settings.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/lane_change_settings.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/mads_settings.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/torque_settings.py
+#: system/ui/tici_setup.py
+#: system/ui/tici_updater.py
+#: system/ui/widgets/network.py
+msgid "Back"
+msgstr ""
+
+#: system/ui/tici_updater.py
+msgid "Update failed"
+msgstr ""
+
+#: system/ui/tici_updater.py
+msgid "Update Required"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "WARNING: Low Voltage"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Power your device in a car with a harness or proceed at your own risk."
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Continue"
+msgstr ""
+
+#: openpilot/selfdrive/ui/layouts/settings/device.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
+#: system/ui/tici_setup.py
+msgid "Power Off"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Getting Started"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Before we get on the road, let's finish installation and cover some details."
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Custom Software"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Choose Software to Use"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Reboot device"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Start over"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Download Failed"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Waiting for internet"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Scroll to continue"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "WARNING: Custom Software"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid ""
+"Use caution when installing third-party software.\n"
+"\n"
+"⚠️ It has not been tested by comma.\n"
+"\n"
+"⚠️ It may not comply with relevant safety standards.\n"
+"\n"
+"⚠️ It may cause damage to your device and/or vehicle.\n"
+"\n"
+"If you'd like to proceed, use https://flash.comma.ai to restore your device to a factory state later."
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Enter URL"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "for Custom Software"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Continue without Wi-Fi"
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "Ensure the entered URL is valid, and the device's internet connection is good."
+msgstr ""
+
+#: system/ui/tici_setup.py
+msgid "No custom software found at this URL."
+msgstr ""
+
 #: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Pair your GitHub account"
 msgstr ""
@@ -57,31 +451,12 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
-#: system/ui/widgets/confirm_dialog.py
-#: system/ui/widgets/keyboard.py
-#: system/ui/widgets/network.py
-#: system/ui/widgets/option_dialog.py
-msgid "Cancel"
-msgstr ""
-
 #: system/ui/widgets/option_dialog.py
 msgid "Select"
 msgstr ""
 
 #: system/ui/widgets/network.py
 msgid "Advanced"
-msgstr ""
-
-#: openpilot/selfdrive/ui/layouts/onboarding.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/onboarding.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_policy.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_settings.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/lane_change_settings.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/mads_settings.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/torque_settings.py
-#: system/ui/widgets/network.py
-msgid "Back"
 msgstr ""
 
 #: system/ui/widgets/network.py
@@ -478,18 +853,7 @@ msgid "Are you sure you want to reboot?"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/device.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/software.py
-msgid "Reboot"
-msgstr ""
-
-#: openpilot/selfdrive/ui/layouts/settings/device.py
 msgid "Are you sure you want to power off?"
-msgstr ""
-
-#: openpilot/selfdrive/ui/layouts/settings/device.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
-msgid "Power Off"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/device.py
@@ -814,10 +1178,12 @@ msgid "Joystick Debug Mode"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
+#: selfdrive/selfdrived/events.py
 msgid "Longitudinal Maneuver Mode"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
+#: selfdrive/selfdrived/events.py
 msgid "Lateral Maneuver Mode"
 msgstr ""
 
@@ -831,10 +1197,6 @@ msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/software.py
 msgid "checking..."
-msgstr ""
-
-#: openpilot/selfdrive/ui/layouts/settings/software.py
-msgid "downloading..."
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/software.py
@@ -977,6 +1339,7 @@ msgstr ""
 #: openpilot/selfdrive/ui/onroad/hud_renderer.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_settings.py
 #: openpilot/selfdrive/ui/sunnypilot/onroad/speed_renderer.py
+#: sunnypilot/selfdrive/selfdrived/events.py
 msgid "km/h"
 msgstr ""
 
@@ -984,6 +1347,7 @@ msgstr ""
 #: openpilot/selfdrive/ui/onroad/hud_renderer.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_settings.py
 #: openpilot/selfdrive/ui/sunnypilot/onroad/speed_renderer.py
+#: sunnypilot/selfdrive/selfdrived/events.py
 msgid "mph"
 msgstr ""
 
@@ -1040,15 +1404,7 @@ msgid "cancel download"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
-msgid "download failed"
-msgstr ""
-
-#: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
 msgid "error"
-msgstr ""
-
-#: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
-msgid "downloading"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
@@ -1191,6 +1547,10 @@ msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/sunnylink.py
 msgid "unable to restore"
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/mici/layouts/sunnylink.py
+msgid "try again later."
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/sunnylink.py
@@ -1483,11 +1843,6 @@ msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
 msgid "Enable Always Offroad"
-msgstr ""
-
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/vehicle/platform_selector.py
-msgid "Confirm"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
@@ -1891,6 +2246,10 @@ msgid "Sponsorship isn't required for basic backup/restore"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/sunnylink.py
+msgid "Backing up {progress}%"
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/sunnylink.py
 msgid "Backup Failed"
 msgstr ""
 
@@ -1900,6 +2259,10 @@ msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/sunnylink.py
 msgid "Settings backup completed."
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/sunnylink.py
+msgid "Restoring {progress}%"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/sunnylink.py
@@ -2239,7 +2602,15 @@ msgid "Cooperative Steering (Beta)"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/vehicle/brands/tesla.py
+msgid "Warning: May experience steering oscillations below {speed} {unit} during turns, recommend disabling this feature if you experience these."
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/vehicle/brands/tesla.py
 msgid "Allows the driver to provide limited steering input while openpilot is engaged."
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/vehicle/brands/tesla.py
+msgid "Only works above {speed} {unit}."
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/vehicle/brands/subaru.py
@@ -2550,12 +2921,24 @@ msgstr ""
 msgid "Speed Limit Source"
 msgstr ""
 
-#: openpilot/selfdrive/ui/mici/layouts/home.py
-msgid "Offline"
+#: openpilot/selfdrive/ui/mici/onroad/augmented_road_view.py
+msgid "system booting"
 msgstr ""
 
-#: openpilot/selfdrive/ui/mici/layouts/onboarding.py
-msgid "next"
+#: openpilot/selfdrive/ui/mici/onroad/augmented_road_view.py
+msgid ""
+"openpilot can't start\n"
+"check alerts"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/onroad/augmented_road_view.py
+msgid ""
+"start the car to\n"
+"use sunnypilot"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/home.py
+msgid "Offline"
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/onboarding.py
@@ -2871,10 +3254,6 @@ msgstr ""
 msgid "Not set"
 msgstr ""
 
-#: openpilot/selfdrive/ui/mici/layouts/settings/developer.py
-msgid "Loading..."
-msgstr ""
-
 #: openpilot/selfdrive/ui/mici/layouts/settings/network/wifi_ui.py
 msgid "slide to forget"
 msgstr ""
@@ -2958,5 +3337,642 @@ msgstr ""
 
 #: openpilot/selfdrive/ui/mici/widgets/pairing_dialog.py
 msgid "pair with comma connect"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Toggle stock LKAS on or off to engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "WARNING: This branch is not tested"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Recalibrating"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Calibrating"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Recording Audio Feedback"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Out of Storage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Camera Malfunction"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Calibration Invalid"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steering misalignment detected"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "System Overheated"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Low Memory"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "High CPU Usage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Driving Model Lagging"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Joystick Mode"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Switch to Traffic-Aware Cruise Control to engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Invalid LKAS setting"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Speed Error: {err:.1f} m/s"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Posenet Speed Invalid"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Process Not Running"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Communication Issue Between Processes"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Remount Device (Pitch: {pitch:.1f}°, Yaw: {yaw:.1f}°)"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steer ratio mismatch"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Gas: {gas}%, Steer: {steer}%"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Enable your car's LKAS to engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Ensure road ahead is clear"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "System Initializing"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Be ready to take over at any time"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Dashcam mode"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Dashcam mode for unsupported car"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Dashcam Mode"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Security Key Not Available"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Car Unrecognized"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "BRAKE!"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Emergency Braking: Risk of Collision"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "AEB: Risk of Collision"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Stock AEB: Risk of Collision"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Stock LKAS: Lane Departure Detected"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Risk of Collision"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Lane Departure Detected"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steering Assist Temporarily Unavailable"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Pay Attention"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Driver Distracted"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "DISENGAGE IMMEDIATELY"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Touch Steering Wheel: No Face Detected"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Touch Steering Wheel"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Driver Unresponsive"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "TAKE CONTROL"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Resume Driving Manually"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Press Resume to Exit Standstill"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steer Left to Start Lane Change Once Safe"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steer Right to Start Lane Change Once Safe"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Car Detected in Blindspot"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Changing Lanes"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Take Control"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Turn Exceeds Steering Limit"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Fan Malfunction"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Likely Hardware Issue"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Camera Malfunction: Reboot Your Device"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Camera Frame Rate Low"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Reboot your Device"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Camera Frame Rate Low: Reboot Your Device"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "locationd Temporary Error"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "locationd Permanent Error"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "paramsd Permanent Error"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Cancel Pressed"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Press Resume to Exit Brake Hold"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Parking Brake Engaged"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Pedal Pressed"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steering Pressed"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Release Brake to Engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Press Set to Engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Adaptive Cruise Disabled"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steering Temporarily Unavailable"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Vehicle Steering Time Limit"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Sensor Data Invalid"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Possible Hardware Issue"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Distraction Level Too High"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Excessive Actuation"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Gear not D"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Calibration Invalid: Remount Device & Recalibrate"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Calibration in Progress"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Remount Detected: Recalibrating"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Door Open"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Seatbelt Unlatched"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Electronic Stability Control Disabled"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Low Battery"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Low Communication Rate Between Processes"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Selfdrive Process Lagging: Reboot Your Device"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Radar Error: Restart the Car"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Radar Temporarily Unavailable"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Device Fell Off Mount"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Low Memory: Reboot Your Device"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Cruise Fault: Restart the Car"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Cruise Fault: Restart the car to engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Electronic Stability Control Active"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Controls Mismatch"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "USB Error: Reboot Your Device"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Unknown Vehicle Variant"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "CAN Bus Disconnected"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "CAN Bus Disconnected: Likely Faulty Cable"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "CAN Bus Disconnected: Check Connections"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "LKAS Fault: Restart the Car"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "LKAS Fault: Restart the car to engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid ""
+"Reverse\n"
+"Gear"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Reverse Gear"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Cruise Is Off"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Harness Relay Malfunction"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Check Hardware"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "openpilot Canceled"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Speed too low"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Speed Too High"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Model uncertain at this speed"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Slow down to engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Vehicle Sensors Invalid"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Vehicle Sensors Calibrating"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Drive to Calibrate"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Bookmark Saved"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Drive above {speed} to engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steer Assist Unavailable Below {speed}"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Drive Above {speed}"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "{count} second(s) remaining. Press again to save early."
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "{percent}% full"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Angle offset too high (Offset: {offset:.1f}°)"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Abnormal tire stiffness"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "{temp:.0f} °C"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "{percent}% used"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "{percent:.1f}% frames dropped"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Driving Personality: {personality}"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Disable your car's stock LKAS to engage"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steering rack geometry may be off (Ratio: {ratio:.1f})"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "paramsd Temporary Error"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Press Resume"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steer Left"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Confirm Lane Change"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Steer Right"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Car in Blindspot"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "take control"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "turn exceeds limit"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Reverse"
+msgstr ""
+
+#: selfdrive/selfdrived/events.py
+msgid "Check tires, pressure, or alignment (Factor: {factor:.1f})"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Adjusting to {speed} {unit} speed limit"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Automatic Lane Centering is OFF"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Manual Steering Required"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Smart/Adaptive Cruise Control: OFF"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Manual Speed Control Required"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Brake Hold Active"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "openpilot Unavailable"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Controls Mismatch: Lateral"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Experimental Mode Switched"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Turning Left"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Turning Right"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Auto adjusting to speed limit"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Set speed changed"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Auto adjusting to last speed limit"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Speed Limit Assist: set to {speed} {unit} to engage"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Press + to confirm speed limit"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events.py
+msgid "Press - to confirm speed limit"
 msgstr ""
 
