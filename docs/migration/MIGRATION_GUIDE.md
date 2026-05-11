@@ -376,5 +376,6 @@ v0.1 is a "code-complete, on-vehicle pending" tag. It is not a "validated for da
 ## Cross-References
 
 - **PORT_STATUS.md** (docs/migration/) — current port status and quick reference
+- **HARDWARE_TI2.md** (docs/) — TI2 hardware prerequisite, BOM, install reference, pre-drive verification
 - **docs/migration/DECISIONS.md** — ADR log; rationale for every architectural choice
 - **docs/migration/ROADMAP.md** — forward plan; P0 (CP-A) through P4 (routes.py)

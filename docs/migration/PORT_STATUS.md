@@ -2,6 +2,8 @@
 
 **Quick reference for contributors and self-installers.**
 
+> **For hardware install and pre-drive verification, see [`docs/HARDWARE_TI2.md`](../HARDWARE_TI2.md) first.**
+
 ---
 
 ## What This Project Is
