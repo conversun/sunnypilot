@@ -325,7 +325,7 @@ Would revisit if on-vehicle testing reveals that INIT/STANDBY states can persist
 
 ---
 
-## D-011: Distribution via conversun forks, no upstream PR
+## D-011: Distribution via personal forks, no upstream PR
 
 **Status**: Accepted  
 **Date**: 2026-05-09  
@@ -337,7 +337,7 @@ After completing the port, options were: (a) submit a PR to commaai/openpilot, (
 
 ### Decision
 
-Distribute via personal forks: `conversun/openpilot` (`mazda-port`), `sunnypilot/opendbc` (`mazda-port-additions`), `sunnyhaibin/panda` (`mazda-port-additions`). No upstream PR.
+Distribute via personal forks: `<maintainer>/openpilot` (`mazda-port`), `<maintainer>/opendbc` (`mazda-port-additions`), `<maintainer>/panda` (`mazda-port-additions`). No upstream PR.
 
 ### Rationale
 

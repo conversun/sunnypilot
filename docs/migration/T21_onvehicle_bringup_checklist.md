@@ -13,8 +13,8 @@ Complete every item here before you get in the car.
 | Check | Expected | How to verify |
 |-------|----------|---------------|
 | Branch | `mazda-port` (or `mazda-frogpilot` if you haven't renamed) | `git branch --show-current` |
-| Parent HEAD | `f0526a2c13cee48dd4dae1fea76d90805105f261` | `git rev-parse HEAD` |
-| panda submodule | `f0526a2c13cee48dd4dae1fea76d90805105f261` | `git -C panda rev-parse HEAD` |
+| Parent HEAD | `<your current HEAD>` (check with `git rev-parse HEAD`) | `git rev-parse HEAD` |
+| panda submodule | `<your current HEAD>` (check with `git rev-parse HEAD`) | `git -C panda rev-parse HEAD` |
 | opendbc_repo submodule | check against your T18b landing SHA | `git -C opendbc_repo rev-parse HEAD` |
 | Firmware flashed to comma 3X | same commit as above | `ssh comma@<device-ip> "cd /data/openpilot && git rev-parse HEAD"` |
 
@@ -410,7 +410,7 @@ If you need to revert to the pre-port firmware:
 
 ```bash
 # On your dev box
-cd /path/to/openpilot-more
+cd <source-fork-root>
 git checkout mazda-frogpilot
 
 # Reflash to device
@@ -450,4 +450,4 @@ For quick reference during triage:
 
 ---
 
-*Wave 7 — T21 on-vehicle bring-up checklist. Parent SHA: `f0526a2c13cee48dd4dae1fea76d90805105f261`.*
+*Wave 7 — T21 on-vehicle bring-up checklist. Parent SHA: `<your current HEAD>` (check with `git rev-parse HEAD`).*

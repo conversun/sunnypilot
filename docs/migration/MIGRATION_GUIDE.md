@@ -189,7 +189,7 @@ Before starting:
 
 ```bash
 # Step 1: opendbc_repo (do this first — parent submodule pointer depends on it)
-cd /Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo
+cd <project-root>/opendbc_repo
 git fetch origin
 git checkout mazda-port-additions
 git rebase origin/master
@@ -329,7 +329,7 @@ After this document is committed, create annotated tags in all three repos:
 
 ```bash
 # opendbc_repo
-cd /Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo
+cd <project-root>/opendbc_repo
 git tag -a mazda-port-v0.1 -m "mazda-port-v0.1: Mazda 3 2019+ GEN2 + TI2 port to openpilot v0.11+
 Code-complete; on-vehicle CP-A pending. See docs/migration/MIGRATION_GUIDE.md"
 git tag -l 'mazda-port-*'
@@ -375,6 +375,6 @@ v0.1 is a "code-complete, on-vehicle pending" tag. It is not a "validated for da
 
 ## Cross-References
 
-- **AGENTS.md** (repo root) — AI agent entry point; read first in any new session
+- **PORT_STATUS.md** (docs/migration/) — current port status and quick reference
 - **docs/migration/DECISIONS.md** — ADR log; rationale for every architectural choice
 - **docs/migration/ROADMAP.md** — forward plan; P0 (CP-A) through P4 (routes.py)

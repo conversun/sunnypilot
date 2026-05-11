@@ -1,6 +1,6 @@
-# AGENTS.md — Mazda 3 2019+ GEN2+TI Port
+# Mazda GEN2+TI2 Port — Current Status & Quick Reference
 
-**Read this first. Every session. Takes ~3 minutes.**
+**Quick reference for contributors and self-installers.**
 
 ---
 
@@ -28,7 +28,7 @@ This is a personal port of the `MAZDA_3_2019` (GEN2 hardware + Torque Intercepto
 ## 5-Second Project Map
 
 ```
-/Users/cyonsun/Documents/Code/sunnypilot        <- parent; work here on mazda-port branch
+<project-root>        <- parent; work here on mazda-port branch
   opendbc_repo/                                       <- submodule; work on mazda-port-additions
     opendbc/car/mazda/                                <- Python: values, interface, carstate,
                                                          carcontroller, mazdacan, fingerprints
@@ -42,7 +42,7 @@ This is a personal port of the `MAZDA_3_2019` (GEN2 hardware + Torque Intercepto
     board/main.c                                      <- SAFETY_MAZDA case
     python/__init__.py                                <- FLAG_MAZDA_GEN2 / _TORQUE_INTERCEPTOR
 
-/Users/cyonsun/Documents/Code/openpilot-more          <- REFERENCE ONLY: source fork (do not edit)
+<source-fork-root>          <- REFERENCE ONLY: source fork (do not edit)
 ```
 
 ---
@@ -56,13 +56,13 @@ This is a personal port of the `MAZDA_3_2019` (GEN2 hardware + Torque Intercepto
 | Why this design? | `docs/migration/DECISIONS.md` |
 | What's next? | `docs/migration/ROADMAP.md` |
 | Pulling in upstream v0.12+? | `docs/migration/REBASE_PLAYBOOK.md` |
-| Investigating an on-vehicle bug? | `docs/migration/T21_followup_log.md` + `docs/migration/T21_cabana_capture.sh` |
+| Investigating an on-vehicle bug? | `docs/migration/T21_onvehicle_bringup_checklist.md (post-drive sections)` + `docs/migration/T21_cabana_capture.sh` |
 | Verifying after a code change? | `docs/migration/T17_T18_device_verification.sh` (Linux/dev box only, not macOS) |
 | Full SHA chain + arch deltas? | `docs/migration/MIGRATION_GUIDE.md` section "Complete Commit Chain" |
 
 ---
 
-## Hard Rules for Any AI Session
+## Hard Rules
 
 **Scope.** This port covers `MAZDA_3_2019` (GEN2 + TI2) only. Never expand scope to GEN3, CX-30, CX-50, Radar Interceptor, or manual transmission without explicit user approval. See `DECISIONS.md` D-002.
 
@@ -122,7 +122,7 @@ git -C /data/openpilot/opendbc_repo rev-parse HEAD # must = daa49373...
 
 ## First-Time Bootstrap Checklist
 
-- [ ] Read this AGENTS.md
+- [ ] Read this document
 - [ ] `cat docs/migration/MIGRATION_GUIDE.md` — full SHA chain + arch deltas
 - [ ] `cat docs/migration/DECISIONS.md` — what's settled and why
 - [ ] `cat docs/migration/ROADMAP.md` — what's pending
@@ -152,4 +152,4 @@ git -C /data/openpilot/opendbc_repo rev-parse HEAD # must = daa49373...
 
 ---
 
-*AGENTS.md — v0.0.2 / Wave 8+hotfix. Parent HEAD: `698fb9c2d`.*
+*PORT_STATUS.md — v0.0.2 / Wave 8+hotfix. Parent HEAD: see `git rev-parse HEAD`.*

@@ -20,7 +20,7 @@
 
 ## Known Limitations
 
-### From Oracle Review (pre-v0.0.2)
+### From Code Review (pre-v0.0.2)
 
 | ID | Issue | Status |
 |----|-------|--------|
@@ -172,12 +172,12 @@ Tags are annotated in all 3 repos. `v0.11.1-mazda3-2019.0.1` was retracted befor
 ## Starting a New Session: What to Do First
 
 **Just installed v0.0.2, haven't driven yet:**
-1. Read AGENTS.md + this ROADMAP
-2. Verify all 3 repo SHAs match expected (see AGENTS.md quick commands)
+1. Read PORT_STATUS.md + this ROADMAP
+2. Verify all 3 repo SHAs match expected (see PORT_STATUS.md quick commands)
 3. Follow `T21_onvehicle_bringup_checklist.md` for CP-A
 
 **Completed CP-A, lateral validated:**
-1. Read AGENTS.md + ROADMAP P1
+1. Read PORT_STATUS.md + ROADMAP P1
 2. Port ACCEL_CMD plumbing (P1 steps above)
 3. Run CP-C from `T21_onvehicle_bringup_checklist.md`
 4. Tag `v0.11.1-mazda3-2019.0.3` or bump to `v0.1.0` after CP-C pass
@@ -186,7 +186,7 @@ Tags are annotated in all 3 repos. `v0.11.1-mazda3-2019.0.1` was retracted befor
 Don't. P1 requires CP-C validation. CP-C requires CP-A first. Do CP-A first.
 
 **Hit a bug on-vehicle:**
-1. Check `T21_followup_log.md` for known issues
+1. Check `T21_onvehicle_bringup_checklist.md (post-drive sections)` for known issues
 2. Capture cabana data with `T21_cabana_capture.sh`
 3. Read DECISIONS.md for relevant architectural constraints before patching
 

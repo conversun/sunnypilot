@@ -12,30 +12,30 @@ Run this before touching anything:
 
 ```bash
 # Check all three repos are clean
-git -C /Users/cyonsun/Documents/Code/sunnypilot status --short
-git -C /Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo status --short
-git -C /Users/cyonsun/Documents/Code/sunnypilot/panda status --short
+git -C <project-root> status --short
+git -C <project-root>/opendbc_repo status --short
+git -C <project-root>/panda status --short
 # Expected: nothing (or only the 4 pre-existing untracked Wave 1 cheat sheets in parent)
 
 # Confirm recovery tags exist
-git -C /Users/cyonsun/Documents/Code/sunnypilot tag -l 'mazda-port-*'
-git -C /Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo tag -l 'mazda-port-*'
-git -C /Users/cyonsun/Documents/Code/sunnypilot/panda tag -l 'mazda-port-*'
+git -C <project-root> tag -l 'mazda-port-*'
+git -C <project-root>/opendbc_repo tag -l 'mazda-port-*'
+git -C <project-root>/panda tag -l 'mazda-port-*'
 # Expected: mazda-port-v0.1 in each
 
 # Create dated backup branches (do this every time)
 DATE=$(date +%Y%m%d)
-git -C /Users/cyonsun/Documents/Code/sunnypilot checkout -b mazda-port-backup-$DATE mazda-port
-git -C /Users/cyonsun/Documents/Code/sunnypilot checkout mazda-port
-git -C /Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo checkout -b mazda-port-additions-backup-$DATE mazda-port-additions
-git -C /Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo checkout mazda-port-additions
-git -C /Users/cyonsun/Documents/Code/sunnypilot/panda checkout -b mazda-port-additions-backup-$DATE mazda-port-additions
-git -C /Users/cyonsun/Documents/Code/sunnypilot/panda checkout mazda-port-additions
+git -C <project-root> checkout -b mazda-port-backup-$DATE mazda-port
+git -C <project-root> checkout mazda-port
+git -C <project-root>/opendbc_repo checkout -b mazda-port-additions-backup-$DATE mazda-port-additions
+git -C <project-root>/opendbc_repo checkout mazda-port-additions
+git -C <project-root>/panda checkout -b mazda-port-additions-backup-$DATE mazda-port-additions
+git -C <project-root>/panda checkout mazda-port-additions
 
 # Note current HEADs
-git -C /Users/cyonsun/Documents/Code/sunnypilot rev-parse HEAD
-git -C /Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo rev-parse HEAD
-git -C /Users/cyonsun/Documents/Code/sunnypilot/panda rev-parse HEAD
+git -C <project-root> rev-parse HEAD
+git -C <project-root>/opendbc_repo rev-parse HEAD
+git -C <project-root>/panda rev-parse HEAD
 ```
 
 All green? Proceed. Any repo dirty? Stash or commit first.
@@ -49,7 +49,7 @@ All green? Proceed. Any repo dirty? Stash or commit first.
 ### Step 1: opendbc_repo
 
 ```bash
-cd /Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo
+cd <project-root>/opendbc_repo
 git fetch origin
 git checkout mazda-port-additions
 git rebase origin/master
@@ -68,7 +68,7 @@ python3 -m py_compile opendbc/car/mazda/values.py opendbc/car/mazda/interface.py
 ### Step 2: panda
 
 ```bash
-cd /Users/cyonsun/Documents/Code/sunnypilot/panda
+cd <project-root>/panda
 git fetch origin
 git checkout mazda-port-additions
 git rebase origin/master
@@ -79,7 +79,7 @@ Conflicts here are rare. The only Mazda commit is `066ca435` (flag constants). I
 ### Step 3: sunnypilot parent
 
 ```bash
-cd /Users/cyonsun/Documents/Code/sunnypilot
+cd <project-root>
 git fetch origin
 git checkout mazda-port
 git rebase origin/master

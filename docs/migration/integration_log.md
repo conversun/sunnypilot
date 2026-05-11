@@ -4,7 +4,7 @@ Cumulative log of cross-cutting integration checkpoints for the `MAZDA_3_2019`
 (GEN2 + Torque Interceptor) port from the FrogPilot fork onto upstream
 openpilot 0.10.x.
 
-Scope reminder (from orchestrator D-decisions):
+Scope reminder (from architecture decisions):
 - Target: `MAZDA_3_2019` only (GEN2 hardware + TI add-on).
 - DROPPED from upstream port: FrogPilot UI, MTSC, SLC, themes, BlendedACC.
 - BlendedACC re-introduction (if needed) lives ONLY inside
@@ -140,5 +140,5 @@ Parent `sunnypilot` (`mazda-port`) submodule-bump chain (newest last):
 | 4 | `05587ac2a` | submodule: bump opendbc_repo for mazda carstate ti_state/acc_values |
 | 5 | _this commit_ | mazda: wave 5 integration verification (docs only) |
 
-Wave 5 sign-off: see `wave5_integration_report.md` for the full grep
+Wave 5 sign-off: see `this document (integration_log.md)` for the full grep
 matrix and the verdict.

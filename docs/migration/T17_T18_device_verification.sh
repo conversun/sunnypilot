@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # T17 + T18 — device-side verification for the MAZDA_3_2019 (GEN2 + Torque
 # Interceptor) port. Run this on a Linux dev box or comma 3X after the macOS
-# Wave 6 report (`wave6_verification_report.md`) has been read.
+# Wave 6 report (`this verification script output`) has been read.
 #
-# Phases mirror `wave6_verification_report.md` so results line up 1:1.
+# Phases mirror `this verification script output` so results line up 1:1.
 #
 # Usage:
 #   bash docs/migration/T17_T18_device_verification.sh                 # full run
