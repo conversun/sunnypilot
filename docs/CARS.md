@@ -228,6 +228,37 @@ A supported vehicle is one that just works when you install a comma device. All 
 |Mazda|3 2019-24|All|openpilot available[<sup>1</sup>](#footnotes)|0 mph|0 mph|[![star](assets/icon-star-full.svg)](##)|[![star](assets/icon-star-full.svg)](##)|<details><summary>Parts</summary><sub>- 1 Mazda connector<br>- 1 OBD-C cable (2 ft)<br>- 1 comma four<br>- 1 comma power v3<br>- 1 harness box<br>- 1 mount<br><a href="https://comma.ai/shop/comma-3x?harness=Mazda 3 2019-24">Buy Here</a></sub></details>|||
 |Mazda|CX-5 2022-25|All|Stock|0 mph|0 mph|[![star](assets/icon-star-full.svg)](##)|[![star](assets/icon-star-full.svg)](##)|<details><summary>Parts</summary><sub>- 1 Mazda connector<br>- 1 OBD-C cable (2 ft)<br>- 1 comma four<br>- 1 comma power v3<br>- 1 harness box<br>- 1 mount<br><a href="https://comma.ai/shop/comma-3x?harness=Mazda CX-5 2022-25">Buy Here</a></sub></details>|||
 |Mazda|CX-9 2021-23|All|Stock|0 mph|28 mph|[![star](assets/icon-star-full.svg)](##)|[![star](assets/icon-star-full.svg)](##)|<details><summary>Parts</summary><sub>- 1 Mazda connector<br>- 1 OBD-C cable (2 ft)<br>- 1 comma four<br>- 1 comma power v3<br>- 1 harness box<br>- 1 mount<br><a href="https://comma.ai/shop/comma-3x?harness=Mazda CX-9 2021-23">Buy Here</a></sub></details>|<a href="https://youtu.be/dA3duO4a0O4" target="_blank"><img height="18px" src="assets/icon-youtube.svg" /></a>||
+
+<!-- mazda-multi-platform-community: 15 platforms (not in upstream CARS_template.md) -->
+<!-- See docs/migration/PORT_STATUS.md for full platform status grid -->
+
+### Mazda Community Port (branch: mazda-multi-platform-community)
+
+> **Note:** The following 15 Mazda platforms are supported in the `mazda-multi-platform-community` branch only. They are not part of the upstream sunnypilot release. This section is maintained manually.
+
+| Platform | Vehicle | Lateral | Longitudinal | Hardware Required |
+|----------|---------|---------|-------------|------------------|
+| `MAZDA_CX5` | Mazda CX-5 (pre-2022) | Yes | Stock ACC | Standard harness |
+| `MAZDA_CX9` | Mazda CX-9 (pre-2021) | Yes | Stock ACC | Standard harness |
+| `MAZDA_3` | Mazda 3 (pre-2019) | Yes | Stock ACC | Standard harness |
+| `MAZDA_6` | Mazda 6 | Yes | Stock ACC | Standard harness |
+| `MAZDA_CX9_2021` | Mazda CX-9 2021-23 | Yes | Stock ACC | Standard harness |
+| `MAZDA_CX5_2022` | Mazda CX-5 2022-25 | Yes | Stock ACC | Standard harness |
+| `MAZDA_3_2019` | Mazda 3 2019+ | Yes | Alpha long | TI2 required |
+| `MAZDA_CX5_TI` | Mazda CX-5 (pre-2022) + TI1 | Yes | Stock ACC | **TI1 hardware add-on required** |
+| `MAZDA_CX9_TI` | Mazda CX-9 (pre-2021) + TI1 | Yes | Stock ACC | **TI1 hardware add-on required** |
+| `MAZDA_3_TI` | Mazda 3 (pre-2019) + TI1 | Yes | Stock ACC | **TI1 hardware add-on required** |
+| `MAZDA_6_TI` | Mazda 6 + TI1 | Yes | Stock ACC | **TI1 hardware add-on required** |
+| `MAZDA_CX_30` | Mazda CX-30 2020-25 | Yes | Alpha long | TI2 required |
+| `MAZDA_CX_50` | Mazda CX-50 2022-25 | Yes | Alpha long | TI2 required |
+| `MAZDA_3_2023` | Mazda 3 2023+ | Yes | Stock ACC only | TI2 required |
+| `MAZDA_CX_30_2023` | Mazda CX-30 2023+ | Yes | Stock ACC only | TI2 required |
+
+**GEN1+TI variants** (`MAZDA_CX5_TI`, `MAZDA_CX9_TI`, `MAZDA_3_TI`, `MAZDA_6_TI`) require the MoreTorque Original Torque Interceptor (TI1) hardware add-on. GEN1 and GEN1+TI variants share identical ECU firmware, so you must manually select the correct `*_TI` variant from the comma device car-selection menu. See `docs/HARDWARE_TI.md` for the full WARNING.
+
+**GEN3 variants** (`MAZDA_3_2023`, `MAZDA_CX_30_2023`) are lateral-only. Longitudinal control is disabled per `DECISIONS.md` D-015.
+
+For full details, see [`docs/migration/PORT_STATUS.md`](migration/PORT_STATUS.md) and [`docs/HARDWARE_TI.md`](HARDWARE_TI.md).
 |Nissan[<sup>5</sup>](#footnotes)|Altima 2019-20, 2024|ProPILOT Assist|Stock|0 mph|0 mph|[![star](assets/icon-star-full.svg)](##)|[![star](assets/icon-star-empty.svg)](##)|<details><summary>Parts</summary><sub>- 1 Nissan B connector<br>- 1 OBD-C cable (2 ft)<br>- 1 comma four<br>- 1 comma power v3<br>- 1 harness box<br>- 1 long OBD-C cable (9.5 ft)<br>- 1 mount<br><a href="https://comma.ai/shop/comma-3x?harness=Nissan Altima 2019-20, 2024">Buy Here</a></sub></details>|||
 |Nissan[<sup>5</sup>](#footnotes)|Leaf 2018-23|ProPILOT Assist|Stock|0 mph|0 mph|[![star](assets/icon-star-full.svg)](##)|[![star](assets/icon-star-empty.svg)](##)|<details><summary>Parts</summary><sub>- 1 Nissan A connector<br>- 1 OBD-C cable (2 ft)<br>- 1 comma four<br>- 1 comma power v3<br>- 1 harness box<br>- 1 long OBD-C cable (9.5 ft)<br>- 1 mount<br><a href="https://comma.ai/shop/comma-3x?harness=Nissan Leaf 2018-23">Buy Here</a></sub></details>|<a href="https://youtu.be/vaMbtAh_0cY" target="_blank"><img height="18px" src="assets/icon-youtube.svg" /></a>||
 |Nissan[<sup>5</sup>](#footnotes)|Rogue 2018-20|ProPILOT Assist|Stock|0 mph|0 mph|[![star](assets/icon-star-full.svg)](##)|[![star](assets/icon-star-empty.svg)](##)|<details><summary>Parts</summary><sub>- 1 Nissan A connector<br>- 1 OBD-C cable (2 ft)<br>- 1 comma four<br>- 1 comma power v3<br>- 1 harness box<br>- 1 long OBD-C cable (9.5 ft)<br>- 1 mount<br><a href="https://comma.ai/shop/comma-3x?harness=Nissan Rogue 2018-20">Buy Here</a></sub></details>|||
