@@ -1,6 +1,6 @@
 # Mazda Torque Interceptor Hardware Reference
 
-This document covers both generations of the MoreTorque Torque Interceptor hardware used in the `mazda-multi-platform-community` branch:
+This document covers both generations of the MoreTorque Torque Interceptor hardware used in the `mazda-community` branch:
 
 - **Section 1 — TI1 (Original Torque Interceptor):** for GEN1 vehicles (Mazda 3, CX-5, CX-9, Mazda 6 pre-2021)
 - **Section 2 — TI2 (Torque Interceptor 2):** for GEN2 vehicles (Mazda 3 2019+, CX-30, CX-50) and GEN3 vehicles (Mazda 3 2023+, CX-30 2023+)

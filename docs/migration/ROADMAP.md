@@ -1,11 +1,11 @@
 # ROADMAP.md — Mazda Multi-Platform Community Port Forward Plan
 
-**Current branch:** `mazda-multi-platform-community`  
+**Current branch:** `mazda-community`  
 **Last updated:** 2026-05-12 (multi-platform scope expansion — see D-012)
 
 > [!NOTE]
 > This roadmap was originally written for the single-platform `MAZDA_3_2019` port at v0.0.2.
-> The scope has since expanded to 15 platforms via branch `mazda-multi-platform-community`
+> The scope has since expanded to 15 platforms via branch `mazda-community`
 > (see `DECISIONS.md` D-012). Items in the Out-of-Scope table that are now implemented
 > are marked accordingly. The priority queue below reflects the current multi-platform state.
 > For the current authoritative state see [`docs/HARDWARE_TI.md`](../HARDWARE_TI.md).

@@ -382,9 +382,9 @@ v0.1 is a "code-complete, on-vehicle pending" tag. It is not a "validated for da
 
 ---
 
-## Multi-Platform Port (mazda-multi-platform-community)
+## Multi-Platform Port (mazda-community)
 
-Branch `mazda-multi-platform-community` extends the original single-platform port to cover all 15 Mazda platforms. See `DECISIONS.md` D-012 for the scope expansion rationale.
+Branch `mazda-community` extends the original single-platform port to cover all 15 Mazda platforms. See `DECISIONS.md` D-012 for the scope expansion rationale.
 
 ### Per-Platform Porting Track
 
@@ -396,15 +396,15 @@ Branch `mazda-multi-platform-community` extends the original single-platform por
 | `MAZDA_6` | GEN1 | Upstream (untouched) | commaai/openpilot master |
 | `MAZDA_CX9_2021` | GEN1 | Upstream (untouched) | commaai/openpilot master |
 | `MAZDA_CX5_2022` | GEN1 | Upstream (untouched) | commaai/openpilot master |
-| `MAZDA_3_2019` | GEN2 | Original port (v0.0.2) | `mazda-multi-platform-community` |
-| `MAZDA_CX5_TI` | GEN1+TI | New (T1.x) | `mazda-multi-platform-community` |
-| `MAZDA_CX9_TI` | GEN1+TI | New (T1.x) | `mazda-multi-platform-community` |
-| `MAZDA_3_TI` | GEN1+TI | New (T1.x) | `mazda-multi-platform-community` |
-| `MAZDA_6_TI` | GEN1+TI | New (T1.x) | `mazda-multi-platform-community` |
-| `MAZDA_CX_30` | GEN2 | New (T2.x) | `mazda-multi-platform-community` |
-| `MAZDA_CX_50` | GEN2 | New (T2.x) | `mazda-multi-platform-community` |
-| `MAZDA_3_2023` | GEN3 | New (T3.x) | `mazda-multi-platform-community` |
-| `MAZDA_CX_30_2023` | GEN3 | New (T3.x) | `mazda-multi-platform-community` |
+| `MAZDA_3_2019` | GEN2 | Original port (v0.0.2) | `mazda-community` |
+| `MAZDA_CX5_TI` | GEN1+TI | New (T1.x) | `mazda-community` |
+| `MAZDA_CX9_TI` | GEN1+TI | New (T1.x) | `mazda-community` |
+| `MAZDA_3_TI` | GEN1+TI | New (T1.x) | `mazda-community` |
+| `MAZDA_6_TI` | GEN1+TI | New (T1.x) | `mazda-community` |
+| `MAZDA_CX_30` | GEN2 | New (T2.x) | `mazda-community` |
+| `MAZDA_CX_50` | GEN2 | New (T2.x) | `mazda-community` |
+| `MAZDA_3_2023` | GEN3 | New (T3.x) | `mazda-community` |
+| `MAZDA_CX_30_2023` | GEN3 | New (T3.x) | `mazda-community` |
 
 ### New Commit Chain (S1-S24)
 

@@ -321,12 +321,12 @@ Wave 5 — FINAL VERIFICATION + PUSH
 - [x] Branch name confirmed: `mazda-multi-platform-community`
 - [x] Submodule branch confirmed: `mazda-multi-platform-additions`
 - [x] Push target confirmed: `conversun/*` only
-- [ ] `git status` clean on `mazda-3-2019-community` (verify before T0a)
-- [ ] `git fetch origin && git fetch conversun` runs clean
-- [ ] Submodules sync at `47d7ffe4` (opendbc_repo) / `cb1cdc6a` (panda) (no `+` prefix) — verified actual SHAs as of 2026-05-12; PORT_STATUS.md claims of `daa49373`/`251bdf57` are stale documentation
-- [ ] Existing safety pytest baseline 79/0/15 captured before any change
-- [ ] Existing `mazda2019_checksum` 6 test vectors captured (anchor)
-- [ ] Read access verified to `/Users/cyonsun/Documents/Code/openpilot-more`
+- [x] `git status` clean on `mazda-3-2019-community` (verify before T0a)
+- [x] `git fetch origin && git fetch conversun` runs clean
+- [x] Submodules sync at `47d7ffe4` (opendbc_repo) / `cb1cdc6a` (panda) (no `+` prefix) — verified on `mazda-3-2019-community` base before T0a; current `mazda-multi-platform-community` branch has advanced SHAs (`1f294054` opendbc / `0a71297d` panda) after Wave 1–3 bumps
+- [x] Existing safety pytest baseline 79/0/15 captured before any change — confirmed at T1.5 gate; baseline was present before Wave 1 code changes (Wave 0 was branch/submodule/docs only)
+- [x] Existing `mazda2019_checksum` 6 test vectors captured (anchor)
+- [x] Read access verified to `/Users/cyonsun/Documents/Code/openpilot-more`
 
 ## 9. Final Clone-from-Scratch Verification Protocol (T5.1 + T5.9)
 

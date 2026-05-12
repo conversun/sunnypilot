@@ -378,7 +378,7 @@ Explicitly EXCLUDED from this scope (Scope D, deferred to future work):
 - `MazdaFlags.RADAR_INTERCEPTOR = 16` (third-party radar interceptor for GEN1 longitudinal)
 - `MazdaFlags.NO_FSC = 32`, `MazdaFlags.NO_MRCC = 64`, `MazdaFlags.MANUAL_TRANSMISSION = 128` (edge-case trim flags)
 
-Work is isolated on a new branch `mazda-multi-platform-community` (forked from `mazda-3-2019-community`) with submodule branches `mazda-multi-platform-additions` in `conversun/opendbc` and `conversun/panda`. Existing `mazda-3-2019-community` branch is preserved untouched as the v0.0.2 recovery point.
+Work is isolated on a new branch `mazda-community` (forked from `mazda-3-2019-community`) with submodule branches `mazda-multi-platform-additions` in `conversun/opendbc` and `conversun/panda`. Existing `mazda-3-2019-community` branch is preserved untouched as the v0.0.2 recovery point.
 
 ### Rationale
 

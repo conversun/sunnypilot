@@ -8,7 +8,7 @@
 
 ## What This Project Is
 
-This is a community port of 15 Mazda platforms from the MoreTore/openpilot `mazda-frogpilot` fork (itself based on openpilot v0.9.7) onto the current commaai/openpilot v0.11+ master architecture. The work spans three repos: `sunnypilot` (parent, branch `mazda-multi-platform-community`), `opendbc_repo` (submodule, branch `mazda-multi-platform-additions`), and `panda` (submodule, branch `mazda-multi-platform-additions`). The original single-platform port (`MAZDA_3_2019` GEN2+TI2) is preserved unchanged; this branch extends it to cover all 15 platforms. See `DECISIONS.md` D-012 for the scope expansion rationale.
+This is a community port of 15 Mazda platforms from the MoreTore/openpilot `mazda-frogpilot` fork (itself based on openpilot v0.9.7) onto the current commaai/openpilot v0.11+ master architecture. The work spans three repos: `sunnypilot` (parent, branch `mazda-community`), `opendbc_repo` (submodule, branch `mazda-multi-platform-additions`), and `panda` (submodule, branch `mazda-multi-platform-additions`). The original single-platform port (`MAZDA_3_2019` GEN2+TI2) is preserved unchanged; this branch extends it to cover all 15 platforms. See `DECISIONS.md` D-012 for the scope expansion rationale.
 
 ---
 
@@ -42,7 +42,7 @@ This is a community port of 15 Mazda platforms from the MoreTore/openpilot `mazd
 
 | Item | Value |
 |------|-------|
-| Parent branch | `mazda-multi-platform-community` in `sunnypilot` |
+| Parent branch | `mazda-community` in `sunnypilot` |
 | Submodule branches | `mazda-multi-platform-additions` in `opendbc_repo` and `panda` |
 | GEN1 platforms | 6 existing upstream + 4 new GEN1+TI variants |
 | GEN2 platforms | `MAZDA_3_2019` (original) + `MAZDA_CX_30` + `MAZDA_CX_50` |
@@ -55,7 +55,7 @@ This is a community port of 15 Mazda platforms from the MoreTore/openpilot `mazd
 ## 5-Second Project Map
 
 ```
-<project-root>        <- parent; work here on mazda-multi-platform-community branch
+<project-root>        <- parent; work here on mazda-community branch
   opendbc_repo/                                       <- submodule; work on mazda-multi-platform-additions
     opendbc/car/mazda/                                <- Python: values, interface, carstate,
                                                          carcontroller, mazdacan, fingerprints
@@ -150,7 +150,7 @@ grep -r 'HARDWARE_TI2' docs/ README.md 2>/dev/null
 - [ ] `cat docs/migration/MIGRATION_GUIDE.md` — full SHA chain + arch deltas
 - [ ] `cat docs/migration/DECISIONS.md` — what's settled and why
 - [ ] `cat docs/migration/ROADMAP.md` — what's pending
-- [ ] `git log --oneline mazda-multi-platform-community -20` — recent activity
+- [ ] `git log --oneline mazda-community -20` — recent activity
 - [ ] Then ask the user: "what would you like to work on?"
 
 ---
@@ -180,4 +180,4 @@ grep -r 'HARDWARE_TI2' docs/ README.md 2>/dev/null
 
 ---
 
-*PORT_STATUS.md — mazda-multi-platform-community. Parent HEAD: see `git rev-parse HEAD`.*
+*PORT_STATUS.md — mazda-community. Parent HEAD: see `git rev-parse HEAD`.*

@@ -229,12 +229,12 @@ A supported vehicle is one that just works when you install a comma device. All 
 |Mazda|CX-5 2022-25|All|Stock|0 mph|0 mph|[![star](assets/icon-star-full.svg)](##)|[![star](assets/icon-star-full.svg)](##)|<details><summary>Parts</summary><sub>- 1 Mazda connector<br>- 1 OBD-C cable (2 ft)<br>- 1 comma four<br>- 1 comma power v3<br>- 1 harness box<br>- 1 mount<br><a href="https://comma.ai/shop/comma-3x?harness=Mazda CX-5 2022-25">Buy Here</a></sub></details>|||
 |Mazda|CX-9 2021-23|All|Stock|0 mph|28 mph|[![star](assets/icon-star-full.svg)](##)|[![star](assets/icon-star-full.svg)](##)|<details><summary>Parts</summary><sub>- 1 Mazda connector<br>- 1 OBD-C cable (2 ft)<br>- 1 comma four<br>- 1 comma power v3<br>- 1 harness box<br>- 1 mount<br><a href="https://comma.ai/shop/comma-3x?harness=Mazda CX-9 2021-23">Buy Here</a></sub></details>|<a href="https://youtu.be/dA3duO4a0O4" target="_blank"><img height="18px" src="assets/icon-youtube.svg" /></a>||
 
-<!-- mazda-multi-platform-community: 15 platforms (not in upstream CARS_template.md) -->
+<!-- mazda-community: 15 platforms (not in upstream CARS_template.md) -->
 <!-- See docs/migration/PORT_STATUS.md for full platform status grid -->
 
-### Mazda Community Port (branch: mazda-multi-platform-community)
+### Mazda Community Port (branch: mazda-community)
 
-> **Note:** The following 15 Mazda platforms are supported in the `mazda-multi-platform-community` branch only. They are not part of the upstream sunnypilot release. This section is maintained manually.
+> **Note:** The following 15 Mazda platforms are supported in the `mazda-community` branch only. They are not part of the upstream sunnypilot release. This section is maintained manually.
 
 | Platform | Vehicle | Lateral | Longitudinal | Hardware Required |
 |----------|---------|---------|-------------|------------------|
