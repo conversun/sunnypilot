@@ -1,9 +1,11 @@
 [submodule "panda"]
   path = panda
   url = https://github.com/conversun/panda.git
+  branch = mazda-multi-platform-additions
 [submodule "opendbc"]
   path = opendbc_repo
   url = https://github.com/conversun/opendbc.git
+  branch = mazda-multi-platform-additions
 [submodule "msgq"]
   path = msgq_repo
   url = https://github.com/commaai/msgq.git
