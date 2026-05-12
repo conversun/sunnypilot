@@ -376,6 +376,79 @@ v0.1 is a "code-complete, on-vehicle pending" tag. It is not a "validated for da
 ## Cross-References
 
 - **PORT_STATUS.md** (docs/migration/) — current port status and quick reference
-- **HARDWARE_TI2.md** (docs/) — TI2 hardware prerequisite, BOM, install reference, pre-drive verification
+- **HARDWARE_TI.md** (docs/) — TI1/TI2 hardware reference, BOM, install reference, pre-drive verification
 - **docs/migration/DECISIONS.md** — ADR log; rationale for every architectural choice
 - **docs/migration/ROADMAP.md** — forward plan; P0 (CP-A) through P4 (routes.py)
+
+---
+
+## Multi-Platform Port (mazda-multi-platform-community)
+
+Branch `mazda-multi-platform-community` extends the original single-platform port to cover all 15 Mazda platforms. See `DECISIONS.md` D-012 for the scope expansion rationale.
+
+### Per-Platform Porting Track
+
+| Platform | Generation | Track | Branch |
+|----------|-----------|-------|--------|
+| `MAZDA_CX5` | GEN1 | Upstream (untouched) | commaai/openpilot master |
+| `MAZDA_CX9` | GEN1 | Upstream (untouched) | commaai/openpilot master |
+| `MAZDA_3` | GEN1 | Upstream (untouched) | commaai/openpilot master |
+| `MAZDA_6` | GEN1 | Upstream (untouched) | commaai/openpilot master |
+| `MAZDA_CX9_2021` | GEN1 | Upstream (untouched) | commaai/openpilot master |
+| `MAZDA_CX5_2022` | GEN1 | Upstream (untouched) | commaai/openpilot master |
+| `MAZDA_3_2019` | GEN2 | Original port (v0.0.2) | `mazda-multi-platform-community` |
+| `MAZDA_CX5_TI` | GEN1+TI | New (T1.x) | `mazda-multi-platform-community` |
+| `MAZDA_CX9_TI` | GEN1+TI | New (T1.x) | `mazda-multi-platform-community` |
+| `MAZDA_3_TI` | GEN1+TI | New (T1.x) | `mazda-multi-platform-community` |
+| `MAZDA_6_TI` | GEN1+TI | New (T1.x) | `mazda-multi-platform-community` |
+| `MAZDA_CX_30` | GEN2 | New (T2.x) | `mazda-multi-platform-community` |
+| `MAZDA_CX_50` | GEN2 | New (T2.x) | `mazda-multi-platform-community` |
+| `MAZDA_3_2023` | GEN3 | New (T3.x) | `mazda-multi-platform-community` |
+| `MAZDA_CX_30_2023` | GEN3 | New (T3.x) | `mazda-multi-platform-community` |
+
+### New Commit Chain (S1-S24)
+
+The multi-platform port adds the following commits on top of the original v0.0.2 chain.
+
+#### opendbc_repo — branch `mazda-multi-platform-additions`
+
+| SHA | Task | Subject |
+|-----|------|---------|
+| `a24ae5af` | T1.2 | mazda: add CAM_LKAS2 (0x249) and TI_FEEDBACK (0x24A) to mazda_2017.dbc |
+| `d5f10614` | T1.1 | safety/tests: add TestMazdaGen1TiSafety test class |
+| `8d6cef59` | T1.1 | safety/tests: broaden Mazda-vs-Mazda TX overlap skip to all TestMazda* classes |
+| `d4ce304c` | T1.3 | safety/mazda: add GEN1+TI rx_checks (mazda_ti_rx_checks) and TX whitelist (MAZDA_GEN1_TI_TX_MSGS) |
+| `cd4bcf3a` | T1.4 | safety/tests: fix TestMazdaGen1TiSafety relay_malfunction and tx encoding |
+| `ed848279` | T1.6 | mazda: add MAZDA_CX5_TI/CX9_TI/3_TI/6_TI platforms in values.py (flags=GEN1\|TORQUE_INTERCEPTOR=9) |
+| `3fa92f18` | T1.7 | mazda: extend mazdacan.py for dual-emit CAM_LKAS + CAM_LKAS2 (KEY=3294744160) on GEN1+TI |
+| `3b3ecddf` | T1.8 | mazda: extend carcontroller.py GEN1+TI lateral path (apply_ti_steer_torque_limits, ti_lkas_allowed gate) |
+| `937476b4` | T1.9 | mazda: extend carstate.py for GEN1+TI TI_FEEDBACK reading (ti_state, ramp_down, fault per D-010) |
+| `9a1952bf` | T1.10 | mazda: mirror GEN1 FW_VERSIONS into TI variants in fingerprints.py |
+| `656f06d1` | T1.11 | mazda: extend interface.py with GEN1+TI branch (safetyParam, minSteerSpeed=0, dashcamOnly=False) |
+| `3182e28d` | T2.1 | mazda: add MAZDA_CX_30 and MAZDA_CX_50 PlatformConfigs (GEN2 flag) in values.py |
+| `a6e6a538` | T2.2 | mazda: add CX_30 and CX_50 FW_VERSIONS in fingerprints.py |
+| `5137123f` | T2.3 | mazda: add NON_LINEAR_TORQUE_PARAMS for MAZDA_CX_30 and MAZDA_CX_50 |
+| `ccbb893e` | T2.4 | mazda: include MAZDA_CX_30 and MAZDA_CX_50 in dashcamOnly exclusion (GEN2 lateral) |
+| `(T3.1)` | T3.1 | safety/tests: add TestMazdaGen3Safety class |
+| `(T3.2)` | T3.2 | panda+mazda.h: add FLAG_MAZDA_GEN3 = 4 constant |
+| `(T3.3)` | T3.3 | mazda: import mazda_2023.dbc (660 lines) |
+| `51c0ac48` | T3.5 | safety/mazda: add GEN3 rx_checks (mazda_2023_rx_checks) |
+| `0aa11227` | T3.7 | mazda: introduce MazdaFlags.GEN3 = 4 and MAZDA_3_2023/CX_30_2023 platforms in values.py |
+| `c840c3a3` | T3.8 | mazda: extend interface.py with GEN3 branch (long disabled, alphaLong disabled) |
+| `ea4361f2` | T3.9 | mazda: add GEN3 fingerprints/FINGERPRINTS in fingerprints.py and substitute.toml |
+| `9a21af18` | T3.7b | mazda/tests: add GEN2 carstate regression guard test |
+| `1f294054` | T3.8b | mazda: refactor carstate.py _update_gen2 to parameterized signal config; add GEN3 signal table |
+
+#### panda — branch `mazda-multi-platform-additions`
+
+| SHA | Task | Subject |
+|-----|------|---------|
+| `(T3.2)` | T3.2 | mazda: add FLAG_MAZDA_GEN3 = 4 to panda/python/__init__.py |
+
+### Key Architecture Notes for Multi-Platform Port
+
+- **GEN1+TI**: `create_steering_control()` in `mazdacan.py` now returns a list (was single message). Callers use `extend` not `append`. Dual-emit: CAM_LKAS on bus 0 + CAM_LKAS2 on bus 1.
+- **GEN2 CX-30/CX-50**: Same architecture as MAZDA_3_2019. `dashcamOnly=False` requires explicit allow-list entry in `interface.py:70` (not just GEN2 flag).
+- **GEN3**: Uses `mazda_2023.dbc`. CRUZE_STATE moves from bus 0 to bus 1. All other signals stay on same buses as GEN2. Long disabled per D-015.
+- **substitute.toml**: Every new CAR enum entry must be added to `opendbc/car/torque_data/substitute.toml` (mapped to MAZDA_CX9_2021). Missing entry causes KeyError in `configure_torque_tune()`.
+- **Safety pytest baseline**: 281 passed / 0 failed / 45 skipped (post-T3.5).
