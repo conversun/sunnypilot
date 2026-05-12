@@ -1,17 +1,14 @@
-# ROADMAP.md — Mazda GEN2+TI Port Forward Plan
+# ROADMAP.md — Mazda Multi-Platform Community Port Forward Plan
 
-**Current tag:** `v0.11.1-mazda3-2019.0.2`  
-**Last updated:** 2026-05-09 (status table refreshed 2026-05-11 — see note below)
+**Current branch:** `mazda-multi-platform-community`  
+**Last updated:** 2026-05-12 (multi-platform scope expansion — see D-012)
 
 > [!NOTE]
-> This roadmap was written at port `v0.0.2`. Since then, opendbc commit
-> `d81e56a6 mazda: enable GEN2 alpha longitudinal control` and
-> `47d7ffe4 mazda: GEN2 long PI tuning — kp=0 anti-jerk` landed in the
-> submodule, which moves item P1 (longitudinal control) from "To-Do"
-> to "Implemented behind alpha-long toggle". The Current Status table
-> below has been updated; the P1 section is kept as historical context.
-> For the current authoritative state see
-> [`docs/HARDWARE_TI2.md`](../HARDWARE_TI2.md).
+> This roadmap was originally written for the single-platform `MAZDA_3_2019` port at v0.0.2.
+> The scope has since expanded to 15 platforms via branch `mazda-multi-platform-community`
+> (see `DECISIONS.md` D-012). Items in the Out-of-Scope table that are now implemented
+> are marked accordingly. The priority queue below reflects the current multi-platform state.
+> For the current authoritative state see [`docs/HARDWARE_TI.md`](../HARDWARE_TI.md).
 
 ---
 
@@ -156,8 +153,9 @@ Cross-reference `DECISIONS.md` for rationale.
 
 | Item | Decision | Notes |
 |------|----------|-------|
-| GEN3 (Mazda 3 2024+) | D-002 | Not in source fork; not user's hardware |
-| CX-30, CX-50 | D-002 | Not in source fork |
+| ~~GEN3 (Mazda 3 2024+)~~ | ~~D-002~~ **Implemented** (D-012) | `MAZDA_3_2023`, `MAZDA_CX_30_2023` added; lateral only, long disabled per D-015 |
+| ~~CX-30, CX-50~~ | ~~D-002~~ **Implemented** (D-012) | `MAZDA_CX_30`, `MAZDA_CX_50` added as GEN2 platforms with alpha long |
+| ~~GEN1+TI (Torque Interceptor 1)~~ | ~~D-002~~ **Implemented** (D-012, D-013) | `MAZDA_CX5_TI`, `MAZDA_CX9_TI`, `MAZDA_3_TI`, `MAZDA_6_TI` added; lateral only |
 | Radar Interceptor (RI) | D-002 | Not user's hardware |
 | Manual transmission | D-002 | Not user's hardware |
 | Upstream PR to commaai | D-011 | Scope too narrow; personal install only |
