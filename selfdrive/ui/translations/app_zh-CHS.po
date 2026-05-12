@@ -184,6 +184,10 @@ msgstr "允许驾驶员在 openpilot 接管时提供有限的转向输入。"
 msgid "Always On"
 msgstr "始终开启"
 
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "Always keep hands on wheel and eyes on road"
+msgstr "请始终双手握住方向盘并注视前方道路"
+
 #: openpilot/selfdrive/ui/layouts/settings/toggles.py
 msgid "Always-On Driver Monitoring"
 msgstr "始终启用驾驶员监控"
@@ -962,6 +966,10 @@ msgstr "启用"
 msgid "Enable \"Always Offroad\" in Device panel, or turn vehicle off to toggle."
 msgstr "在设备面板中启用“始终离路”，或关闭车辆以切换。"
 
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "Enable Adaptive Cruise to Engage"
+msgstr "请启用自适应巡航以接管"
+
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
 msgid "Enable ADB"
 msgstr "启用 ADB"
@@ -981,6 +989,10 @@ msgstr "启用动态实验控制"
 #: openpilot/selfdrive/ui/layouts/settings/toggles.py
 msgid "Enable Lane Departure Warnings"
 msgstr "启用车道偏离警示"
+
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "Enable Main Switch to Engage"
+msgstr "请启用主开关以接管"
 
 #: system/ui/widgets/network.py
 msgid "Enable Roaming"
@@ -3479,6 +3491,10 @@ msgstr "openpilot 已取消"
 #: sunnypilot/selfdrive/selfdrived/events.py
 msgid "openpilot Unavailable"
 msgstr "openpilot 不可用"
+
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "openpilot will disengage"
+msgstr "openpilot 即将解除接管"
 
 #: openpilot/selfdrive/ui/mici/onroad/augmented_road_view.py
 msgid ""

@@ -3976,3 +3976,19 @@ msgstr ""
 msgid "Press - to confirm speed limit"
 msgstr ""
 
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "Always keep hands on wheel and eyes on road"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "Enable Adaptive Cruise to Engage"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "Enable Main Switch to Engage"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "openpilot will disengage"
+msgstr ""
+
