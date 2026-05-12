@@ -38,7 +38,7 @@ Would reconsider if v0.11.0..master introduces a breaking change to the Mazda RX
 
 ## D-002: Scope limited to MAZDA_3_2019 + TI2 only
 
-**Status**: Accepted  
+**Status**: **Superseded by D-012** (2026-05-12)  
 **Date**: 2026-05-09  
 **Wave**: Wave 0
 
@@ -357,4 +357,180 @@ Would reconsider an upstream PR if: (a) multiple GEN2 Mazda users validate the p
 
 ---
 
-*DECISIONS.md — v0.0.2 / Wave 8+hotfix. 11 decisions recorded.*
+## D-012: Scope expansion to multi-platform Mazda port (supersedes D-002)
+
+**Status**: Accepted (supersedes D-002)  
+**Date**: 2026-05-12  
+**Wave**: Multi-platform Wave 0 / pre-implementation
+
+### Context
+
+D-002 explicitly locked scope to `MAZDA_3_2019 + TI2` only and forbade expansion. The user has now explicitly approved scope expansion to cover the remaining mazda-frogpilot platforms plus GEN1 Original Torque Interceptor (TI1) support. The new scope is "Scope C" — a measured expansion that adds widely-validated platforms without pulling in unvalidated edge-case features (Radar Interceptor, NO_FSC, NO_MRCC, MANUAL_TRANSMISSION).
+
+### Decision
+
+Expand supported Mazda platforms to:
+1. **GEN1+TI1**: New CAR variants `MAZDA_CX5_TI`, `MAZDA_CX9_TI`, `MAZDA_3_TI`, `MAZDA_6_TI` (Original Torque Interceptor hardware add-on for 2014-2018 GEN1 Mazdas).
+2. **GEN2 expansion**: New CAR entries `MAZDA_CX_30` and `MAZDA_CX_50` (same GEN2+TI2 hardware path as MAZDA_3_2019).
+3. **GEN3**: New CAR entries `MAZDA_3_2023` and `MAZDA_CX_30_2023` (2024+ Mazda3, 2023+ CX-30) with new `MazdaFlags.GEN3 = 4` flag and `mazda_2023.dbc`.
+
+Explicitly EXCLUDED from this scope (Scope D, deferred to future work):
+- `MazdaFlags.RADAR_INTERCEPTOR = 16` (third-party radar interceptor for GEN1 longitudinal)
+- `MazdaFlags.NO_FSC = 32`, `MazdaFlags.NO_MRCC = 64`, `MazdaFlags.MANUAL_TRANSMISSION = 128` (edge-case trim flags)
+
+Work is isolated on a new branch `mazda-multi-platform-community` (forked from `mazda-3-2019-community`) with submodule branches `mazda-multi-platform-additions` in `conversun/opendbc` and `conversun/panda`. Existing `mazda-3-2019-community` branch is preserved untouched as the v0.0.2 recovery point.
+
+### Rationale
+
+- User explicitly requested expansion via two rounds of Q&A; scope C was their chosen option from 4 alternatives (A/B/C/D)
+- GEN1+TI1 unlocks 6 existing dashcam-only GEN1 cars for active control with widely-validated hardware ($329 MoreTorque Original TI)
+- GEN2 CX-30/CX-50 share identical EPS architecture with MAZDA_3_2019 (already-validated code path); pure data addition
+- GEN3 is the next-generation Mazda platform (2023+); ports the source fork's mazda_2023.dbc + GEN3 safety path
+- Excluding RADAR_INTERCEPTOR keeps the diff offline-verifiable (no real-RI-hardware required for QA)
+- Excluding NO_* flags avoids "trim adapter" scope creep without user FW dumps
+
+### Consequences
+
+- Positive: 8 new supported platform variants; community parity with mazda-frogpilot mainline minus the RI/edge-flag subset; offline-verifiable
+- Negative: Larger surface area; T3 GEN3 carstate refactor must preserve GEN2 byte-perfect behavior (locked invariant via T3.7b fixture)
+- D-002 is now formally superseded; future scope changes require new ADRs
+
+### How to challenge this decision
+
+Would reconsider further expansion (Scope D) only with: (a) user has RI hardware + tested FW dump for the targeted GEN1 platform, OR (b) user has a specific trim missing MRCC/FSC and provides cabana data, OR (c) the upstream FrogPilot Mazda community formally absorbs sunnypilot's port (in which case scope alignment becomes upstream's problem).
+
+---
+
+## D-013: GEN1+TI1 implemented as separate CAR variants (not param-toggle)
+
+**Status**: Accepted  
+**Date**: 2026-05-12  
+**Wave**: Multi-platform Wave 0 / pre-implementation
+
+### Context
+
+The source fork (mazda-frogpilot) implements Torque Interceptor as a runtime `Params().get_bool("TorqueInterceptorEnabled")` toggle in `_get_params`. This pattern conflicts with D-004 (no Params() reads in `_get_params`). Three alternatives were evaluated for sunnypilot:
+
+- **Option (a)**: Add new CAR variants (`MAZDA_CX5_TI`, etc.) with TORQUE_INTERCEPTOR flag hardcoded into `PlatformConfig.flags`. User selects variant via comma device car-selection menu.
+- **Option (b)**: Add sunnypilot-specific param `MazdaTIInstalled` read in `_get_params_sp()` (sunnypilot's separate sp-extension hook, not standard `_get_params`); auto-promote base CAR to TI variant at runtime.
+- **Option (c)**: Sniff TI_FEEDBACK (0x24A bus 1) presence at boot to auto-detect; complex framework integration.
+
+Oracle consultation: Option (a) recommended at 90% confidence. Matches D-005 precedent (TI flag is hardware identity, not user preference). Source fork's design intent is closer to (a) than its actual Params() implementation suggests.
+
+### Decision
+
+Adopt **Option (a)**: separate CAR variants with `MazdaFlags.TORQUE_INTERCEPTOR (=8)` hardcoded into `PlatformConfig.flags`. Combined flag value for GEN1+TI is `GEN1 | TORQUE_INTERCEPTOR = 9`.
+
+Disambiguation between GEN1 and GEN1+TI variants is handled via **manual selection** by the user in the comma device car-selection menu. GEN1 and GEN1+TI share identical ECU firmware (TI is a hardware-only add-on with no FW signature change), so auto-fingerprinting cannot reliably distinguish them.
+
+### Rationale
+
+- Matches D-005 hardcode-flag precedent (consistency across TI1 / TI2 hardware add-ons)
+- D-004-compliant (no `Params()` in `_get_params`)
+- Each variant gets independent fingerprint test path → clean QA isolation
+- Manual selection is acceptable because TI install is itself a deliberate user action — they know what they installed
+- HARDWARE_TI.md will carry a bold WARNING about correct variant selection
+
+### Consequences
+
+- Positive: Clean architecture; D-004-compliant; independent QA per variant
+- Negative: User must manually pick the correct variant; getting it wrong silently produces wrong safety mode (no auto-detection safety net). Mitigation: bold WARNING in HARDWARE_TI.md + clear naming convention (`*_TI` suffix).
+
+### How to challenge this decision
+
+Would add Option (b) as a layered enhancement (sp-param auto-promotes base to TI variant) if (a) multiple users report selection mistakes in production, AND (b) a clean sp-param hook can be added without compromising the safety isolation between base and TI variants.
+
+---
+
+## D-014: GEN3 carstate via typed signal config (parameterize `_update_gen2`)
+
+**Status**: Accepted  
+**Date**: 2026-05-12  
+**Wave**: Multi-platform Wave 3 / pre-implementation
+
+### Context
+
+GEN3 Mazda platforms (MAZDA_3_2023, MAZDA_CX_30_2023) share most of GEN2's CAN architecture but use different bus assignments and addresses for several signals:
+
+| Signal | GEN2 | GEN3 |
+|---|---|---|
+| CRUZE_STATE bus | 0 | 1 |
+| BRAKE_PEDAL addr | 0x43F | 0x9F |
+| SPEED / WHEEL_SPEEDS addr | 0x217 | 0x215 |
+| ACC addr | 0x220 | 0x21E (+ ACC_2 0x222) |
+
+Source fork addresses this by dispatching on flag inside `_update_gen2()` with inline conditionals. Two alternatives for sunnypilot:
+
+- **Option A**: Add a separate `_update_gen3()` method, even if 95% identical to `_update_gen2()`
+- **Option B**: Refactor `_update_gen2()` to accept a `MazdaGenSignalConfig` dataclass; instantiate both `GEN2_CFG` and `GEN3_CFG` constants; dispatch in `update()`
+
+Oracle consultation: Option B recommended at 85% confidence. Matches existing precedent in Hyundai-CANFD, Toyota, Subaru codebases.
+
+### Decision
+
+Adopt **Option B**: typed `MazdaGenSignalConfig` dataclass with GEN2 and GEN3 instances. `_update_gen2()` is renamed-in-spirit to `_update_with_cfg()` and accepts `signal_cfg`. `update()` dispatch picks the correct config based on `CP.flags`.
+
+Locked invariant: **GEN2 byte-perfect regression** — the refactored method MUST produce field-identical `CarState` output for MAZDA_3_2019 inputs. Enforced via T3.7b fixture-replay test (`tests/test_carstate_gen2_regression.py` with canned bus snapshot pickled before refactor).
+
+### Rationale
+
+- Less code duplication than Option A (~150 lines saved)
+- Adding future generations (GEN4, etc.) is a new config instance — no method duplication
+- Typed dataclass makes signal layout explicit and self-documenting
+- The byte-perfect fixture test catches any regression introduced by the refactor
+
+### Consequences
+
+- Positive: Maintainable signal-layout abstraction; future-proof for additional Mazda generations
+- Negative: Refactor touches existing GEN2 code path (D-002 v0.0.2 invariant); requires fixture-based regression discipline
+- Risk: If T3.7b fixture is mis-constructed (wrong seed values), regression test would silently pass while behavior drifts. Mitigation: T3.7b fixture script explicitly lists all GEN2 RX message seeds for reproducibility.
+
+### How to challenge this decision
+
+Would revert to Option A (separate methods) if (a) T3.7b regression discovers any GEN2 behavior change that cannot be reconciled in the typed config, OR (b) the signal table grows beyond ~10 fields and parameterization becomes harder to reason about than duplication.
+
+---
+
+## D-015: GEN3 longitudinal control disabled (alphaLong + OP-long both False)
+
+**Status**: Accepted  
+**Date**: 2026-05-12  
+**Wave**: Multi-platform Wave 3 / pre-implementation
+
+### Context
+
+GEN2 Mazdas (MAZDA_3_2019, future CX-30, CX-50) advertise `alphaLongitudinalAvailable = True` and support OP longitudinal control via `MAZDA_2019_ACC (0x220 bus 2)` MITM. The source fork (mazda-frogpilot) sets `experimentalLongitudinalAvailable = False` and `openpilotLongitudinalControl = False` for GEN3 platforms, even though their ACC frames (0x21E + ACC_2 0x222) are physically present on the bus.
+
+Reasons inferred from source fork commit history (`ae00ff982 mazda 2023+`, `b25106805 add steer actuator delay for Mazda Gen3`, `b0a4bfe89 2023 checksum`):
+- GEN3 ACC frame layout / checksum is incompletely reverse-engineered
+- GEN3 longitudinal control was never validated on a real GEN3 car in the source fork
+- Standstill hold/resume is sufficient for first-drive validation; full OP long is a follow-up
+
+### Decision
+
+For GEN3 platforms (MAZDA_3_2023, MAZDA_CX_30_2023):
+- `experimentalLongitudinalAvailable = False`
+- `alphaLongitudinalAvailable = False`
+- `openpilotLongitudinalControl = False`
+- Stock MRCC pass-through only (no ACC frame MITM by openpilot)
+
+### Rationale
+
+- Conservative: only ship validated longitudinal paths
+- Matches source fork (which had a GEN3 contributor but no GEN3 long validation)
+- ACC frame at 0x21E + ACC_2 0x222 is documented in DBC for RX-only purposes (read stock state, do not transmit OP long)
+- GEN3 lateral control via TI2 is the primary value add for these platforms
+
+### Consequences
+
+- Positive: Reduced GEN3 risk surface; no false-advertise of OP long; clean stock MRCC pass-through
+- Negative: GEN3 users cannot use OP for stop-and-go or speed control; stuck with stock MRCC limitations
+- Negative: Diverges from GEN2 capability profile (GEN2 advertises alphaLong=True, GEN3 does not)
+
+### How to challenge this decision
+
+Would enable GEN3 OP longitudinal if (a) a GEN3 user provides CP-C cabana logs demonstrating ACC frame MITM works correctly with byte-perfect checksum, (b) GEN3 longitudinal limits are validated against panda safety constraints, AND (c) a follow-up ADR documents the lift.
+
+---
+
+*DECISIONS.md — v0.0.3 / Multi-platform Wave 0 ADR drafts. 15 decisions recorded (11 from v0.0.2 + 4 new: D-012/D-013/D-014/D-015). D-002 superseded by D-012.*
