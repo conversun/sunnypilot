@@ -44,11 +44,11 @@ class OSMLayout(Widget):
     self._update_map_size()
     self._progress.set_visible(False)
     self._state_btn.set_visible(False)
-    self._mapd_version.action_item.set_text(ui_state.params.get("MapdVersion") or "Loading...")
+    self._mapd_version.action_item.set_text(ui_state.params.get("MapdVersion") or tr("Loading..."))
     self._scroller = Scroller(self.items, line_separator=True, spacing=0)
 
   def _initialize_items(self):
-    self._mapd_version = text_item(tr("Mapd Version"), lambda: ui_state.params.get("MapdVersion") or "Loading...")
+    self._mapd_version = text_item(tr("Mapd Version"), lambda: ui_state.params.get("MapdVersion") or tr("Loading..."))
     self._delete_maps_btn = ListItemSP(tr("Downloaded Maps"), action_item=NoElideButtonAction(tr("DELETE"), enabled=True), callback=self._delete_maps)
     self._progress = progress_item(tr("Downloading Map"))
     self._update_btn = ListItemSP(tr("Database Update"), action_item=NoElideButtonAction(tr("CHECK"), enabled=True), callback=self._update_db)

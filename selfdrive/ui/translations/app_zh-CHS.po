@@ -24,6 +24,10 @@ msgstr " 您的设备朝向 {:.1f}° {} 与 {:.1f}° {}。"
 msgid "%"
 msgstr "%"
 
+#: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
+msgid "(Default)"
+msgstr "（默认）"
+
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/sunnylink.py
 msgid "(Only for highest tiers, and does NOT bring ANY benefit to you yet. We are just testing data volume.)"
 msgstr "（仅限最高赞助等级，目前对您没有任何实际收益。我们只是在测试数据量。）"
@@ -687,10 +691,6 @@ msgstr "拒绝并卸载 sunnypilot"
 msgid "Default"
 msgstr "默认"
 
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
-msgid "Default Model"
-msgstr "默认模型"
-
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
 msgid "Default: Device will boot/wake-up normally & will be ready to engage."
 msgstr "默认：设备正常启动/唤醒，随时可以接管。"
@@ -966,13 +966,13 @@ msgstr "启用"
 msgid "Enable \"Always Offroad\" in Device panel, or turn vehicle off to toggle."
 msgstr "在设备面板中启用“始终离路”，或关闭车辆以切换。"
 
-#: sunnypilot/selfdrive/selfdrived/events_base.py
-msgid "Enable Adaptive Cruise to Engage"
-msgstr "请启用自适应巡航以接管"
-
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
 msgid "Enable ADB"
 msgstr "启用 ADB"
+
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "Enable Adaptive Cruise to Engage"
+msgstr "请启用自适应巡航以接管"
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
 msgid "Enable Always Offroad"
@@ -1505,6 +1505,7 @@ msgid "Live Steer Delay:"
 msgstr "实时转向延迟："
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/developer.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/osm.py
 #: system/ui/tici_updater.py
 msgid "Loading..."
 msgstr "加载中…"
@@ -3201,10 +3202,6 @@ msgstr ""
 msgid "default"
 msgstr "默认"
 
-#: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
-msgid "default model"
-msgstr "默认模型"
-
 #: openpilot/selfdrive/ui/mici/layouts/settings/settings.py
 msgid "developer"
 msgstr "开发者"
@@ -3489,12 +3486,9 @@ msgid "openpilot Canceled"
 msgstr "openpilot 已取消"
 
 #: sunnypilot/selfdrive/selfdrived/events.py
+#: sunnypilot/selfdrive/selfdrived/events_base.py
 msgid "openpilot Unavailable"
 msgstr "openpilot 不可用"
-
-#: sunnypilot/selfdrive/selfdrived/events_base.py
-msgid "openpilot will disengage"
-msgstr "openpilot 即将解除接管"
 
 #: openpilot/selfdrive/ui/mici/onroad/augmented_road_view.py
 msgid ""
@@ -3503,6 +3497,10 @@ msgid ""
 msgstr ""
 "openpilot 无法启动\n"
 "请查看告警"
+
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "openpilot will disengage"
+msgstr "openpilot 即将解除接管"
 
 #: openpilot/selfdrive/ui/mici/layouts/onboarding.py
 msgid "or go to https://sunnypilot.ai/terms"

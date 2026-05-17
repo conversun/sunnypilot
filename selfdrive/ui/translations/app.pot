@@ -262,6 +262,7 @@ msgid "Invalid URL: {url}"
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/developer.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/osm.py
 #: system/ui/tici_updater.py
 msgid "Loading..."
 msgstr ""
@@ -1384,10 +1385,6 @@ msgid "active model"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
-msgid "default model"
-msgstr ""
-
-#: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
 msgid "cache size"
 msgstr ""
 
@@ -1405,6 +1402,10 @@ msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
 msgid "error"
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
+msgid "(Default)"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
@@ -1751,10 +1752,6 @@ msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
 msgid "Select a Model"
-msgstr ""
-
-#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
-msgid "Default Model"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
@@ -3933,6 +3930,7 @@ msgid "Brake Hold Active"
 msgstr ""
 
 #: sunnypilot/selfdrive/selfdrived/events.py
+#: sunnypilot/selfdrive/selfdrived/events_base.py
 msgid "openpilot Unavailable"
 msgstr ""
 
@@ -3977,10 +3975,6 @@ msgid "Press - to confirm speed limit"
 msgstr ""
 
 #: sunnypilot/selfdrive/selfdrived/events_base.py
-msgid "Always keep hands on wheel and eyes on road"
-msgstr ""
-
-#: sunnypilot/selfdrive/selfdrived/events_base.py
 msgid "Enable Adaptive Cruise to Engage"
 msgstr ""
 
@@ -3990,5 +3984,9 @@ msgstr ""
 
 #: sunnypilot/selfdrive/selfdrived/events_base.py
 msgid "openpilot will disengage"
+msgstr ""
+
+#: sunnypilot/selfdrive/selfdrived/events_base.py
+msgid "Always keep hands on wheel and eyes on road"
 msgstr ""
 
