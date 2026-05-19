@@ -2821,7 +2821,7 @@ msgstr "未知"
 
 #: selfdrive/selfdrived/events.py
 msgid "Unknown Vehicle Variant"
-msgstr "未知车辆型号"
+msgstr "CAN 通讯中断"
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/vehicle/platform_selector.py
 msgid "Unrecognized Vehicle"
