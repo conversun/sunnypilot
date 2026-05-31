@@ -191,6 +191,9 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"MadsSteeringMode", {PERSISTENT | BACKUP, INT, "0"}},
     {"MadsUnifiedEngagementMode", {PERSISTENT | BACKUP, BOOL, "1"}},
 
+    // Mazda params
+    {"MazdaGen2LowSpeedLong", {PERSISTENT | BACKUP, BOOL, "0"}},
+
     // Model Manager params
     {"ModelManager_ActiveBundle", {PERSISTENT, JSON}},
     {"ModelManager_ClearCache", {CLEAR_ON_MANAGER_START, BOOL}},
