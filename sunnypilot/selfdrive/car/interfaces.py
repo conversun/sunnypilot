@@ -137,6 +137,7 @@ def initialize_params(params) -> list[dict[str, Any]]:
   # mazda
   keys.extend([
     "MazdaGen2LowSpeedLong",
+    "MazdaTorqueInterceptor",
   ])
 
   return [{k: params.get(k, return_default=True)} for k in keys]

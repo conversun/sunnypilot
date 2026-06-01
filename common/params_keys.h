@@ -193,6 +193,7 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
 
     // Mazda params
     {"MazdaGen2LowSpeedLong", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"MazdaTorqueInterceptor", {PERSISTENT | BACKUP, BOOL, "0"}},
 
     // Model Manager params
     {"ModelManager_ActiveBundle", {PERSISTENT, JSON}},
