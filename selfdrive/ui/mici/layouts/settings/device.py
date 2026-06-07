@@ -49,7 +49,7 @@ class ReviewTrainingGuide(TrainingGuide):
   def hide_event(self):
     super().hide_event()
     device.set_override_interactive_timeout(None)
-    ui_state.params.put_bool_nonblocking("IsDriverViewEnabled", False)
+    ui_state.params.put_bool("IsDriverViewEnabled", False)
 
 
 class MiciFccModal(NavRawScrollPanel):
@@ -210,7 +210,7 @@ class UpdateOpenpilotBigButton(BigButton):
       if self._state_key == _STATE_DOWNLOAD_UPDATE:
         os.system("pkill -SIGHUP -f system.updated.updated")
       elif self._state_key == _STATE_UPDATE_NOW:
-        ui_state.params.put_bool("DoReboot", True)
+        ui_state.params.put_bool("DoReboot", True, block=True)
       else:
         os.system("pkill -SIGUSR1 -f system.updated.updated")
 
@@ -269,6 +269,7 @@ class UpdateOpenpilotBigButton(BigButton):
     elif self._state == UpdaterState.IDLE:
       self.set_rotate_icon(False)
       if failed:
+        self.set_enabled(True)  # allow retry when failure came from updater param
         if self._state_key != _STATE_FAILED_TO_UPDATE:
           self.set_value("failed to update")
 
@@ -303,10 +304,10 @@ class DeviceLayoutMici(NavScroller):
     self._fcc_dialog: HtmlModal | None = None
 
     def power_off_callback():
-      ui_state.params.put_bool("DoShutdown", True)
+      ui_state.params.put_bool("DoShutdown", True, block=True)
 
     def reboot_callback():
-      ui_state.params.put_bool("DoReboot", True)
+      ui_state.params.put_bool("DoReboot", True, block=True)
 
     def reset_calibration_callback():
       params = ui_state.params
@@ -315,10 +316,10 @@ class DeviceLayoutMici(NavScroller):
       params.remove("LiveParameters")
       params.remove("LiveParametersV2")
       params.remove("LiveDelay")
-      params.put_bool("OnroadCycleRequested", True)
+      params.put_bool("OnroadCycleRequested", True, block=True)
 
     def uninstall_openpilot_callback():
-      ui_state.params.put_bool("DoUninstall", True)
+      ui_state.params.put_bool("DoUninstall", True, block=True)
 
     reset_calibration_btn = EngagedConfirmationButton(tr("reset calibration"), tr("reset"), gui_app.texture("icons_mici/settings/device/lkas.png", 122, 64),
                                                       reset_calibration_callback)

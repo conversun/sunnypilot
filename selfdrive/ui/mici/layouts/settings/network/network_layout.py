@@ -67,14 +67,14 @@ class NetworkLayoutMici(NavScroller):
 
     # ******** Advanced settings ********
     # ******** Roaming toggle ********
-    self._roaming_btn = BigParamControl(tr("enable roaming"), "GsmRoaming", toggle_callback=self._toggle_roaming)
+    self._roaming_btn = BigParamControl(tr("enable roaming"), "GsmRoaming")
 
     # ******** APN settings ********
     self._apn_btn = BigButton(tr("apn settings"), tr("edit"))
     self._apn_btn.set_click_callback(self._edit_apn)
 
     # ******** Cellular metered toggle ********
-    self._cellular_metered_btn = BigParamControl(tr("cellular metered"), "GsmMetered", toggle_callback=self._toggle_cellular_metered)
+    self._cellular_metered_btn = BigParamControl(tr("cellular metered"), "GsmMetered")
 
     # Main scroller ----------------------------------
     self._scroller.add_widgets([
@@ -88,11 +88,6 @@ class NetworkLayoutMici(NavScroller):
       self._cellular_metered_btn,
       # */
     ])
-
-    # Set initial config
-    roaming_enabled = ui_state.params.get_bool("GsmRoaming")
-    metered = ui_state.params.get_bool("GsmMetered")
-    self._wifi_manager.update_gsm_settings(roaming_enabled, ui_state.params.get("GsmApn") or "", metered)
 
   def _update_state(self):
     super()._update_state()
@@ -117,9 +112,6 @@ class NetworkLayoutMici(NavScroller):
 
     gui_app.remove_nav_stack_tick(self._wifi_manager.process_callbacks)
 
-  def _toggle_roaming(self, checked: bool):
-    self._wifi_manager.update_gsm_settings(checked, ui_state.params.get("GsmApn") or "", ui_state.params.get_bool("GsmMetered"))
-
   def _edit_apn(self):
     def update_apn(apn: str):
       apn = apn.strip()
@@ -128,14 +120,9 @@ class NetworkLayoutMici(NavScroller):
       else:
         ui_state.params.put("GsmApn", apn)
 
-      self._wifi_manager.update_gsm_settings(ui_state.params.get_bool("GsmRoaming"), apn, ui_state.params.get_bool("GsmMetered"))
-
     current_apn = ui_state.params.get("GsmApn") or ""
     dlg = BigInputDialog(tr("enter APN..."), current_apn, minimum_length=0, confirm_callback=update_apn)
     gui_app.push_widget(dlg)
-
-  def _toggle_cellular_metered(self, checked: bool):
-    self._wifi_manager.update_gsm_settings(ui_state.params.get_bool("GsmRoaming"), ui_state.params.get("GsmApn") or "", checked)
 
   def _on_network_updated(self, networks: list[Network]):
     # Update tethering state
