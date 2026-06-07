@@ -4086,7 +4086,7 @@ msgstr "• 可能不符合安全标准。"
 
 #: openpilot/selfdrive/ui/widgets/prime.py
 msgid "✓ SUBSCRIBED"
-msgstr "✓ 已订阅"
+msgstr "已订阅"
 
 #: openpilot/selfdrive/ui/widgets/setup.py
 msgid "🔥 Firehose Mode 🔥"
