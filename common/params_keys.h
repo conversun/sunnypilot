@@ -279,4 +279,16 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"TorqueParamsOverrideEnabled", {PERSISTENT | BACKUP, BOOL, "0"}},
     {"TorqueParamsOverrideFriction", {PERSISTENT | BACKUP, FLOAT, "0.1"}},
     {"TorqueParamsOverrideLatAccelFactor", {PERSISTENT | BACKUP, FLOAT, "2.5"}},
+
+    // Longitudinal MPC tuning
+    {"LongitudinalMpcTuningComfortBrake", {PERSISTENT | BACKUP, FLOAT, "2.5"}},
+    {"LongitudinalMpcTuningStopDistance", {PERSISTENT | BACKUP, FLOAT, "6.0"}},
+    {"LongitudinalMpcTuningTFollowRelaxed", {PERSISTENT | BACKUP, FLOAT, "1.75"}},
+    {"LongitudinalMpcTuningTFollowStandard", {PERSISTENT | BACKUP, FLOAT, "1.45"}},
+    {"LongitudinalMpcTuningTFollowAggressive", {PERSISTENT | BACKUP, FLOAT, "1.25"}},
+    {"LongitudinalMpcTuningXEgoObstacleCost", {PERSISTENT | BACKUP, FLOAT, "3.0"}},
+    {"LongitudinalMpcTuningJEgoCost", {PERSISTENT | BACKUP, FLOAT, "5.0"}},
+    {"LongitudinalMpcTuningAChangeCost", {PERSISTENT | BACKUP, FLOAT, "200.0"}},
+    {"LongitudinalMpcTuningDangerZoneCost", {PERSISTENT | BACKUP, FLOAT, "100.0"}},
+    {"LongitudinalMpcTuningLeadDangerFactor", {PERSISTENT | BACKUP, FLOAT, "0.75"}},
 };

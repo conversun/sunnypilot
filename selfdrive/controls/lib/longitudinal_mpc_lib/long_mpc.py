@@ -9,6 +9,7 @@ from openpilot.common.swaglog import cloudlog
 # WARNING: imports outside of constants will not trigger a rebuild
 from openpilot.selfdrive.modeld.constants import index_function
 from openpilot.selfdrive.controls.radard import _LEAD_ACCEL_TAU
+from openpilot.common.params import Params
 
 if __name__ == '__main__':  # generating code
   from acados.acados_template import AcadosModel, AcadosOcp, AcadosOcpSolver
@@ -53,8 +54,21 @@ T_IDXS_LST = [index_function(idx, max_val=MAX_T, max_idx=N) for idx in range(N+1
 T_IDXS = np.array(T_IDXS_LST)
 FCW_IDXS = T_IDXS < 5.0
 T_DIFFS = np.diff(T_IDXS, prepend=[0.])
-COMFORT_BRAKE = 2.5
-STOP_DISTANCE = 6.0
+
+
+def _read_tuning_float(params, key, default):
+  """Best-effort read of a float tuning param; falls back to default (e.g. in tests / no-params env)."""
+  try:
+    val = params.get(key, return_default=True)
+    return float(val) if val is not None else default
+  except Exception:
+    return default
+
+# COMFORT_BRAKE and STOP_DISTANCE are baked into the compiled acados solver (see gen_long_ocp).
+# They are read at module load so a solver rebuild bakes the user's chosen values consistently.
+_TUNING_PARAMS = Params()
+COMFORT_BRAKE = _read_tuning_float(_TUNING_PARAMS, "LongitudinalMpcTuningComfortBrake", 2.5)
+STOP_DISTANCE = _read_tuning_float(_TUNING_PARAMS, "LongitudinalMpcTuningStopDistance", 6.0)
 CRUISE_MIN_ACCEL = -1.2
 CRUISE_MAX_ACCEL = 1.6
 MIN_X_LEAD_FACTOR = 0.5
@@ -217,8 +231,33 @@ class LongitudinalMpc:
   def __init__(self, dt=DT_MDL):
     self.dt = dt
     self.solver = AcadosOcpSolverCython(MODEL_NAME, ACADOS_SOLVER_TYPE, N)
+    self.tuning_params = Params()
+    self.frame = 0
+    self._read_live_tuning()
     self.reset()
     self.source = LongitudinalPlanSource.cruise
+
+  def _read_live_tuning(self):
+    # Live-adjustable MPC tuning (no solver rebuild needed): cost weights, follow time and lead danger factor.
+    p = self.tuning_params
+    self.t_follow_relaxed = _read_tuning_float(p, "LongitudinalMpcTuningTFollowRelaxed", 1.75)
+    self.t_follow_standard = _read_tuning_float(p, "LongitudinalMpcTuningTFollowStandard", 1.45)
+    self.t_follow_aggressive = _read_tuning_float(p, "LongitudinalMpcTuningTFollowAggressive", 1.25)
+    self.x_ego_obstacle_cost = _read_tuning_float(p, "LongitudinalMpcTuningXEgoObstacleCost", X_EGO_OBSTACLE_COST)
+    self.j_ego_cost = _read_tuning_float(p, "LongitudinalMpcTuningJEgoCost", J_EGO_COST)
+    self.a_change_cost = _read_tuning_float(p, "LongitudinalMpcTuningAChangeCost", A_CHANGE_COST)
+    self.danger_zone_cost = _read_tuning_float(p, "LongitudinalMpcTuningDangerZoneCost", DANGER_ZONE_COST)
+    self.lead_danger_factor = _read_tuning_float(p, "LongitudinalMpcTuningLeadDangerFactor", LEAD_DANGER_FACTOR)
+
+  def get_t_follow(self, personality=log.LongitudinalPersonality.standard):
+    if personality == log.LongitudinalPersonality.relaxed:
+      return self.t_follow_relaxed
+    elif personality == log.LongitudinalPersonality.standard:
+      return self.t_follow_standard
+    elif personality == log.LongitudinalPersonality.aggressive:
+      return self.t_follow_aggressive
+    else:
+      raise NotImplementedError("Longitudinal personality not supported")
 
   def reset(self):
     self.solver.reset()
@@ -269,9 +308,9 @@ class LongitudinalMpc:
 
   def set_weights(self, prev_accel_constraint=True, personality=log.LongitudinalPersonality.standard):
     jerk_factor = get_jerk_factor(personality)
-    a_change_cost = A_CHANGE_COST if prev_accel_constraint else 0
-    cost_weights = [X_EGO_OBSTACLE_COST, X_EGO_COST, V_EGO_COST, A_EGO_COST, jerk_factor * a_change_cost, jerk_factor * J_EGO_COST]
-    constraint_cost_weights = [LIMIT_COST, LIMIT_COST, LIMIT_COST, DANGER_ZONE_COST]
+    a_change_cost = self.a_change_cost if prev_accel_constraint else 0
+    cost_weights = [self.x_ego_obstacle_cost, X_EGO_COST, V_EGO_COST, A_EGO_COST, jerk_factor * a_change_cost, jerk_factor * self.j_ego_cost]
+    constraint_cost_weights = [LIMIT_COST, LIMIT_COST, LIMIT_COST, self.danger_zone_cost]
     self.set_cost_weights(cost_weights, constraint_cost_weights)
 
   def set_cur_state(self, v, a):
@@ -314,7 +353,11 @@ class LongitudinalMpc:
     return lead_xv
 
   def update(self, radarstate, v_cruise, personality=log.LongitudinalPersonality.standard):
-    t_follow = get_T_FOLLOW(personality)
+    # Refresh live tuning ~1x/sec to pick up UI changes without per-cycle file reads.
+    if self.frame % 100 == 0:
+      self._read_live_tuning()
+    self.frame += 1
+    t_follow = self.get_t_follow(personality)
     v_ego = self.x0[1]
     self.status = radarstate.leadOne.status or radarstate.leadTwo.status
 
@@ -348,7 +391,7 @@ class LongitudinalMpc:
     self.params[:,2] = np.min(x_obstacles, axis=1)
     self.params[:,3] = np.copy(self.a_prev)
     self.params[:,4] = t_follow
-    self.params[:,5] = LEAD_DANGER_FACTOR
+    self.params[:,5] = self.lead_danger_factor
 
     self.run()
     if (np.any(lead_xv_0[FCW_IDXS,0] - self.x_sol[FCW_IDXS,0] < CRASH_DISTANCE) and
