@@ -132,6 +132,10 @@ msgstr "APN 设置"
 msgid "Abnormal tire stiffness"
 msgstr "轮胎刚度异常"
 
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Acceleration Change Cost"
+msgstr "加速度变化代价"
+
 #: openpilot/selfdrive/ui/widgets/offroad_alerts.py
 msgid "Acknowledge Excessive Actuation"
 msgstr "确认过度作动"
@@ -542,6 +546,10 @@ msgstr "综合"
 msgid "Combined: Use combined Speed Limit data from Car & OpenStreetMaps"
 msgstr "综合：同时使用车辆与 OpenStreetMaps 的限速数据。"
 
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Comfort Brake"
+msgstr "舒适刹车"
+
 #: selfdrive/selfdrived/events.py
 msgid "Communication Issue Between Processes"
 msgstr "进程间通信异常"
@@ -660,6 +668,10 @@ msgstr "立即解除"
 #: openpilot/selfdrive/ui/layouts/settings/software.py
 msgid "DOWNLOAD"
 msgstr "下载"
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Danger Zone Cost"
+msgstr "危险区代价"
 
 #: selfdrive/selfdrived/events.py
 msgid "Dashcam Mode"
@@ -816,6 +828,10 @@ msgstr "显示当前行驶道路的名称。<br>需先从 OSM 面板下载所在
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/visuals.py
 msgid "Distance"
 msgstr "距离"
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Distance Cost"
+msgstr "距离代价"
 
 #: selfdrive/selfdrived/events.py
 msgid "Distraction Level Too High"
@@ -1220,6 +1236,18 @@ msgstr "固定"
 msgid "Fixed: Adds a fixed offset [Speed Limit + Offset]"
 msgstr "固定：添加固定偏移量 [限速 + 偏移量]"
 
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Follow Time - Aggressive"
+msgstr "跟车时距 - 激进"
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Follow Time - Relaxed"
+msgstr "跟车时距 - 宽松"
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Follow Time - Standard"
+msgstr "跟车时距 - 标准"
+
 #: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Follow the prompts to complete the pairing process"
 msgstr "按照提示完成配对流程"
@@ -1423,6 +1451,10 @@ msgstr "LKAS 设置无效"
 msgid "Invalid URL: {url}"
 msgstr "URL 无效:{url}"
 
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Jerk Cost"
+msgstr "加加速度代价"
+
 #: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Join our Community Forum at https://community.sunnypilot.ai and reach out to a moderator if you have issues"
 msgstr "如有问题，请前往社区论坛 https://community.sunnypilot.ai 联系版主。"
@@ -1480,6 +1512,10 @@ msgstr "横向加速度系数"
 msgid "Lateral Maneuver Mode"
 msgstr "横向机动模式"
 
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Lead Danger Factor"
+msgstr "前车危险系数"
+
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/visuals.py
 msgid "Lead Departure Alert (Beta)"
 msgstr "前车起步提醒（Beta）"
@@ -1513,6 +1549,10 @@ msgstr "加载中…"
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise.py
 msgid "Long Press Increment"
 msgstr "长按增量"
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise.py
+msgid "Longitudinal MPC Tuning"
+msgstr "纵向 MPC 调校"
 
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
 #: selfdrive/selfdrived/events.py
@@ -2146,6 +2186,10 @@ msgstr "重置设置"
 msgid "Reset failed. Reboot to try again."
 msgstr "重置失败。请重启以重试。"
 
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Reset to Defaults"
+msgstr "恢复默认值"
+
 #: system/ui/tici_reset.py
 msgid ""
 "Resetting device...\n"
@@ -2571,6 +2615,10 @@ msgstr "原厂 AEB:碰撞风险"
 #: selfdrive/selfdrived/events.py
 msgid "Stock LKAS: Lane Departure Detected"
 msgstr "原厂 LKAS:检测到偏离车道"
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Stop Distance"
+msgstr "停车距离"
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/vehicle/brands/subaru.py
 msgid "Stop and Go (Beta)"
@@ -4091,4 +4139,3 @@ msgstr "已订阅"
 #: openpilot/selfdrive/ui/widgets/setup.py
 msgid "🔥 Firehose Mode 🔥"
 msgstr "🔥 Firehose 模式 🔥"
-
