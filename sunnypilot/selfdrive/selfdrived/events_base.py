@@ -6,7 +6,7 @@ from collections.abc import Callable
 from cereal import log, car
 import cereal.messaging as messaging
 from openpilot.common.realtime import DT_CTRL
-from openpilot.system.hardware import HARDWARE
+from openpilot.common.hardware import HARDWARE
 from openpilot.system.ui.lib.multilang import tr_noop
 
 AlertSize = log.SelfdriveState.AlertSize
