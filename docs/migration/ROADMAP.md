@@ -163,7 +163,7 @@ Cross-reference `DECISIONS.md` for rationale.
 | `v0.0.x` | Pre-vehicle hotfixes (current: v0.0.2) |
 | `v0.1.x` | First successful CP-A; lateral validated on-vehicle |
 | `v0.2.x` | Longitudinal restored (after P1 complete + CP-C pass) |
-| `v1.0.x` | Daily driver stable: sustained miles + at least 1 successful upstream rebase per REBASE_PLAYBOOK |
+| `v1.0.x` | Daily driver stable: sustained miles + at least 1 successful upstream merge per REBASE_PLAYBOOK |
 
 Tags are annotated in all 3 repos. `v0.11.1-mazda3-2019.0.1` was retracted before any drive. `v0.11.1-mazda3-2019.0.2` is the current recovery point.
 
@@ -191,7 +191,7 @@ Don't. P1 requires CP-C validation. CP-C requires CP-A first. Do CP-A first.
 3. Read DECISIONS.md for relevant architectural constraints before patching
 
 **Pulling in upstream v0.12+:**
-Follow `REBASE_PLAYBOOK.md` exactly. Create dated backup branches first. Do opendbc_repo and panda before the parent.
+Follow `REBASE_PLAYBOOK.md` exactly (it documents a merge workflow, despite the filename). Create dated backup branches first. Do opendbc_repo and panda before the parent.
 
 ---
 
