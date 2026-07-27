@@ -2,369 +2,370 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-#: system/ui/tici_reset.py
+#: openpilot/system/ui/tici_reset.py
 msgid "System reset triggered. Press confirm to erase all content and settings. Press cancel to resume boot."
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
-#: system/ui/tici_reset.py
-#: system/ui/widgets/confirm_dialog.py
-#: system/ui/widgets/keyboard.py
-#: system/ui/widgets/network.py
-#: system/ui/widgets/option_dialog.py
+#: openpilot/system/ui/tici_reset.py
+#: openpilot/system/ui/widgets/confirm_dialog.py
+#: openpilot/system/ui/widgets/keyboard.py
+#: openpilot/system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/option_dialog.py
 msgid "Cancel"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/vehicle/platform_selector.py
-#: system/ui/tici_reset.py
+#: openpilot/system/ui/tici_reset.py
 msgid "Confirm"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/device.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/software.py
-#: system/ui/tici_reset.py
-#: system/ui/tici_updater.py
+#: openpilot/system/ui/tici_reset.py
+#: openpilot/system/ui/tici_updater.py
 msgid "Reboot"
 msgstr ""
 
-#: system/ui/tici_reset.py
+#: openpilot/system/ui/tici_reset.py
 msgid "System Reset"
 msgstr ""
 
-#: system/ui/tici_reset.py
+#: openpilot/system/ui/tici_reset.py
 msgid "Are you sure you want to reset your device?"
 msgstr ""
 
-#: system/ui/tici_reset.py
+#: openpilot/system/ui/tici_reset.py
 msgid ""
 "Resetting device...\n"
 "This may take up to a minute."
 msgstr ""
 
-#: system/ui/tici_reset.py
+#: openpilot/system/ui/tici_reset.py
 msgid "Reset failed. Reboot to try again."
 msgstr ""
 
-#: system/ui/tici_reset.py
+#: openpilot/system/ui/tici_reset.py
 msgid "Unable to mount data partition. Partition may be corrupted. Press confirm to erase and reset your device."
 msgstr ""
 
-#: system/ui/mici_updater.py
+#: openpilot/system/ui/mici_updater.py
 msgid "loading"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
-#: system/ui/mici_updater.py
+#: openpilot/system/ui/mici_updater.py
 msgid "downloading"
 msgstr ""
 
-#: system/ui/mici_updater.py
+#: openpilot/system/ui/mici_updater.py
 msgid ""
 "download\n"
 "& install"
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/onboarding.py
-#: system/ui/mici_setup.py
-#: system/ui/mici_updater.py
+#: openpilot/system/ui/mici_setup.py
+#: openpilot/system/ui/mici_updater.py
 msgid "next"
 msgstr ""
 
-#: system/ui/mici_updater.py
+#: openpilot/system/ui/mici_updater.py
 msgid "update failed"
 msgstr ""
 
-#: system/ui/mici_updater.py
+#: openpilot/system/ui/mici_updater.py
 msgid "update required"
 msgstr ""
 
-#: system/ui/mici_updater.py
+#: openpilot/system/ui/mici_updater.py
 msgid ""
 "the download size\n"
 "is approximately 1 GB"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid "reset failed"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid "reboot to try again"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid "resetting device"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid ""
 "this may take up to\n"
 "a minute..."
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid ""
 "reset &\n"
 "erase"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid "cancel"
 msgstr ""
 
-#: system/ui/mici_reset.py
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_reset.py
+#: openpilot/system/ui/mici_setup.py
 msgid ""
 "reboot\n"
 "device"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid "factory reset"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid ""
 "resetting erases\n"
 "all user content & data"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid ""
 "this may take up to\n"
 "a minute{dots}"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid "Resetting erases all user content & data."
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid ""
 "user data partition\n"
 "could not be mounted"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid ""
 "For a deeper reset, go to\n"
 "https://flash.comma.ai"
 msgstr ""
 
-#: system/ui/mici_reset.py
+#: openpilot/system/ui/mici_reset.py
 msgid ""
 "reset triggered by\n"
 "tapping the screen"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "start"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/software.py
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "downloading..."
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid ""
 "connect to\n"
 "internet"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "swipe down to go back"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid ""
 "connect to\n"
 "continue"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "install openpilot"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid ""
 "slide to install\n"
 "openpilot"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid ""
 "slide to install\n"
 "custom software"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "choose software"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "custom software URL..."
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid ""
 "caution: installing\n"
 "3rd party software"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "• It has not been tested by comma."
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "• It may not comply with safety standards."
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "• It may damage your device and/or vehicle."
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid ""
 "how to restore to a\n"
 "factory state later"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid ""
 "waiting for\n"
 "internet..."
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "Incompatible sunnypilot version."
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/models.py
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "download failed"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid ""
 "swipe down to go\n"
 "back and try again"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "No custom software found at this URL: {url}"
 msgstr ""
 
-#: system/ui/mici_setup.py
+#: openpilot/system/ui/mici_setup.py
 msgid "Invalid URL: {url}"
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/developer.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/osm.py
-#: system/ui/tici_updater.py
+#: openpilot/system/ui/tici_updater.py
 msgid "Loading..."
 msgstr ""
 
-#: system/ui/tici_setup.py
-#: system/ui/tici_updater.py
+#: openpilot/system/ui/tici_setup.py
+#: openpilot/system/ui/tici_updater.py
 msgid "Downloading..."
 msgstr ""
 
-#: system/ui/tici_updater.py
+#: openpilot/system/ui/tici_updater.py
 msgid "An operating system update is required. Connect your device to Wi-Fi for the fastest update experience. The download size is approximately 1GB."
 msgstr ""
 
-#: system/ui/tici_setup.py
-#: system/ui/tici_updater.py
+#: openpilot/system/ui/tici_setup.py
+#: openpilot/system/ui/tici_updater.py
 msgid "Connect to Wi-Fi"
 msgstr ""
 
-#: system/ui/tici_updater.py
+#: openpilot/system/ui/tici_updater.py
 msgid "Install"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/onboarding.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/onboarding.py
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_policy.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_settings.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/lane_change_settings.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/mads_settings.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/steering_sub_layouts/torque_settings.py
-#: system/ui/tici_setup.py
-#: system/ui/tici_updater.py
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/tici_setup.py
+#: openpilot/system/ui/tici_updater.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Back"
 msgstr ""
 
-#: system/ui/tici_updater.py
+#: openpilot/system/ui/tici_updater.py
 msgid "Update failed"
 msgstr ""
 
-#: system/ui/tici_updater.py
+#: openpilot/system/ui/tici_updater.py
 msgid "Update Required"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "WARNING: Low Voltage"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Power your device in a car with a harness or proceed at your own risk."
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Continue"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/device.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/device.py
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Power Off"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Getting Started"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Before we get on the road, let's finish installation and cover some details."
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Custom Software"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Choose Software to Use"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Reboot device"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Start over"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Download Failed"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Waiting for internet"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Scroll to continue"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "WARNING: Custom Software"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid ""
 "Use caution when installing third-party software.\n"
 "\n"
@@ -377,198 +378,197 @@ msgid ""
 "If you'd like to proceed, use https://flash.comma.ai to restore your device to a factory state later."
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Enter URL"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "for Custom Software"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Continue without Wi-Fi"
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "Ensure the entered URL is valid, and the device's internet connection is good."
 msgstr ""
 
-#: system/ui/tici_setup.py
+#: openpilot/system/ui/tici_setup.py
 msgid "No custom software found at this URL."
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Pair your GitHub account"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Early Access: Become a sunnypilot Sponsor"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Scan the QR code to login to your GitHub account"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Follow the prompts to complete the pairing process"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Re-enter the \"sunnylink\" panel to verify sponsorship status"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "If sponsorship status was not updated, please contact a moderator on the community forum at https://community.sunnypilot.ai"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Scan the QR code to visit sunnyhaibin's GitHub Sponsors page"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Choose your sponsorship tier and confirm your support"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/sunnylink_pairing_dialog.py
 msgid "Join our Community Forum at https://community.sunnypilot.ai and reach out to a moderator if you have issues"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/tree_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/tree_dialog.py
 msgid "Search"
 msgstr ""
 
-#: system/ui/sunnypilot/widgets/tree_dialog.py
+#: openpilot/system/ui/sunnypilot/widgets/tree_dialog.py
 msgid "Enter search query"
 msgstr ""
 
-#: system/ui/widgets/list_view.py
+#: openpilot/system/ui/widgets/list_view.py
 msgid "Error"
 msgstr ""
 
-#: openpilot/selfdrive/ui/layouts/sidebar.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/sunnylink.py
-#: system/ui/widgets/confirm_dialog.py
-#: system/ui/widgets/html_render.py
+#: openpilot/system/ui/widgets/confirm_dialog.py
+#: openpilot/system/ui/widgets/html_render.py
 msgid "OK"
 msgstr ""
 
-#: system/ui/widgets/option_dialog.py
+#: openpilot/system/ui/widgets/option_dialog.py
 msgid "Select"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Advanced"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Enter APN"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "leave blank for automatic configuration"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Enter SSID"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Enter new tethering password"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Enable Tethering"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "EDIT"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Tethering Password"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Enable Roaming"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Cellular Metered"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "APN Setting"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Wi-Fi Network Metered"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Enter password"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Scanning Wi-Fi networks..."
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "CONNECTING..."
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Forget"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Prevent large data uploads when on a metered cellular connection"
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/network/network_layout.py
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "default"
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/network/network_layout.py
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "metered"
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/network/network_layout.py
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "unmetered"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Prevent large data uploads when on a metered Wi-Fi connection"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "IP Address"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Hidden Network"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/sidebar.py
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "CONNECT"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Wrong password"
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "FORGETTING..."
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "for \"{}\""
 msgstr ""
 
-#: system/ui/widgets/network.py
+#: openpilot/system/ui/widgets/network.py
 msgid "Forget Wi-Fi Network \"{}\"?"
 msgstr ""
 
@@ -766,15 +766,15 @@ msgid "Unknown"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/sidebar.py
+msgid "HIGH"
+msgstr ""
+
+#: openpilot/selfdrive/ui/layouts/sidebar.py
 msgid "NO"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/sidebar.py
 msgid "PANDA"
-msgstr ""
-
-#: openpilot/selfdrive/ui/layouts/sidebar.py
-msgid "HIGH"
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/sidebar.py
@@ -1143,13 +1143,6 @@ msgid ""
 "Does it matter which software I run? Yes, only upstream openpilot (and particular forks) are able to be used for training."
 msgstr ""
 
-#: openpilot/selfdrive/ui/layouts/settings/firehose.py
-#: openpilot/selfdrive/ui/mici/layouts/settings/firehose.py
-msgid "{} segment of your driving is in the training dataset so far."
-msgid_plural "{} segments of your driving is in the training dataset so far."
-msgstr[0] ""
-msgstr[1] ""
-
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
 msgid "ADB (Android Debug Bridge) allows connecting to your device over USB or over the network. See https://docs.comma.ai/how-to/connect-to-comma for more info."
 msgstr ""
@@ -1159,7 +1152,7 @@ msgid "Warning: This grants SSH access to all public keys in your GitHub setting
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
-msgid "<b>WARNING: sunnypilot longitudinal control is in alpha for this car and will disable Automatic Emergency Braking (AEB).</b><br><br>On this car, sunnypilot defaults to the car's built-in ACC instead of sunnypilot's longitudinal control. Enable this to switch to sunnypilot longitudinal control. Enabling Experimental mode is recommended when enabling sunnypilot longitudinal control alpha. Changing this setting will restart sunnypilot if the car is powered on."
+msgid "<b>WARNING: sunnypilot longitudinal control is in alpha for this car and may disable Automatic Emergency Braking (AEB).</b><br><br>On this car, sunnypilot defaults to the car's built-in ACC instead of sunnypilot's longitudinal control. Enable this to switch to sunnypilot longitudinal control. Enabling Experimental mode is recommended when enabling sunnypilot longitudinal control alpha. Changing this setting will restart sunnypilot if the car is powered on."
 msgstr ""
 
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
@@ -1178,13 +1171,13 @@ msgstr ""
 msgid "Joystick Debug Mode"
 msgstr ""
 
+#: openpilot/selfdrive/selfdrived/events.py
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
-#: selfdrive/selfdrived/events.py
 msgid "Longitudinal Maneuver Mode"
 msgstr ""
 
+#: openpilot/selfdrive/selfdrived/events.py
 #: openpilot/selfdrive/ui/layouts/settings/developer.py
-#: selfdrive/selfdrived/events.py
 msgid "Lateral Maneuver Mode"
 msgstr ""
 
@@ -1340,7 +1333,7 @@ msgstr ""
 #: openpilot/selfdrive/ui/onroad/hud_renderer.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_settings.py
 #: openpilot/selfdrive/ui/sunnypilot/onroad/speed_renderer.py
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "km/h"
 msgstr ""
 
@@ -1348,7 +1341,7 @@ msgstr ""
 #: openpilot/selfdrive/ui/onroad/hud_renderer.py
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_settings.py
 #: openpilot/selfdrive/ui/sunnypilot/onroad/speed_renderer.py
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "mph"
 msgstr ""
 
@@ -1496,12 +1489,10 @@ msgstr ""
 msgid "sponsor"
 msgstr ""
 
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/sunnylink.py
 msgid "paired"
 msgstr ""
 
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
 #: openpilot/selfdrive/ui/sunnypilot/mici/layouts/sunnylink.py
 msgid "pair"
 msgstr ""
@@ -1674,6 +1665,10 @@ msgstr ""
 msgid "Speed Limit"
 msgstr ""
 
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise.py
+msgid "Longitudinal MPC Tuning"
+msgstr ""
+
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
 msgid "Enable this for the car to learn and adapt its steering response time. Disable to use a fixed steering response time. Keeping this on provides the stock openpilot experience."
 msgstr ""
@@ -1740,6 +1735,14 @@ msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
 msgid "Live Learning Steer Delay"
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
+msgid "Adjust Camera Offset"
+msgstr ""
+
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
+msgid "Virtually shift camera's perspective to move model's center to Left(+ values) or Right (- values)"
 msgstr ""
 
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/models.py
@@ -2874,6 +2877,10 @@ msgstr ""
 msgid "Speed Limit Offset"
 msgstr ""
 
+#: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/longitudinal_mpc_tuning.py
+msgid "Reset to Defaults"
+msgstr ""
+
 #: openpilot/selfdrive/ui/sunnypilot/layouts/settings/cruise_sub_layouts/speed_limit_policy.py
 msgid "Car Only"
 msgstr ""
@@ -3017,91 +3024,11 @@ msgid "no alerts"
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "device ID"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "serial"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "update sunnypilot"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "reset calibration"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "reset"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "uninstall sunnypilot"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "uninstall"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "reboot"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "power off"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "regulatory info"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid ""
-"driver\n"
-"camera preview"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid ""
-"review\n"
-"training guide"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid ""
-"terms &\n"
-"conditions"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
 msgid "Please connect to Wi-Fi to complete initial pairing."
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "Please connect to Wi-Fi to update."
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "subscribed"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "upgrade to prime"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
 msgid "Device must be registered with the comma.ai backend to pair."
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid ""
-"slide to\n"
-"{}"
-msgstr ""
-
-#: openpilot/selfdrive/ui/mici/layouts/settings/device.py
-msgid "Disengage to {}"
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/toggles.py
@@ -3219,6 +3146,12 @@ msgstr ""
 msgid "INACTIVE: connect to an unmetered network"
 msgstr ""
 
+#: openpilot/selfdrive/ui/mici/layouts/settings/firehose.py
+msgid "{} segment of your driving is in the training dataset so far."
+msgid_plural "{} segments of your driving is in the training dataset so far."
+msgstr[0] ""
+msgstr[1] ""
+
 #: openpilot/selfdrive/ui/mici/layouts/settings/developer.py
 msgid "SSH keys"
 msgstr ""
@@ -3249,6 +3182,38 @@ msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/developer.py
 msgid "Not set"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/settings/software.py
+msgid "version"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/settings/software.py
+msgid "branch"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/settings/software.py
+msgid "check for update"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/settings/software.py
+msgid "install update"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/settings/software.py
+msgid "target branch"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/settings/software.py
+msgid "uninstall sunnypilot"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/settings/software.py
+msgid "uninstall"
+msgstr ""
+
+#: openpilot/selfdrive/ui/mici/layouts/settings/software.py
+msgid "Please connect to Wi-Fi to update."
 msgstr ""
 
 #: openpilot/selfdrive/ui/mici/layouts/settings/network/wifi_ui.py
@@ -3336,657 +3301,665 @@ msgstr ""
 msgid "pair with comma connect"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Toggle stock LKAS on or off to engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "WARNING: This branch is not tested"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Recalibrating"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Calibrating"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+msgid "Pay Attention to Engage"
+msgstr ""
+
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Recording Audio Feedback"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Out of Storage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Camera Malfunction"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Calibration Invalid"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steering misalignment detected"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "System Overheated"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Low Memory"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "High CPU Usage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Driving Model Lagging"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Joystick Mode"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Switch to Traffic-Aware Cruise Control to engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Invalid LKAS setting"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+msgid "Too Distracted"
+msgstr ""
+
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Speed Error: {err:.1f} m/s"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Posenet Speed Invalid"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Process Not Running"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Communication Issue Between Processes"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Remount Device (Pitch: {pitch:.1f}°, Yaw: {yaw:.1f}°)"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steer ratio mismatch"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Gas: {gas}%, Steer: {steer}%"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Enable your car's LKAS to engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Ensure road ahead is clear"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "System Initializing"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Be ready to take over at any time"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Dashcam mode"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Dashcam mode for unsupported car"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Dashcam Mode"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Security Key Not Available"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Car Unrecognized"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "BRAKE!"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Emergency Braking: Risk of Collision"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "AEB: Risk of Collision"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Stock AEB: Risk of Collision"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Stock LKAS: Lane Departure Detected"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Risk of Collision"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Lane Departure Detected"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steering Assist Temporarily Unavailable"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Pay Attention"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Driver Distracted"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "DISENGAGE IMMEDIATELY"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Touch Steering Wheel: No Face Detected"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Touch Steering Wheel"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Driver Unresponsive"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "TAKE CONTROL"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Resume Driving Manually"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Press Resume to Exit Standstill"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steer Left to Start Lane Change Once Safe"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steer Right to Start Lane Change Once Safe"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Car Detected in Blindspot"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Changing Lanes"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Take Control"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Turn Exceeds Steering Limit"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Fan Malfunction"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Likely Hardware Issue"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Camera Malfunction: Reboot Your Device"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Camera Frame Rate Low"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Reboot your Device"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Camera Frame Rate Low: Reboot Your Device"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "locationd Temporary Error"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "locationd Permanent Error"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "paramsd Permanent Error"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Cancel Pressed"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Press Resume to Exit Brake Hold"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Parking Brake Engaged"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Pedal Pressed"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steering Pressed"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Release Brake to Engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Press Set to Engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Adaptive Cruise Disabled"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steering Temporarily Unavailable"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Vehicle Steering Time Limit"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Sensor Data Invalid"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Possible Hardware Issue"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
-msgid "Distraction Level Too High"
-msgstr ""
-
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Excessive Actuation"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Gear not D"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Calibration Invalid: Remount Device & Recalibrate"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Calibration in Progress"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Remount Detected: Recalibrating"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Door Open"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Seatbelt Unlatched"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Electronic Stability Control Disabled"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Low Battery"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Low Communication Rate Between Processes"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Selfdrive Process Lagging: Reboot Your Device"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Radar Error: Restart the Car"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Radar Temporarily Unavailable"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Device Fell Off Mount"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Low Memory: Reboot Your Device"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Cruise Fault: Restart the Car"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Cruise Fault: Restart the car to engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Electronic Stability Control Active"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Controls Mismatch"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "USB Error: Reboot Your Device"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Unknown Vehicle Variant"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "CAN Bus Disconnected"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "CAN Bus Disconnected: Likely Faulty Cable"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "CAN Bus Disconnected: Check Connections"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "LKAS Fault: Restart the Car"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "LKAS Fault: Restart the car to engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid ""
 "Reverse\n"
 "Gear"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Reverse Gear"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Cruise Is Off"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Harness Relay Malfunction"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Check Hardware"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "openpilot Canceled"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Speed too low"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Speed Too High"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Model uncertain at this speed"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Slow down to engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Vehicle Sensors Invalid"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Vehicle Sensors Calibrating"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Drive to Calibrate"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Bookmark Saved"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Drive above {speed} to engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steer Assist Unavailable Below {speed}"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Drive Above {speed}"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "{count} second(s) remaining. Press again to save early."
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "{percent}% full"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Angle offset too high (Offset: {offset:.1f}°)"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Abnormal tire stiffness"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "{temp:.0f} °C"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "{percent}% used"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "{percent:.1f}% frames dropped"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Driving Personality: {personality}"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Disable your car's stock LKAS to engage"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
+msgid "{count} minute(s) Left"
+msgstr ""
+
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steering rack geometry may be off (Ratio: {ratio:.1f})"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "paramsd Temporary Error"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Press Resume"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steer Left"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Confirm Lane Change"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Steer Right"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Car in Blindspot"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "take control"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "turn exceeds limit"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Reverse"
 msgstr ""
 
-#: selfdrive/selfdrived/events.py
+#: openpilot/selfdrive/selfdrived/events.py
 msgid "Check tires, pressure, or alignment (Factor: {factor:.1f})"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Adjusting to {speed} {unit} speed limit"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Automatic Lane Centering is OFF"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Manual Steering Required"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Smart/Adaptive Cruise Control: OFF"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Manual Speed Control Required"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Brake Hold Active"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
-#: sunnypilot/selfdrive/selfdrived/events_base.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events_base.py
 msgid "openpilot Unavailable"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Controls Mismatch: Lateral"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Experimental Mode Switched"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Turning Left"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Turning Right"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Auto adjusting to speed limit"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Set speed changed"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Auto adjusting to last speed limit"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Speed Limit Assist: set to {speed} {unit} to engage"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Press + to confirm speed limit"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events.py
 msgid "Press - to confirm speed limit"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events_base.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events_base.py
 msgid "Enable Adaptive Cruise to Engage"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events_base.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events_base.py
 msgid "Enable Main Switch to Engage"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events_base.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events_base.py
 msgid "openpilot will disengage"
 msgstr ""
 
-#: sunnypilot/selfdrive/selfdrived/events_base.py
+#: openpilot/sunnypilot/selfdrive/selfdrived/events_base.py
 msgid "Always keep hands on wheel and eyes on road"
 msgstr ""
 
