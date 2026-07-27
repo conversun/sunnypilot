@@ -1,6 +1,6 @@
 # controls/lib/ - SP CONTROL FEATURE LIBRARIES
 
-sunnypilot's per-feature control logic. All features are **param-gated** and integrate via [controlsd_ext.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/selfdrive/controls/controlsd_ext.py) + [longitudinal_planner.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/selfdrive/controls/lib/longitudinal_planner.py).
+sunnypilot's per-feature control logic. All features are **param-gated** and integrate via [controlsd_ext.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/selfdrive/controls/controlsd_ext.py) + [longitudinal_planner.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/selfdrive/controls/lib/longitudinal_planner.py).
 
 ## STRUCTURE
 
@@ -30,7 +30,7 @@ lib/
 | **DEC** | longitudinal_planner.py | `DynamicExperimentalControl` |
 | **NNLC** | latcontrol_torque_ext.py via `CarParamsSP.NeuralNetworkLateralControl` | `NeuralNetworkLateralControl` |
 | **SCC-V/M** | longitudinal_planner.py | `SmartCruiseControlVision`, `SmartCruiseControlMap` |
-| **SLA** | longitudinal_planner.py via [speed_limit/resolver.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/selfdrive/controls/lib/speed_limit) | `SpeedLimitMode` |
+| **SLA** | longitudinal_planner.py via [speed_limit/resolver.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/selfdrive/controls/lib/speed_limit) | `SpeedLimitMode` |
 | **Auto Lane Change** | controlsd_ext.py | `AutoLaneChangeTimer` |
 | **Blinker Pause** | controlsd_ext.py | `BlinkerPauseLateralControl`, `BlinkerPauseLateralControlSpeed`, `BlinkerPauseLateralControlReengageDelay` |
 | **Lane Turn Desire** | controlsd_ext.py via `ModelDataV2SP.laneTurnDirection` | `LaneTurnDesire` |
@@ -42,7 +42,7 @@ Blended ACC: switches between `acc` (cruise) and `blended` (e2e) longitudinal mo
 
 ## NNLC (Neural Network Lateral Control)
 
-ML model produces torque feedforward from `roll, pitch, lateral_accel, jerk_error`. Model file is per-platform - selected via `CarParamsSP.neuralNetworkLateralControl.model.{path,name}`. Training data from submodule [sunnypilot/neural_network_data/](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/neural_network_data).
+ML model produces torque feedforward from `roll, pitch, lateral_accel, jerk_error`. Model file is per-platform - selected via `CarParamsSP.neuralNetworkLateralControl.model.{path,name}`. Training data from submodule [openpilot/sunnypilot/neural_network_data/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/neural_network_data).
 
 ## SCC (Smart Cruise Control)
 
@@ -69,5 +69,5 @@ Resolver pulls from car CAN, MAPD, or override. Assist applies the resolved limi
 
 - `latcontrol_torque_versions.json` lets users select between tune revisions (v0 = upstream pre-2026 tune).
 - `e2e_alerts_helper.py` reads from `ModelDataV2SP` for green-light + lead-departure detection - emits via `LongitudinalPlanSP.e2eAlerts`.
-- Tests in `tests/` use plain pytest. Run individual: `pytest sunnypilot/selfdrive/controls/lib/nnlc/tests/`.
+- Tests in `tests/` use plain pytest. Run individual: `pytest openpilot/sunnypilot/selfdrive/controls/lib/nnlc/tests/`.
 - The MPC solver caveat from parent applies: imports outside the constants block do NOT trigger rebuild.

@@ -1,6 +1,6 @@
 # sunnylink/ - SP CLOUD PLATFORM
 
-sunnypilot's parallel cloud-services stack (analog to comma's athena/api). 40+ files. See [sunnypilot/AGENTS.md](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/AGENTS.md) for fork conventions.
+sunnypilot's parallel cloud-services stack (analog to comma's athena/api). 40+ files. See [openpilot/sunnypilot/AGENTS.md](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/AGENTS.md) for fork conventions.
 
 ## STRUCTURE
 
@@ -42,27 +42,25 @@ settings_ui_src/*.yaml  --[apply_macros.py]-->  --[compile_settings_ui.py]--> se
 
 | Tool | Purpose |
 |------|---------|
-| [tools/apply_macros.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/tools/apply_macros.py) | Expand reusable YAML fragments |
-| [tools/compile_settings_ui.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/tools/compile_settings_ui.py) | YAML -> JSON |
-| [tools/extract_settings_ui.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/tools/extract_settings_ui.py) | Reverse: JSON -> YAML (rare) |
-| [tools/generate_settings_schema.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/tools/generate_settings_schema.py) | Regenerate schema after struct changes |
-| [tools/update_params_metadata.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/tools/update_params_metadata.py) | Regenerate `params_metadata.json` from [common/params_keys.h](file:///Users/cyonsun/Documents/Code/sunnypilot/common/params_keys.h) |
-| [tools/validate_settings_ui.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/tools/validate_settings_ui.py) | Schema-validate `settings_ui.json` |
+| [tools/apply_macros.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/sunnylink/tools/apply_macros.py) | Expand reusable YAML fragments |
+| [tools/compile_settings_ui.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/sunnylink/tools/compile_settings_ui.py) | YAML -> JSON |
+| [tools/extract_settings_ui.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/sunnylink/tools/extract_settings_ui.py) | Reverse: JSON -> YAML (rare) |
+| [tools/generate_settings_schema.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/sunnylink/tools/generate_settings_schema.py) | Regenerate schema after struct changes |
+| [tools/validate_settings_ui.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/sunnylink/tools/validate_settings_ui.py) | Schema-validate `settings_ui.json` |
 
 ## REGISTRATION & KEYS
 
 - Device registers via `registration_manager` (background daemon)
 - Uses **elliptic curve keys** (Ed25519) - keys generated on first boot, persist across reinstalls
 - Param keys: `SunnylinkEnabled`, `SunnylinkdPid`, `SunnylinkRegisteredHash`, etc.
-- Status helpers in [utils.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/utils.py): `sunnylink_ready(params)`, `sunnylink_need_register(params)`, `use_sunnylink_uploader(params)`
+- Status helpers in [utils.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/sunnylink/utils.py): `sunnylink_ready(params)`, `sunnylink_need_register(params)`, `use_sunnylink_uploader(params)`
 
 ## ANTI-PATTERNS (THIS DIR)
 
-- **NEVER hand-edit `settings_ui.json`, `settings_ui.schema.json`, `params_metadata.json`** - they are compiled outputs. Edit `settings_ui_src/*.yaml` then re-run the compile chain.
+- **NEVER hand-edit `settings_ui.json`, `settings_ui.schema.json`** - they are compiled outputs. Edit `settings_ui_src/*.yaml` then re-run the compile chain.
 - **NEVER block remote modification of `GithubSshKeys`** is intentional - server CANNOT push SSH keys ([CHANGELOG ref](file:///Users/cyonsun/Documents/Code/sunnypilot/CHANGELOG.md)).
 - **NEVER store unencrypted backup payloads** - all device-state backups must go through `AESCipher`.
-- **DO NOT call sunnylink endpoints directly from daemons** - go through [api.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/api.py) so retry/auth is consistent.
-- **DO NOT add Param keys without metadata** - run `update_params_metadata.py` after editing `params_keys.h` so settings UI stays consistent.
+- **DO NOT call sunnylink endpoints directly from daemons** - go through [api.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/sunnylink/api.py) so retry/auth is consistent.
 
 ## NOTES
 

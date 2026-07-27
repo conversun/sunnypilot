@@ -12,20 +12,21 @@ sunnypilot is a fork of comma.ai openpilot (Level-2 driver assistance). Multi-la
 
 ```
 sunnypilot/
-├── selfdrive/      # Driving stack (controlsd, plannerd, modeld, locationd, ui)
-├── system/         # System services (manager, hardware, loggerd, athena, updated)
-├── common/         # Shared C++/Python utils + Params (key-value persistent store)
-├── cereal/         # Cap'n Proto messaging spec - see cereal/README.md
-├── msgq_repo/      # SUBMODULE - IPC backend; symlinked as msgq/
-├── opendbc_repo/   # SUBMODULE (FORK: conversun/opendbc) - car interfaces + safety; symlinked as opendbc/
+├── openpilot/      # Real source tree (common, selfdrive, system, sunnypilot, cereal, third_party, tools)
+│   ├── cereal/     # Cap'n Proto messaging spec - see openpilot/cereal/README.md
+│   ├── common/     # Shared C++/Python utils + Params (key-value persistent store)
+│   ├── selfdrive/  # Driving stack (controlsd, plannerd, modeld, locationd, ui)
+│   ├── sunnypilot/ # Fork-specific code (MADS, sunnylink, mapd, modeld_v2, NNLC, ...)
+│   ├── system/     # System services (manager, hardware, loggerd, athena, updated)
+│   ├── third_party/ # Vendored native deps (acados, raylib, json11)
+│   └── tools/      # openpilot tools (cabana, replay, sim)
+├── tools/          # Root dev tools (op.sh, car_porting/, release/, scripts/)
+├── msgq_repo/      # SUBMODULE - IPC backend
+├── opendbc_repo/   # SUBMODULE (FORK: conversun/opendbc) - car interfaces + safety
 ├── panda/          # SUBMODULE (FORK: conversun/panda) - STM32 firmware
-├── rednose_repo/   # SUBMODULE - EKF library; symlinked as rednose/
+├── rednose_repo/   # SUBMODULE - EKF library
 ├── tinygrad_repo/  # SUBMODULE (FORK: sunnypilot/tinygrad) - ML inference
 ├── teleoprtc_repo/ # SUBMODULE - WebRTC for body
-├── sunnypilot/     # FORK-SPECIFIC code (MADS, sunnylink, mapd, modeld_v2, NNLC, ...)
-├── openpilot/      # SYMLINK PACK -> ../{common,selfdrive,system,...} (namespace pkg)
-├── tools/          # Dev tools: cabana, replay, sim, joystick, op.sh
-├── third_party/    # Vendored native deps (acados, raylib, json11)
 ├── docs/           # User + migration docs
 ├── release/        # Release build/CI scripts
 ├── site_scons/     # Custom SCons builders (cython, compilation_db, rednose_filter)
@@ -42,14 +43,14 @@ sunnypilot/
 
 | Task | Location |
 |------|----------|
-| Add a managed daemon | [system/manager/process_config.py](file:///Users/cyonsun/Documents/Code/sunnypilot/system/manager/process_config.py) |
-| Add a cereal message | [cereal/log.capnp](file:///Users/cyonsun/Documents/Code/sunnypilot/cereal/log.capnp) (stock) or [cereal/custom.capnp](file:///Users/cyonsun/Documents/Code/sunnypilot/cereal/custom.capnp) (fork-only) |
-| Add a Params key | [common/params_keys.h](file:///Users/cyonsun/Documents/Code/sunnypilot/common/params_keys.h) |
-| Add a sunnypilot feature | `sunnypilot/...` mirroring upstream layout, with `_ext.py` suffix to extend |
-| Add safety logic | [opendbc/safety/](file:///Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo/opendbc/safety) (C, MISRA) - tests MUST pass with 100% coverage |
-| Add a car port | [opendbc/car/{brand}/](file:///Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo/opendbc/car) + [opendbc/sunnypilot/{brand}/](file:///Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo/opendbc/sunnypilot) for SP extensions |
-| Modify UI | [selfdrive/ui/](file:///Users/cyonsun/Documents/Code/sunnypilot/selfdrive/ui) (Raylib Python) + [selfdrive/ui/sunnypilot/](file:///Users/cyonsun/Documents/Code/sunnypilot/selfdrive/ui/sunnypilot) for SP screens |
-| Modify settings UI | [sunnypilot/sunnylink/settings_ui_src/](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/settings_ui_src) -> compile via [tools/compile_settings_ui.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/sunnylink/tools/compile_settings_ui.py) |
+| Add a managed daemon | [openpilot/system/manager/process_config.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/system/manager/process_config.py) |
+| Add a cereal message | [openpilot/cereal/log.capnp](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/cereal/log.capnp) (stock) or [openpilot/cereal/custom.capnp](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/cereal/custom.capnp) (fork-only) |
+| Add a Params key | [openpilot/common/params_keys.h](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/params_keys.h) |
+| Add a sunnypilot feature | `openpilot/sunnypilot/...` mirroring upstream layout, with `_ext.py` suffix to extend |
+| Add safety logic | [opendbc_repo/opendbc/safety/](file:///Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo/opendbc/safety) (C, MISRA) - tests MUST pass with 100% coverage |
+| Add a car port | [opendbc_repo/opendbc/car/{brand}/](file:///Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo/opendbc/car) + [opendbc_repo/opendbc/sunnypilot/{brand}/](file:///Users/cyonsun/Documents/Code/sunnypilot/opendbc_repo/opendbc/sunnypilot) for SP extensions |
+| Modify UI | [openpilot/selfdrive/ui/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/selfdrive/ui) (Raylib Python) + [openpilot/selfdrive/ui/sunnypilot/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/selfdrive/ui/sunnypilot) for SP screens |
+| Modify settings UI | [openpilot/sunnypilot/sunnylink/settings_ui_src/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/sunnylink/settings_ui_src) -> compile via [openpilot/sunnypilot/sunnylink/tools/compile_settings_ui.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/sunnylink/tools/compile_settings_ui.py) |
 | Add a test | Co-locate as `tests/test_*.py` next to module |
 | Run on PC | [tools/op.sh](file:///Users/cyonsun/Documents/Code/sunnypilot/tools/op.sh) (`op setup`, `op build`, `op test`, `op lint`, `op sim`) |
 
@@ -59,7 +60,7 @@ sunnypilot/
 - **Indent: 2 spaces** (NOT 4). Lines: 160 max. Quote style: `preserve`.
 - **Type checker: `ty`** (Astral) - NOT mypy. Many rules ignored - see [pyproject.toml](file:///Users/cyonsun/Documents/Code/sunnypilot/pyproject.toml#L215-L253).
 - **Test runner: pytest** with `pytest-xdist -n auto --dist=loadgroup`. NEVER `unittest`.
-- **Imports: ALWAYS `from openpilot.X import Y`** (banned: bare `from common.X`, `from selfdrive.X`, `from system.X`, `from tools.X`, `from third_party.X`).
+- **Imports: ALWAYS `from openpilot.X import Y`** (banned: bare `from openpilot.common.X`, `from openpilot.selfdrive.X`, `from openpilot.system.X`, `from openpilot.tools.X`, `from openpilot.third_party.X`).
 - **NEVER use `time.time()`** - use `time.monotonic()` (banned via TID251).
 - **NEVER use `unittest`** - use `pytest` (banned via TID251).
 - **NEVER call `pytest.main()`** directly (special-handling banned via TID251).
@@ -97,12 +98,12 @@ Post-commit hook auto-runs `op lint --fast`. Install via `op post-commit`.
 ### SAFETY-CRITICAL (banned -> fork loses comma.ai access)
 - **NEVER disable/nerf driver monitoring** - [docs/SAFETY.md:38](file:///Users/cyonsun/Documents/Code/sunnypilot/docs/SAFETY.md#L38)
 - **NEVER disable/nerf excessive actuation checks** - [docs/SAFETY.md:39](file:///Users/cyonsun/Documents/Code/sunnypilot/docs/SAFETY.md#L39)
-- **NEVER modify `opendbc/safety/` without preserving full test suite + 100% coverage** - [docs/SAFETY.md:40-42](file:///Users/cyonsun/Documents/Code/sunnypilot/docs/SAFETY.md#L40-L42)
+- **NEVER modify `opendbc_repo/opendbc/safety/` without preserving full test suite + 100% coverage** - [docs/SAFETY.md:40-42](file:///Users/cyonsun/Documents/Code/sunnypilot/docs/SAFETY.md#L40-L42)
 
 ### CEREAL SCHEMA (breaks log compat)
 - **NEVER change Cap'n Proto identifiers** (e.g. `@0x81c2f05a394cf4af`) or field IDs (`@107`)
 - **NEVER change which struct a field points to**
-- **NEVER modify stock message struct field semantics** in a fork - create new structs in [cereal/custom.capnp](file:///Users/cyonsun/Documents/Code/sunnypilot/cereal/custom.capnp) instead
+- **NEVER modify stock message struct field semantics** in a fork - create new structs in [openpilot/cereal/custom.capnp](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/cereal/custom.capnp) instead
 - All cereal fields MUST be SI units unless name says otherwise
 
 ### CODE / WORKFLOW
@@ -158,11 +159,11 @@ python selfdrive/test/process_replay/test_processes.py
 
 ## NOTES
 
-- **`openpilot/` is a SYMLINK PACK** -> back to `common/`, `selfdrive/`, etc. Enables `from openpilot.X import Y` namespacing. NEVER edit files via the `openpilot/` path - edit the source.
-- **`opendbc/` is a SYMLINK** -> `opendbc_repo/opendbc/`. Same for `msgq` -> `msgq_repo/msgq`. Both submodules ARE forks (URL: `conversun/opendbc`, `conversun/panda`).
-- **Process manager `manager.py` is the supervisor** - all daemons defined in [process_config.py](file:///Users/cyonsun/Documents/Code/sunnypilot/system/manager/process_config.py). To run a single daemon for testing: `python -m openpilot.selfdrive.controls.controlsd` (after `op_activate_venv`).
-- **Two model runners coexist**: stock `selfdrive/modeld/` (SNPE/PC) and sunnypilot's `sunnypilot/modeld_v2/` (tinygrad). Switched via `ModelManagerSP.Runner` cereal enum.
-- **Generated files (DO NOT commit, DO NOT edit):** `*_pyx.cpp`, `cereal/gen/`, `cereal/services.h`, `selfdrive/locationd/models/generated/`, `panda/board/obj/`, `compile_commands.json`, `c_generated_code/` (acados).
+- **`openpilot/` is the real source tree** -> contains `common/`, `selfdrive/`, `system/`, `sunnypilot/`, `cereal/`, `third_party/`, and `tools/`. Edit files there directly.
+- **`opendbc_repo/opendbc/` and `msgq_repo/msgq/` are the checked-out submodules at root**. Both are forks (URL: `conversun/opendbc`, `conversun/panda`).
+- **Process manager `manager.py` is the supervisor** - all daemons defined in [openpilot/system/manager/process_config.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/system/manager/process_config.py). To run a single daemon for testing: `python -m openpilot.selfdrive.controls.controlsd` (after `op_activate_venv`).
+- **Two model runners coexist**: stock `openpilot/selfdrive/modeld/` (SNPE/PC) and sunnypilot's `openpilot/sunnypilot/modeld_v2/` (tinygrad). Switched via `ModelManagerSP.Runner` cereal enum.
+- **Generated files (DO NOT commit, DO NOT edit):** `*_pyx.cpp`, `openpilot/cereal/gen/`, `openpilot/cereal/services.h`, `openpilot/selfdrive/locationd/models/generated/`, `panda/board/obj/`, `compile_commands.json`, `c_generated_code/` (acados).
 - **AGNOS = comma 3/3X OS** (Ubuntu-based, larch64). `/AGNOS` file marks device. `/TICI` for tici hardware. `larch64` is the SCons arch tag.
 - **Safety message lag = automatic disengage**: any monitored CAN msg lagging >1s causes `controls_allowed=false`. Affects feature additions reading new messages.
 - **Submodule URLs are FORKED** for panda + opendbc + tinygrad. `git submodule update --remote` will pull from sunnypilot/conversun forks, not commaai upstream.

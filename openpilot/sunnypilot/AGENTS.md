@@ -27,14 +27,14 @@ sunnypilot **extends** upstream openpilot files via `*_ext.py` siblings. Stock f
 
 | Stock file | SP extension |
 |------------|--------------|
-| `selfdrive/controls/controlsd.py` | [controlsd_ext.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/selfdrive/controls/controlsd_ext.py) |
-| `selfdrive/selfdrived/events.py` | [events.py](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/selfdrive/selfdrived/events.py) (custom alerts) |
-| `selfdrive/locationd/torqued.py` | `sunnypilot/selfdrive/locationd/torqued_ext.py` |
-| `opendbc/car/{brand}/carstate.py` | `opendbc/sunnypilot/{brand}/carstate_ext.py` |
+| `openpilot/selfdrive/controls/controlsd.py` | [controlsd_ext.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/selfdrive/controls/controlsd_ext.py) |
+| `openpilot/selfdrive/selfdrived/events.py` | [events.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/selfdrive/selfdrived/events.py) (custom alerts) |
+| `openpilot/selfdrive/locationd/torqued.py` | `openpilot/sunnypilot/selfdrive/locationd/torqued_ext.py` |
+| `opendbc_repo/opendbc/car/{brand}/carstate.py` | `opendbc_repo/opendbc/sunnypilot/{brand}/carstate_ext.py` |
 
 ## PROCESS ADDITIONS
 
-SP daemons registered in [system/manager/process_config.py](file:///Users/cyonsun/Documents/Code/sunnypilot/system/manager/process_config.py) (search `# sunnypilot`):
+SP daemons registered in [openpilot/system/manager/process_config.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/system/manager/process_config.py) (search `# sunnypilot`):
 - `manage_sunnylinkd` - sunnylink athena daemon
 - `models_manager` - model download/select (offroad only)
 - `modeld_tinygrad` - alternative modeld (when `Runner.tinygrad`)
@@ -56,18 +56,18 @@ SP-specific structs use reserved IDs (DO NOT change identifiers):
 
 ## FEATURE FLAGS (Params)
 
-Features are param-gated via [common/params_keys.h](file:///Users/cyonsun/Documents/Code/sunnypilot/common/params_keys.h). Common SP keys: `Mads`, `MadsMainCruiseAllowed`, `MadsUnifiedEngagementMode`, `IntelligentCruiseButtonManagement`, `NeuralNetworkLateralControl`, `EnforceTorqueControl`, `SpeedLimitMode`, `LagdToggle`, `BlinkerPauseLateralControl`, `AutoLaneChangeTimer`, `LaneTurnDesire`, `DynamicExperimentalControl`, `SunnylinkEnabled`.
+Features are param-gated via [openpilot/common/params_keys.h](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/params_keys.h). Common SP keys: `Mads`, `MadsMainCruiseAllowed`, `MadsUnifiedEngagementMode`, `IntelligentCruiseButtonManagement`, `NeuralNetworkLateralControl`, `EnforceTorqueControl`, `SpeedLimitMode`, `LagdToggle`, `BlinkerPauseLateralControl`, `AutoLaneChangeTimer`, `LaneTurnDesire`, `DynamicExperimentalControl`, `SunnylinkEnabled`.
 
 ## ANTI-PATTERNS (THIS DIR)
 
 - **NEVER modify stock cereal stock-message field semantics**. Add to `custom.capnp` instead.
 - **NEVER duplicate upstream classes** - extend via `_ext.py`.
 - **NEVER hardcode feature behavior** - gate via Params.
-- **NEVER touch `neural_network_data/`** directly - it's a submodule (sunnypilot/neural-network-data).
+- **NEVER touch `openpilot/sunnypilot/neural_network_data/`** directly - it's a submodule.
 - **DO NOT confuse modeld vs modeld_v2** - they are mutually exclusive at runtime, switched by `ModelManagerSP.Runner` enum.
 
 ## NOTES
 
-- The mirror at `openpilot/sunnypilot/` is the symlink pack for namespace imports - DO NOT edit there.
+- `openpilot/sunnypilot/` is the real source tree for namespace imports; edit files there directly.
 - Two-channel build flag: `release_sp_channel` (sunnypilot release branch) vs `release_channel` (upstream).
-- SP version in [common/version.h](file:///Users/cyonsun/Documents/Code/sunnypilot/sunnypilot/common/version.h) (e.g. `SUNNYPILOT_VERSION "2026.001.000"`); upstream version in [/common/version.h](file:///Users/cyonsun/Documents/Code/sunnypilot/common/version.h).
+- SP version in [openpilot/common/version.h](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/version.h) (e.g. `SUNNYPILOT_VERSION "2026.001.000"`); upstream version in [openpilot/common/version.h](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/version.h).
