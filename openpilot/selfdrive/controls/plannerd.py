@@ -30,11 +30,17 @@ def main():
   pm = messaging.PubMaster(['longitudinalPlan', 'driverAssistance', 'longitudinalPlanSP'])
   sm = messaging.SubMaster(['carControl', 'carState', 'controlsState', 'liveParameters', 'radarState', 'modelV2', 'selfdriveState',
                             'liveMapDataSP', 'carStateSP', gps_location_service],
-                           poll='carState', ignore_alive=ignore_services, ignore_avg_freq=ignore_services, ignore_valid=ignore_services)
+                           poll='modelV2', ignore_alive=ignore_services, ignore_avg_freq=ignore_services, ignore_valid=ignore_services)
+
+  # SLA reacts to cruise button releases, which only appear in individual carState frames. SubMaster's socket is
+  # conflated and yields just the newest carState per iteration, so keep a queued socket to see every frame.
+  car_state_sock = messaging.sub_sock('carState')
 
   while True:
     sm.update()
-    longitudinal_planner.sla.update_car_state(sm['carState'])
+    for cs_msg in messaging.drain_sock(car_state_sock):
+      longitudinal_planner.sla.update_car_state(cs_msg.carState)
+
     if sm.updated['modelV2']:
       longitudinal_planner.update(sm)
       longitudinal_planner.publish(sm, pm)
