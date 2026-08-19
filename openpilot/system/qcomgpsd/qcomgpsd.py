@@ -18,7 +18,7 @@ from openpilot.common.time_helpers import system_time_valid
 from openpilot.common.hardware.comma.pins import GPIO
 from openpilot.common.serial import Serial
 from openpilot.common.swaglog import cloudlog
-from openpilot.system.qcomgpsd.modemdiag import ModemDiag, DIAG_LOG_F, setup_logs, send_recv
+from openpilot.system.qcomgpsd.modemdiag import ModemDiag, DIAG_LOG_F, DIAG_PORT, setup_logs, send_recv
 from openpilot.system.qcomgpsd.structs import (dict_unpacker, position_report, relist,
                                               gps_measurement_report, gps_measurement_report_sv,
                                               glonass_measurement_report, glonass_measurement_report_sv,
@@ -164,9 +164,16 @@ def teardown_quectel(diag):
   try_setup_logs(diag, [])
 
 
+@retry(attempts=10, delay=1.0)
+def connect_diag() -> ModemDiag:
+  # the DIAG port is a separate USB interface from AT_PORT and udev can create it later. it is also
+  # opened exclusively, so a previous qcomgpsd that has not fully exited yet still holds the lock.
+  return ModemDiag()
+
+
 def wait_for_modem():
   cloudlog.warning("waiting for modem to come up")
-  while not os.path.exists(AT_PORT):
+  while not (os.path.exists(AT_PORT) and os.path.exists(DIAG_PORT)):
     time.sleep(0.5)
   # wait until the modem GNSS subsystem responds
   while True:
@@ -211,7 +218,7 @@ def main() -> NoReturn:
   signal.signal(signal.SIGTERM, cleanup)
 
   # connect to modem
-  diag = ModemDiag()
+  diag = connect_diag()
   setup_quectel(diag)
   cloudlog.warning("quectel setup done")
   gpio_init(GPIO.GNSS_PWR_EN, True)
