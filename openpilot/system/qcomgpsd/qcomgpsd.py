@@ -110,7 +110,11 @@ def at_cmd(cmd: str) -> str:
 def gps_enabled() -> bool:
   return "QGPS: 1" in at_cmd("AT+QGPS?")
 
-@retry(attempts=5, delay=1.0)
+# The modem answers AT+QGPS? (what wait_for_modem waits on) well before its AT and DIAG channels
+# are reliably settled after a cold boot, so give the whole setup ~30s to ride that out. Failing
+# here kills qcomgpsd for the entire ignition cycle: manager never restarts a process it already
+# started, so managerState latches shouldBeRunning with running=False and the UI blocks engagement.
+@retry(attempts=15, delay=2.0)
 def setup_quectel(diag: ModemDiag):
   # enable OEMDRE in the NV
   # TODO: it has to reboot for this to take effect
