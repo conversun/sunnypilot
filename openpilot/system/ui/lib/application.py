@@ -123,8 +123,7 @@ class FontWeight(StrEnum):
 
 # Scripts Inter cannot render, for every language in FONT_FALLBACK_LANGUAGES: Thai, Hangul,
 # CJK radicals/punctuation/kana/ideographs and halfwidth/fullwidth forms.
-_NON_LATIN_RE = re.compile(r"[\u0e00-\u0e7f\u1100-\u11ff\u2e80-\u2fff\u3000-\u30ff\u3130-\u318f"
-                           r"\u3400-\u4dbf\u4e00-\u9fff\uac00-\ud7af\uf900-\ufaff\ufe30-\ufe4f\uff00-\uffef]")
+_NON_LATIN_RE = re.compile(r"[\u0e00-\u0e7f\u1100-\u11ff\u2e80-\u318f\u3400-\u9fff\uac00-\ud7af\uf900-\ufaff\ufe30-\ufe4f\uff00-\uffef]")
 
 
 def font_fallback(font: rl.Font, text: str = "") -> rl.Font:
