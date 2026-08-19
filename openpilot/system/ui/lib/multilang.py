@@ -2,25 +2,27 @@ from importlib.resources import files
 import json
 import os
 import re
+from typing import TYPE_CHECKING
 from openpilot.common.basedir import BASEDIR
 from openpilot.common.swaglog import cloudlog
 
-try:
+if TYPE_CHECKING:
   from openpilot.common.params import Params
-except ImportError:
-  Params = None
+else:
+  try:
+    from openpilot.common.params import Params
+  except (ImportError, OSError):
+    Params = None
 
 SYSTEM_UI_DIR = os.path.join(BASEDIR, "openpilot/system", "ui")
 UI_DIR = files("openpilot.selfdrive.ui")
 TRANSLATIONS_DIR = UI_DIR.joinpath("translations")
 LANGUAGES_FILE = TRANSLATIONS_DIR.joinpath("languages.json")
 
-# Languages whose primary font fallback is unifont (16 px bitmap GNU Unifont).
-# zh-CHS is intentionally NOT here — it uses HarmonyOS Sans SC as primary, with unifont
-# only as a per-text secondary fallback for chars HarmonyOS Sans SC doesn't cover.
-UNIFONT_LANGUAGES = [
+FONT_FALLBACK_LANGUAGES = [
   "th",
   "zh-CHT",
+  "zh-CHS",
   "ko",
   "ja",
 ]
@@ -163,9 +165,8 @@ class Multilang:
   def language(self) -> str:
     return self._language
 
-  def requires_unifont(self) -> bool:
-    """Certain languages require unifont to render their glyphs."""
-    return self._language in UNIFONT_LANGUAGES
+  def requires_font_fallback(self) -> bool:
+    return self._language in FONT_FALLBACK_LANGUAGES
 
   def setup(self):
     try:

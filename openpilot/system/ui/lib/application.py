@@ -20,7 +20,7 @@ from typing import NamedTuple
 from importlib.resources import as_file, files
 from openpilot.common.swaglog import cloudlog
 from openpilot.common.hardware import HARDWARE, PC
-from openpilot.system.ui.lib.multilang import multilang
+from openpilot.system.ui.lib.multilang import FONT_FALLBACK_LANGUAGES, TRANSLATIONS_DIR, multilang
 from openpilot.common.realtime import Ratekeeper
 
 from openpilot.system.ui.sunnypilot.lib.application import GuiApplicationExt
@@ -95,60 +95,49 @@ FONT_SCALE = 1.242 if BIG_UI else 1.16
 
 ASSETS_DIR = files("openpilot.selfdrive").joinpath("assets")
 FONT_DIR = ASSETS_DIR.joinpath("fonts")
+EXTRA_FONT_CHARS = "–‑✓×°§•X⚙✕◀▶✔⌫⇧␣○●↳çêüñ–‑✓×°§•€£¥"
+NOTO_FONTS = {
+  "ja": "NotoSansCJKjp-Regular.otf",
+  "ko": "NotoSansCJKkr-Regular.otf",
+  "th": "NotoSansThai-Regular.ttf",
+  # HarmonyOS Sans SC, not NotoSansCJKsc: the Noto .otf lives on sunnypilot's GitLab LFS,
+  # which this fork cannot fetch. The HarmonyOS fonts are stored as plain git blobs.
+  "zh-CHS": "HarmonyOS_Sans_SC_Regular.ttf",
+  "zh-CHT": "NotoSansCJKtc-Regular.otf",
+}
 
 
 class FontWeight(StrEnum):
-  NORMAL = "Inter-Regular.fnt" if BIG_UI else "Inter-Medium.fnt"
-  MEDIUM = "Inter-Medium.fnt"
-  BOLD = "Inter-Bold.fnt"
-  SEMI_BOLD = "Inter-SemiBold.fnt"
-  UNIFONT = "unifont.fnt"
-  AUDIOWIDE = "Audiowide-Regular.fnt"
-  CJK_SC_NORMAL = "HarmonyOS_Sans_SC_Regular.fnt"
-  CJK_SC_BOLD = "HarmonyOS_Sans_SC_Bold.fnt"
+  NORMAL = "Inter-Regular.ttf" if BIG_UI else "Inter-Medium.ttf"
+  MEDIUM = "Inter-Medium.ttf"
+  BOLD = "Inter-Bold.ttf"
+  SEMI_BOLD = "Inter-SemiBold.ttf"
+  UNIFONT = "unifont.otf"
+  AUDIOWIDE = "Audiowide-Regular.ttf"
 
   # Small UI fonts
-  DISPLAY_REGULAR = "Inter-Regular.fnt"
-  ROMAN = "Inter-Regular.fnt"
-  DISPLAY = "Inter-Bold.fnt"
+  DISPLAY_REGULAR = "Inter-Regular.ttf"
+  ROMAN = "Inter-Regular.ttf"
+  DISPLAY = "Inter-Bold.ttf"
 
 
-# When zh-CHS is active, route every Inter-family weight to the matching
-# HarmonyOS Sans SC weight. AUDIOWIDE/UNIFONT/CJK_SC_* fall through to identity.
-_CJK_SC_FALLBACK: dict[FontWeight, FontWeight] = {
-  FontWeight.NORMAL: FontWeight.CJK_SC_NORMAL,
-  FontWeight.MEDIUM: FontWeight.CJK_SC_NORMAL,
-  FontWeight.ROMAN: FontWeight.CJK_SC_NORMAL,
-  FontWeight.DISPLAY_REGULAR: FontWeight.CJK_SC_NORMAL,
-  FontWeight.BOLD: FontWeight.CJK_SC_BOLD,
-  FontWeight.SEMI_BOLD: FontWeight.CJK_SC_BOLD,
-  FontWeight.DISPLAY: FontWeight.CJK_SC_BOLD,
-}
-# Fonts that should NOT be remapped at all (already CJK-capable or special-purpose).
-_CJK_SC_PASSTHROUGH = {FontWeight.UNIFONT, FontWeight.AUDIOWIDE, FontWeight.CJK_SC_NORMAL, FontWeight.CJK_SC_BOLD}
-# Codepoint ranges that Inter cannot render and that require the HarmonyOS Sans SC atlas:
-# CJK punctuation, kana, ideographs, halfwidth/fullwidth forms.
-_CJK_RE = re.compile(r"[\u2e80-\u2fff\u3000-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\ufe30-\ufe4f\uff00-\uffef]")
+# Scripts Inter cannot render, for every language in FONT_FALLBACK_LANGUAGES: Thai, Hangul,
+# CJK radicals/punctuation/kana/ideographs and halfwidth/fullwidth forms.
+_NON_LATIN_RE = re.compile(r"[\u0e00-\u0e7f\u1100-\u11ff\u2e80-\u2fff\u3000-\u30ff\u3130-\u318f"
+                           r"\u3400-\u4dbf\u4e00-\u9fff\uac00-\ud7af\uf900-\ufaff\ufe30-\ufe4f\uff00-\uffef]")
 
 
 def font_fallback(font: rl.Font, text: str = "") -> rl.Font:
-  """Fall back to a language-appropriate font for CJK languages.
+  """Use a Noto fallback for languages not covered by Inter.
 
-  When `text` is provided and contains no CJK codepoints, the original font is
+  When `text` is provided and contains no non-Latin codepoints, the original font is
   returned so pure-ASCII strings (numbers, English labels) keep Inter's crisp
-  vector-quality scaling instead of being downgraded to the 72 px CJK atlas.
+  scaling instead of being downgraded to the 48 px fallback atlas.
   """
-  lang = multilang.language
-  if lang == "zh-CHS":
-    if text and not _CJK_RE.search(text):
+  if multilang.requires_font_fallback():
+    if text and not _NON_LATIN_RE.search(text):
       return font
-    weight = gui_app._font_weights_by_id.get(font.texture.id)
-    if weight is None or weight in _CJK_SC_PASSTHROUGH:
-      return font
-    target = _CJK_SC_FALLBACK.get(weight)
-    return gui_app.font(target) if target is not None else font
-  if multilang.requires_unifont():
-    return gui_app.font(FontWeight.UNIFONT)
+    return gui_app.fallback_font()
   return font
 
 
@@ -236,9 +225,7 @@ class GuiApplication(GuiApplicationExt):
     self._set_log_callback()
 
     self._fonts: dict[FontWeight, rl.Font] = {}
-    # Map texture.id -> FontWeight so font_fallback() can recover the requested weight
-    # from an arbitrary rl.Font (pyray may wrap/copy Font objects).
-    self._font_weights_by_id: dict[int, FontWeight] = {}
+    self._fallback_fonts: dict[str, rl.Font] = {}
     self._width = width if width is not None else GuiApplication._default_width()
     self._height = height if height is not None else GuiApplication._default_height()
 
@@ -596,7 +583,9 @@ class GuiApplication(GuiApplicationExt):
     for font in self._fonts.values():
       rl.unload_font(font)
     self._fonts = {}
-    self._font_weights_by_id = {}
+    for font in self._fallback_fonts.values():
+      rl.unload_font(font)
+    self._fallback_fonts = {}
 
     if self._render_texture is not None:
       rl.unload_render_texture(self._render_texture)
@@ -722,6 +711,21 @@ class GuiApplication(GuiApplicationExt):
   def font(self, font_weight: FontWeight = FontWeight.NORMAL) -> rl.Font:
     return self._fonts[font_weight]
 
+  def fallback_font(self) -> rl.Font:
+    language = multilang.language
+    if language not in self._fallback_fonts:
+      chars = set(map(chr, range(32, 127))) | set(EXTRA_FONT_CHARS)
+      chars.update(TRANSLATIONS_DIR.joinpath(f"app_{language}.po").read_text(encoding="utf-8"))
+      codepoints = sorted(map(ord, chars))
+      codepoint_buffer = rl.ffi.new("int[]", codepoints)
+      with as_file(FONT_DIR) as fspath:
+        font = rl.load_font_ex((fspath / NOTO_FONTS[language]).as_posix(), 48,
+                               rl.ffi.cast("int *", codepoint_buffer), len(codepoints))
+      rl.gen_texture_mipmaps(font.texture)
+      rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
+      self._fallback_fonts[language] = font
+    return self._fallback_fonts[language]
+
   @property
   def width(self):
     return self._width
@@ -731,21 +735,27 @@ class GuiApplication(GuiApplicationExt):
     return self._height
 
   def _load_fonts(self):
+    base_chars = set(map(chr, range(32, 127))) | set(EXTRA_FONT_CHARS)
+    unifont_chars = set(base_chars)
+    for language, code in multilang.languages.items():
+      unifont_chars.update(language)
+      if code not in FONT_FALLBACK_LANGUAGES:
+        base_chars.update(TRANSLATIONS_DIR.joinpath(f"app_{code}.po").read_text(encoding="utf-8"))
+
     for font_weight_file in FontWeight:
       with as_file(FONT_DIR) as fspath:
-        fnt_path = fspath / font_weight_file
-        font = rl.load_font(fnt_path.as_posix())
-        # Skip mipmaps/trilinear only for the bitmap-style UNIFONT, whose pixel-grid
-        # design would be smudged by mipmaps. Smooth fonts — including the CJK SC
-        # subset atlas — need mipmaps + trilinear; otherwise raylib's default POINT
-        # filter renders scaled text as a visible pixel grid ("点阵" look).
+        unifont = font_weight_file == FontWeight.UNIFONT
+        codepoints = sorted(map(ord, unifont_chars if unifont else base_chars))
+        codepoint_buffer = rl.ffi.new("int[]", codepoints)
+        font = rl.load_font_ex((fspath / font_weight_file).as_posix(), 16 if unifont else 200,
+                               rl.ffi.cast("int *", codepoint_buffer), len(codepoints))
         if font_weight_file != FontWeight.UNIFONT:
           rl.gen_texture_mipmaps(font.texture)
           rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
         self._fonts[font_weight_file] = font
-        self._font_weights_by_id[font.texture.id] = font_weight_file
-    # Set the raygui default font through font_fallback so e.g. zh-CHS picks HarmonyOS Sans SC.
-    rl.gui_set_font(font_fallback(self._fonts[FontWeight.NORMAL]))
+    if multilang.requires_font_fallback():
+      self.fallback_font()
+    rl.gui_set_font(self._fonts[FontWeight.NORMAL])
 
   def _set_styles(self):
     rl.gui_set_style(rl.GuiControl.DEFAULT, rl.GuiControlProperty.BORDER_WIDTH, 0)
