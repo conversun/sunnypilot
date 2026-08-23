@@ -125,6 +125,13 @@ class FontWeight(StrEnum):
 # CJK radicals/punctuation/kana/ideographs and halfwidth/fullwidth forms.
 _NON_LATIN_RE = re.compile(r"[\u0e00-\u0e7f\u1100-\u11ff\u2e80-\u318f\u3400-\u9fff\uac00-\ud7af\uf900-\ufaff\ufe30-\ufe4f\uff00-\uffef]")
 
+# The fallback atlas is baked from a fixed codepoint list, so it only contains glyphs
+# we asked for. UI strings come from the .po, but dynamic text (OSM road names) does not,
+# and raylib renders any codepoint outside the atlas as '?'. Unseen codepoints are queued
+# and baked in between frames, up to this ceiling so a stream of junk names cannot grow the
+# texture without bound.
+FALLBACK_ATLAS_MAX_CODEPOINTS = 4000
+
 
 def font_fallback(font: rl.Font, text: str = "") -> rl.Font:
   """Use a Noto fallback for languages not covered by Inter.
@@ -136,7 +143,7 @@ def font_fallback(font: rl.Font, text: str = "") -> rl.Font:
   if multilang.requires_font_fallback():
     if text and not _NON_LATIN_RE.search(text):
       return font
-    return gui_app.fallback_font()
+    return gui_app.fallback_font(text)
   return font
 
 
@@ -225,6 +232,8 @@ class GuiApplication(GuiApplicationExt):
 
     self._fonts: dict[FontWeight, rl.Font] = {}
     self._fallback_fonts: dict[str, rl.Font] = {}
+    self._fallback_chars: dict[str, set[str]] = {}
+    self._fallback_pending: set[str] = set()
     self._width = width if width is not None else GuiApplication._default_width()
     self._height = height if height is not None else GuiApplication._default_height()
 
@@ -585,6 +594,8 @@ class GuiApplication(GuiApplicationExt):
     for font in self._fallback_fonts.values():
       rl.unload_font(font)
     self._fallback_fonts = {}
+    self._fallback_chars = {}
+    self._fallback_pending = set()
 
     if self._render_texture is not None:
       rl.unload_render_texture(self._render_texture)
@@ -636,6 +647,9 @@ class GuiApplication(GuiApplicationExt):
           time.sleep(1 / self._target_fps)
           yield False, 0.0, 0.0
           continue
+
+        # Between frames only: swapping the atlas mid-draw would invalidate a bound texture.
+        self._rebake_pending_fallback()
 
         if self._render_texture:
           rl.begin_texture_mode(self._render_texture)
@@ -710,20 +724,60 @@ class GuiApplication(GuiApplicationExt):
   def font(self, font_weight: FontWeight = FontWeight.NORMAL) -> rl.Font:
     return self._fonts[font_weight]
 
-  def fallback_font(self) -> rl.Font:
+  def _bake_fallback_font(self, language: str, chars: set[str]) -> rl.Font:
+    codepoints = sorted(map(ord, chars))
+    codepoint_buffer = rl.ffi.new("int[]", codepoints)
+    with as_file(FONT_DIR) as fspath:
+      font = rl.load_font_ex((fspath / NOTO_FONTS[language]).as_posix(), 48,
+                             rl.ffi.cast("int *", codepoint_buffer), len(codepoints))
+    rl.gen_texture_mipmaps(font.texture)
+    rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
+    return font
+
+  def fallback_font(self, text: str = "") -> rl.Font:
     language = multilang.language
     if language not in self._fallback_fonts:
       chars = set(map(chr, range(32, 127))) | set(EXTRA_FONT_CHARS)
       chars.update(TRANSLATIONS_DIR.joinpath(f"app_{language}.po").read_text(encoding="utf-8"))
-      codepoints = sorted(map(ord, chars))
-      codepoint_buffer = rl.ffi.new("int[]", codepoints)
-      with as_file(FONT_DIR) as fspath:
-        font = rl.load_font_ex((fspath / NOTO_FONTS[language]).as_posix(), 48,
-                               rl.ffi.cast("int *", codepoint_buffer), len(codepoints))
-      rl.gen_texture_mipmaps(font.texture)
-      rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
-      self._fallback_fonts[language] = font
+      self._fallback_chars[language] = chars
+      self._fallback_fonts[language] = self._bake_fallback_font(language, chars)
+
+    baked = self._fallback_chars[language]
+    for char in text:
+      if char not in baked:
+        self._fallback_pending.add(char)
+
     return self._fallback_fonts[language]
+
+  def _rebake_pending_fallback(self) -> None:
+    if not self._fallback_pending:
+      return
+
+    pending, self._fallback_pending = self._fallback_pending, set()
+    language = multilang.language
+    baked = self._fallback_chars.get(language)
+    if baked is None:
+      return
+
+    # Record every queued codepoint as seen even when it cannot be baked, otherwise a
+    # character the font has no glyph for re-queues itself on every frame.
+    chars = baked | pending
+    self._fallback_chars[language] = chars
+    if len(chars) > FALLBACK_ATLAS_MAX_CODEPOINTS:
+      cloudlog.warning(f"fallback atlas at ceiling ({len(baked)} codepoints), not baking {len(pending)} new ones")
+      return
+
+    old_font = self._fallback_fonts[language]
+    try:
+      font = self._bake_fallback_font(language, chars)
+    except Exception:
+      # Keep drawing with the old atlas; manager does not restart a crashed ui.
+      cloudlog.exception("failed to grow fallback atlas")
+      return
+
+    self._fallback_fonts[language] = font
+    rl.unload_font(old_font)
+    cloudlog.debug(f"fallback atlas grew to {len(chars)} codepoints (+{len(pending)})")
 
   @property
   def width(self):
