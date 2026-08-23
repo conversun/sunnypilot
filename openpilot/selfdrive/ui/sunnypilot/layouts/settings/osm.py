@@ -40,6 +40,9 @@ class OSMLayout(Widget):
     self._current_percent = 0
     self._last_map_size_update = 0
     self._mem_params = Params("/dev/shm/params") if platform.system() != "Darwin" else ui_state.params
+    # Cached for the row title below: ListItemSP re-reads title for visibility, measurement,
+    # layout and draw, so a Params.get() there is 4 filesystem hits per frame (111 us each on tizi).
+    self._is_china = ui_state.params.get("OsmLocationName") == CHINA_NATION_REF
     self._initialize_items()
     self._update_map_size()
     self._progress.set_visible(False)
@@ -54,7 +57,7 @@ class OSMLayout(Widget):
     self._update_btn = ListItemSP(tr("Database Update"), action_item=NoElideButtonAction(tr("CHECK"), enabled=True), callback=self._update_db)
     self._country_btn = ListItemSP(tr("Country"), action_item=NoElideButtonAction(tr("SELECT"), enabled=True), callback=lambda: self._select_region("Country"))
     self._state_btn = ListItemSP(
-      lambda: tr("Province") if ui_state.params.get("OsmLocationName") == CHINA_NATION_REF else tr("State"),
+      lambda: tr("Province") if self._is_china else tr("State"),
       action_item=NoElideButtonAction(tr("SELECT"), enabled=True),
       callback=lambda: self._select_region("State"),
     )
@@ -183,8 +186,10 @@ class OSMLayout(Widget):
     downloading = bool(self._mem_params.get("OSMDownloadLocations") or self._mem_params.get("OSMDownloadBounds"))
     self._country_btn.set_enabled(not downloading)
     self._state_btn.set_enabled(not downloading)
-    self._state_btn.set_visible(ui_state.params.get("OsmLocationName") in ("US", CHINA_NATION_REF))
-    self._update_btn.set_visible(bool(ui_state.params.get("OsmLocationName")))
+    location = ui_state.params.get("OsmLocationName")
+    self._is_china = location == CHINA_NATION_REF
+    self._state_btn.set_visible(location in ("US", CHINA_NATION_REF))
+    self._update_btn.set_visible(bool(location))
 
     self._country_btn.action_item.set_value(ui_state.params.get("OsmLocationTitle") or "")
     self._state_btn.action_item.set_value(ui_state.params.get("OsmStateTitle") or "")
