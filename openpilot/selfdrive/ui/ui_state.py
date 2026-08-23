@@ -164,6 +164,9 @@ class UIState(UIStateSP):
     # Update started state
     self.started = self.sm["deviceState"].started and self.ignition
 
+    # Never rebuild the CJK font atlas while driving: it stalls the UI for 100 ms+.
+    gui_app.allow_font_rebake = not self.started
+
     # Update body state
     if self.CP is not None and self.is_body != self.CP.notCar:
       self.is_body = self.CP.notCar

@@ -236,6 +236,9 @@ class GuiApplication(GuiApplicationExt):
     self._fallback_fonts: dict[str, rl.Font] = {}
     self._fallback_chars: dict[str, set[str]] = {}
     self._fallback_pending: set[str] = set()
+    # Baking an atlas costs 108-233 ms on tizi against a 50 ms frame budget, so it is only
+    # ever allowed off-road. Onroad the queue just accumulates and unbaked glyphs draw as '?'.
+    self.allow_font_rebake: bool = True
     self._width = width if width is not None else GuiApplication._default_width()
     self._height = height if height is not None else GuiApplication._default_height()
 
@@ -755,7 +758,8 @@ class GuiApplication(GuiApplicationExt):
     # imported here: both modules import font_fallback from this one
     from openpilot.system.ui.lib import text_measure, wrap_text
 
-    if not self._fallback_pending:
+    if not self._fallback_pending or not self.allow_font_rebake:
+      # Onroad: leave the queue alone so these glyphs get baked next time we are parked.
       return
 
     pending, self._fallback_pending = self._fallback_pending, set()
