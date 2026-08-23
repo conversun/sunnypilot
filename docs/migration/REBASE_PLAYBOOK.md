@@ -15,8 +15,8 @@ Read this first — the branch names have changed over time.
 
 | Repo | Branch | Remote |
 |------|--------|--------|
-| sunnypilot (parent) | `mazda-port` | `conversun` (SSH), `origin` = upstream sunnypilot |
-| `opendbc_repo` | `mazda-gen2-oplong-lowspeed` | `origin` = `conversun/opendbc` |
+| sunnypilot (parent) | `mazda-port` | `origin` = `conversun/sunnypilot` (ours), `github` = upstream `sunnypilot/sunnypilot` |
+| `opendbc_repo` | `mazda-gen2-oplong-lowspeed` | `conversun` = `conversun/opendbc` (ours), `origin` = upstream `sunnypilot/opendbc` |
 | `panda` | `mazda-gen2-sync` | `conversun/panda` |
 
 Older docs mention `mazda-port-additions` in the submodules. Those branches
@@ -25,6 +25,34 @@ with `git -C <submodule> branch --show-current` before starting.
 
 There are no `mazda-port-v*` recovery tags. Use dated backup branches instead
 (created in the pre-merge checklist below).
+
+> **`origin` in the parent is NOT upstream.** It is `conversun/sunnypilot`, our
+> own fork, and its `master` lags upstream by hundreds of commits. Upstream is
+> the `github` remote. Every scout command below therefore uses `github/master`.
+> Using `origin/master` reports "0 commits behind" while real upstream has moved.
+>
+> That remote also shipped a fetch refspec of `+refs/heads/release-*` only, so
+> `git fetch --all` silently never fetched master. Confirm it is fixed before
+> trusting any count:
+>
+> ```bash
+> git config --get-all remote.github.fetch   # must include refs/heads/master
+> ```
+
+### Picking the target commit
+
+Do not merge the tip of `github/master`. Merge the master commit that the
+current `staging` release was cut from — that code has been through a release.
+The release branches record it in their commit message:
+
+```bash
+gh api repos/sunnypilot/sunnypilot/branches/staging --jq '.commit.commit.message'
+# -> "master commit: <sha>"   <- merge target
+```
+
+`dev`, `staging`, `release-tizi` and `__nightly` are orphan root commits
+(`parents=0`), one squashed tree per release, sharing no history with master.
+Never try to merge them directly; they are only useful for this lookup.
 
 ---
 
@@ -58,17 +86,17 @@ git config diff.renameLimit 5000
 
 ```bash
 git fetch --all --prune
-MB=$(git merge-base HEAD origin/master)
+MB=$(git merge-base HEAD github/master)
 
 # How far behind, and how many fork commits are at risk
-git rev-list --left-right --count origin/master...HEAD   # left=upstream  right=fork
+git rev-list --left-right --count github/master...HEAD   # left=upstream  right=fork
 
 # Which files both sides touched — this is your real conflict list
 comm -12 <(git diff --name-only $MB..HEAD | sort) \
-         <(git diff --name-only $MB..origin/master | sort)
+         <(git diff --name-only $MB..github/master | sort)
 
 # Dry-run the whole merge without touching the worktree
-git merge-tree --write-tree HEAD origin/master | head -60
+git merge-tree --write-tree HEAD github/master | head -60
 ```
 
 `git merge-tree` is the highest-value step here. It prints every conflict
@@ -84,11 +112,11 @@ submodule commits that already exist, otherwise you commit a dangling pointer.
 
 ### Step 1: opendbc_repo
 
-Find the upstream target from the parent's `origin/master`, not from the
-submodule's own remote — the submodule remote is the fork:
+Find the upstream target from the parent's `github/master`, not from the
+submodule's own `conversun` remote — that one is the fork:
 
 ```bash
-git ls-tree origin/master opendbc_repo panda    # upstream's expected SHAs
+git ls-tree github/master opendbc_repo panda    # upstream's expected SHAs
 
 cd opendbc_repo
 git fetch --all --prune
@@ -117,7 +145,7 @@ Conflicts here are rare. The only fork changes are `FLAG_MAZDA_GEN2 = 2` /
 
 ```bash
 cd ..
-git merge --no-ff --no-commit origin/master
+git merge --no-ff --no-commit <target-sha>   # the staging cut point, not github/master tip
 ```
 
 `--no-commit` lets you inspect and fix everything before anything is recorded.
@@ -184,7 +212,7 @@ the device updater down with it.
 not infallible:
 
 ```bash
-MB=$(git merge-base mazda-port-backup-$DATE origin/master)
+MB=$(git merge-base mazda-port-backup-$DATE github/master)
 git diff --name-only -M $MB mazda-port-backup-$DATE \
   | sed -E 's#^(cereal|common|selfdrive|system|sunnypilot|third_party)/#openpilot/\1/#' \
   | while read f; do
