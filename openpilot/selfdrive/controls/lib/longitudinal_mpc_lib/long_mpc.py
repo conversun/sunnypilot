@@ -229,15 +229,12 @@ class LongitudinalMpc:
   def __init__(self, dt=DT_MDL):
     self.dt = dt
     self.solver = AcadosOcpSolverCython(MODEL_NAME, ACADOS_SOLVER_TYPE, N)
-    self.tuning_params = Params()
-    self.frame = 0
-    self._read_live_tuning()
+    self._read_live_tuning(Params())
     self.reset()
     self.source = LongitudinalPlanSource.cruise
 
-  def _read_live_tuning(self):
-    # Live-adjustable MPC tuning (no solver rebuild needed): cost weights, follow time and lead danger factor.
-    p = self.tuning_params
+  def _read_live_tuning(self, p: Params):
+    # MPC tuning (no solver rebuild needed): cost weights, follow time and lead danger factor.
     self.t_follow_relaxed = _read_tuning_float(p, "LongitudinalMpcTuningTFollowRelaxed", 1.75)
     self.t_follow_standard = _read_tuning_float(p, "LongitudinalMpcTuningTFollowStandard", 1.45)
     self.t_follow_aggressive = _read_tuning_float(p, "LongitudinalMpcTuningTFollowAggressive", 1.25)
@@ -347,10 +344,10 @@ class LongitudinalMpc:
     return lead_xv
 
   def update(self, radarstate, personality=log.LongitudinalPersonality.standard):
-    # Refresh live tuning ~1x/sec to pick up UI changes without per-cycle file reads.
-    if self.frame % 100 == 0:
-      self._read_live_tuning()
-    self.frame += 1
+    # Tuning is read once in __init__, never here. Params.get() is a filesystem read that
+    # measures 111 us/key on a tizi, and its tail latency is unbounded when loggerd or the
+    # uploader are busy -- not something to put in the planning loop. plannerd only runs
+    # onroad, so edits made while parked take effect on the next drive.
     t_follow = self.get_t_follow(personality)
 
     lead_xv_0 = self.process_lead(radarstate.leadOne)
