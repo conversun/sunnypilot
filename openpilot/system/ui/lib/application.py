@@ -128,9 +128,11 @@ _NON_LATIN_RE = re.compile(r"[\u0e00-\u0e7f\u1100-\u11ff\u2e80-\u318f\u3400-\u9f
 # The fallback atlas is baked from a fixed codepoint list, so it only contains glyphs
 # we asked for. UI strings come from the .po, but dynamic text (OSM road names) does not,
 # and raylib renders any codepoint outside the atlas as '?'. Unseen codepoints are queued
-# and baked in between frames, up to this ceiling so a stream of junk names cannot grow the
-# texture without bound.
-FALLBACK_ATLAS_MAX_CODEPOINTS = 4000
+# and baked in between frames. The ceiling bounds both the stall and the texture: measured on
+# desktop raylib with this font, 2000 codepoints is a 4096x2048 atlas taking ~30 ms to bake,
+# already over tizi's 50 ms frame budget once the slower GPU is accounted for, and 4000 would
+# double the texture to ~43 MiB with both copies live across the swap.
+FALLBACK_ATLAS_MAX_CODEPOINTS = 2000
 
 
 def font_fallback(font: rl.Font, text: str = "") -> rl.Font:
@@ -750,6 +752,9 @@ class GuiApplication(GuiApplicationExt):
     return self._fallback_fonts[language]
 
   def _rebake_pending_fallback(self) -> None:
+    # imported here: both modules import font_fallback from this one
+    from openpilot.system.ui.lib import text_measure, wrap_text
+
     if not self._fallback_pending:
       return
 
@@ -775,8 +780,27 @@ class GuiApplication(GuiApplicationExt):
       cloudlog.exception("failed to grow fallback atlas")
       return
 
+    # load_font_ex hands back the default font instead of raising when it cannot load,
+    # so a bare try/except would swap in that stub and free the atlas that still works.
+    default_id = rl.get_font_default().texture.id
+    if font.texture.id <= 0 or font.texture.id == default_id:
+      cloudlog.error("fallback atlas bake produced an invalid font, keeping the old one")
+      if font.texture.id > 0 and font.texture.id != default_id:
+        rl.unload_font(font)
+      return
+
+    # raygui stores the Font by value, so a copy of old_font outlives the unload below.
+    if rl.gui_get_font().texture.id == old_font.texture.id:
+      rl.gui_set_font(font)
+
     self._fallback_fonts[language] = font
     rl.unload_font(old_font)
+
+    # Both caches key on font.texture.id, which raylib recycles: stale entries from a freed
+    # atlas would collide with the new one and hand back widths measured against '?' glyphs.
+    text_measure.clear_cache()
+    wrap_text.clear_cache()
+
     cloudlog.debug(f"fallback atlas grew to {len(chars)} codepoints (+{len(pending)})")
 
   @property

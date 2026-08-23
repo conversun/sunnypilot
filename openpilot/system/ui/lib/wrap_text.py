@@ -105,3 +105,8 @@ def wrap_text(font: rl.Font, text: str, font_size: int, max_width: int, spacing:
 
   _cache[key] = all_lines
   return all_lines
+
+
+def clear_cache() -> None:
+  """See text_measure.clear_cache: keys embed a recyclable font.texture.id."""
+  _cache.clear()
