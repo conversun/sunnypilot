@@ -8,7 +8,6 @@ from openpilot.cereal import log, messaging, custom
 from openpilot.common.basedir import BASEDIR
 from openpilot.common.filter_simple import FirstOrderFilter
 from openpilot.common.realtime import Ratekeeper
-from openpilot.common.utils import retry
 from openpilot.common.swaglog import cloudlog
 
 from openpilot.system import micd
@@ -22,6 +21,7 @@ MAX_VOLUME = 1.0
 MIN_VOLUME = 0.1
 ALERT_RAMP_TIME = 4 # seconds to ramp to max volume for warningImmediate
 SELFDRIVE_STATE_TIMEOUT = 5 # 5 seconds
+MAX_ENGAGED_OUTAGE = 30  # seconds without audio while engaged before we let manager soft disable
 FILTER_DT = 1. / (micd.SAMPLE_RATE / micd.FFT_SAMPLES)
 
 AMBIENT_DB = 26 # DB where MIN_VOLUME is applied
@@ -168,7 +168,6 @@ class Soundd(QuietMode):
     volume = ((weighted_db - AMBIENT_DB) / DB_SCALE) * (MAX_VOLUME - MIN_VOLUME) + MIN_VOLUME
     return math.pow(VOLUME_BASE, (np.clip(volume, MIN_VOLUME, MAX_VOLUME) - 1))
 
-  @retry(attempts=10, delay=3)
   def get_stream(self, sd):
     # reload sounddevice to reinitialize portaudio
     sd._terminate()
@@ -182,12 +181,23 @@ class Soundd(QuietMode):
 
     sm = messaging.SubMaster(['selfdriveState', 'selfdriveStateSP', 'soundPressure'])
 
-    # the audio device can be missing at boot (amp still being configured) or go away mid-drive.
-    # never exit: manager does not restart crashed processes, so a raise here is permanent.
+    # The audio device can be missing at boot (amp still being configured) or go away mid-drive,
+    # and manager never restarts a crashed process, so a raise here is permanent. Retry instead --
+    # but only fail open while disengaged. Staying alive and silent while engaged would suppress
+    # the processNotRunning SOFT_DISABLE that is the driver's cue to take over.
+    outage_start = None
+
     while True:
       try:
         with self.get_stream(sd) as stream:
+          outage_start = None
           rk = Ratekeeper(20)
+
+          # Drop anything buffered before the outage so an engage chime cannot finish
+          # playing after the car has already disengaged.
+          self.current_alert = AudibleAlert.none
+          self.current_sound_frame = 0
+          self.pending_stop = False
 
           cloudlog.info(f"soundd stream started: {stream.samplerate=} {stream.channels=} {stream.dtype=} {stream.device=}, {stream.blocksize=}")
           while stream.active:
@@ -214,6 +224,18 @@ class Soundd(QuietMode):
         cloudlog.error("soundd stream went inactive, reopening")
       except Exception:
         cloudlog.exception("soundd stream failed, reopening")
+
+      if outage_start is None:
+        outage_start = time.monotonic()
+
+      # No stream, so nothing else is reading these: keep polling to decide whether to fail closed.
+      sm.update(0)
+      engaged = sm['selfdriveState'].enabled or sm['selfdriveStateSP'].mads.enabled
+      outage = time.monotonic() - outage_start
+      if engaged and outage > MAX_ENGAGED_OUTAGE:
+        cloudlog.error(f"soundd: no audio for {outage:.0f}s while engaged, exiting so manager soft disables")
+        return
+
       time.sleep(micd.STREAM_RETRY_DELAY)
 
 

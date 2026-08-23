@@ -6,7 +6,6 @@ import time
 
 from openpilot.cereal import messaging
 from openpilot.common.realtime import Ratekeeper
-from openpilot.common.utils import retry
 from openpilot.common.swaglog import cloudlog
 
 RATE = 10
@@ -104,7 +103,6 @@ class Mic:
 
         self.measurements = self.measurements[FFT_SAMPLES:]
 
-  @retry(attempts=10, delay=3)
   def get_stream(self, sd):
     # reload sounddevice to reinitialize portaudio
     sd._terminate()
@@ -121,6 +119,11 @@ class Mic:
     while True:
       try:
         with self.get_stream(sd) as stream:
+          # a fresh Ratekeeper per stream: the old one would burn through every deadline
+          # missed during the outage back to back, since keep_time() only advances one interval.
+          self.rk = Ratekeeper(RATE)
+          with self.lock:
+            self.measurements = np.empty(0)
           cloudlog.info(f"micd stream started: {stream.samplerate=} {stream.channels=} {stream.dtype=} {stream.device=}, {stream.blocksize=}")
           while stream.active:
             self.update()
