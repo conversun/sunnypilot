@@ -7,9 +7,9 @@ OS-level services, hardware abstraction, process supervision. See parent [AGENTS
 ```
 system/
 ├── manager/         # THE process supervisor - manager.py + process_config.py + process.py
-├── hardware/        # PC vs TICI HW abstraction (base.py, tici/, pc/) - hardwared daemon
+├── hardware/        # Runtime HW daemons (hardwared, fan_controller, power_monitoring). Abstraction lives in common/hardware/
 ├── athena/          # comma connect remote daemon (athenad)
-├── camerad/         # C++ camera daemon (TICI/larch64 only)
+├── camerad/         # C++ camera daemon (+ webcam/ Python variant when WEBCAM=1)
 ├── loggerd/         # Log writer + encoderd + uploader + deleter + bootlog
 ├── sensord/         # IMU/sensor daemon
 ├── ubloxd/          # u-blox GPS (ubloxd, pigeond)
@@ -17,9 +17,7 @@ system/
 ├── updated/         # OTA updater (casync overlay-based)
 ├── webrtc/          # WebRTC bridge daemon
 ├── ui/              # Standalone UI lib (raylib wrappers + widgets) - NOT same as selfdrive/ui
-├── openpilot/common/version.py       # Build metadata extraction (commit, branch, dirty status, channel detection)
 ├── sentry.py        # Sentry init (selfdrive vs panda projects)
-├── statsd.py        # Stats aggregator
 ├── micd.py / journald.py / proclogd.py / timed.py / tombstoned.py / logmessaged.py
 └── tests/
 ```
@@ -50,17 +48,17 @@ PythonProcess("controlsd", "openpilot.selfdrive.controls.controlsd", and_(not_jo
 | `pandad` (Python) | Python | openpilot.selfdrive.pandad.pandad | Always |
 | `_pandad` (Native) | Native | openpilot/selfdrive/pandad | Disabled (managed by Python pandad) |
 | `loggerd` | Native | openpilot.system.loggerd | Onroad + logging param |
-| `camerad` | Native | openpilot.system.camerad | larch64 only |
+| `camerad` | Native | openpilot/system/camerad | `or_(driverview, livestream)`, `enabled=not WEBCAM` |
 | `hardwared` | Python | openpilot.system.hardware.hardwared | Always |
 | `updated` | Python | openpilot.system.updated.updated | Offroad only |
 
 ## HARDWARE ABSTRACTION
 
 [common/hardware/base.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/hardware/base.py) defines `HardwareBase`. Concrete impls:
-- [common/hardware/tici/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/hardware/tici) - comma 3/3X (AGNOS, agnos.py updater, GPU, modem)
+- [common/hardware/comma/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/hardware/comma) - comma 3/3X (AGNOS updater, GPU, modem). There is no `tici/` dir anymore.
 - [common/hardware/pc/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/hardware/pc) - desktop fallback
 
-Constants: `PC` and `TICI` booleans imported from [common/hardware/__init__.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/hardware/__init__.py). Files `/AGNOS` and `/TICI` mark device.
+Constants in [common/hardware/__init__.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/hardware/__init__.py): `AGNOS = isfile('/AGNOS')`, `COMMA_HARDWARE = AGNOS`, `PC = not COMMA_HARDWARE`. The `TICI` boolean and `/TICI` marker are gone - AGNOS-only daemons use `enabled=not PC`.
 
 `system/hardware/` keeps the runtime daemons: [hardwared.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/system/hardware/hardwared.py), [fan_controller.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/system/hardware/fan_controller.py), [power_monitoring.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/system/hardware/power_monitoring.py).
 

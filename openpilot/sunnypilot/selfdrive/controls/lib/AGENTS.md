@@ -69,5 +69,5 @@ Resolver pulls from car CAN, MAPD, or override. Assist applies the resolved limi
 
 - `latcontrol_torque_versions.json` lets users select between tune revisions (v0 = upstream pre-2026 tune).
 - `e2e_alerts_helper.py` reads from `ModelDataV2SP` for green-light + lead-departure detection - emits via `LongitudinalPlanSP.e2eAlerts`.
-- Tests in `tests/` use plain pytest. Run individual: `pytest openpilot/sunnypilot/selfdrive/controls/lib/nnlc/tests/`.
+- Tests in `tests/` are plain `unittest` (subclass `OpenpilotTestCase`). Run one subtree: `./tools/op.sh test openpilot/sunnypilot/selfdrive/controls/lib/nnlc`.
 - The MPC solver caveat from parent applies: imports outside the constants block do NOT trigger rebuild.

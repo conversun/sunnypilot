@@ -1,6 +1,6 @@
 # sunnypilot/ - FORK EXTENSION LAYER
 
-Fork-specific code mirroring upstream layout. **Primary development target.** ~379 files. See parent [AGENTS.md](file:///Users/cyonsun/Documents/Code/sunnypilot/AGENTS.md) for project-wide conventions.
+Fork-specific code mirroring upstream layout. **Primary development target.** 263 tracked files (114 of them under `neural_network_data/`, a submodule). See parent [AGENTS.md](file:///Users/cyonsun/Documents/Code/sunnypilot/AGENTS.md) for project-wide conventions.
 
 ## STRUCTURE
 
@@ -70,4 +70,5 @@ Features are param-gated via [openpilot/common/params_keys.h](file:///Users/cyon
 
 - `openpilot/sunnypilot/` is the real source tree for namespace imports; edit files there directly.
 - Two-channel build flag: `release_sp_channel` (sunnypilot release branch) vs `release_channel` (upstream).
-- SP version in [openpilot/common/version.h](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/version.h) (e.g. `SUNNYPILOT_VERSION "2026.001.000"`); upstream version in [openpilot/common/version.h](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/version.h).
+- SP version lives in [openpilot/sunnypilot/common/version.h](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/common/version.h) - this is what `common/version.py::get_version()` reads. The upstream [openpilot/common/version.h](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/version.h) is a separate file; do not confuse them.
+- Tests here are plain `unittest` (subclass `OpenpilotTestCase`), run via `./tools/op.sh test openpilot/sunnypilot`. pytest was removed repo-wide.

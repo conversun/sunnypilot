@@ -17,7 +17,7 @@ sunnylink/
 ├── docs/                     # Schema reference docs (autogen targets)
 ├── settings_ui_src/          # YAML SOURCE for settings UI (edit here)
 ├── tools/                    # Settings-UI compiler chain - see "Settings UI" below
-├── tests/                    # pytest tests for capabilities, params, signing
+├── tests/                     # unittest tests for capabilities, params, signing
 ├── capabilities.py           # Capability discovery (server features advertise)
 ├── registration_manager.py   # Device registration daemon
 ├── statsd.py                 # SP-specific telemetry (statsd_sp process)
@@ -67,4 +67,4 @@ settings_ui_src/*.yaml  --[apply_macros.py]-->  --[compile_settings_ui.py]--> se
 - API base URL is configurable via Param `SunnylinkApiUrl` (default points to staging `stg.api.sunnypilot.ai`).
 - `manage_sunnylinkd` runs **always** (offroad+onroad); the inner `sunnylinkd` only connects when `sunnylink_ready()`.
 - `backup_manager` runs offroad only AND requires `sunnylink_ready` - check process_config.py.
-- Tests heavily mock the API - real HTTP calls are gated behind env vars.
+- Tests heavily mock the API - real HTTP calls are gated behind env vars. Run: `./tools/op.sh test openpilot/sunnypilot/sunnylink`.

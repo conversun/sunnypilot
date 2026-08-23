@@ -15,7 +15,6 @@ selfdrive/
 ├── monitoring/      # Driver attention monitoring (dmonitoringd)
 ├── ui/              # Raylib UI - layouts, widgets, onroad, soundd, feedback
 ├── assets/          # Icons + offroad HTML + sounds
-├── debug/           # Manual debug scripts (gitignored from pytest)
 └── test/            # Cross-module integration: process_replay, longitudinal_maneuvers, cpp_harness
 ```
 
@@ -46,11 +45,11 @@ python -m openpilot.selfdrive.controls.controlsd
 
 ## TESTING
 
-- Tests co-located: `*/tests/test_*.py`, `*/test_*.py`
-- **Process replay** (regression): NOT collected by default pytest - run via [test/process_replay/test_processes.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/selfdrive/test/process_replay/test_processes.py). Reference logs cached via git-lfs.
-- **Longitudinal maneuvers**: `pytest openpilot/selfdrive/test/longitudinal_maneuvers/`
-- **C++ tests**: cpp_harness via pytest-cpp - see [test/cpp_harness.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/selfdrive/test/cpp_harness.py)
-- **Hypothesis fuzzing**: `openpilot/selfdrive/car/tests/test_models.py` (per-car), `openpilot/selfdrive/test/process_replay/test_fuzzy.py`. Set `MAX_EXAMPLES=1` for fast CI.
+- Co-located as `*/tests/test_*.py`. Plain `unittest` - subclass [`OpenpilotTestCase`](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/common/test.py). **pytest is gone from this repo.**
+- Run a subtree: `./tools/op.sh test openpilot/selfdrive/controls`. Single case: `./tools/op.sh test path/test_x.py::Class::test_method`.
+- **Process replay** (regression): hard-EXCLUDED from `op test` ([tools/test_runner.py:17-20](file:///Users/cyonsun/Documents/Code/sunnypilot/tools/test_runner.py#L17-L20)). Invoke [test/process_replay/test_processes.py](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/selfdrive/test/process_replay/test_processes.py) directly; reference logs come from git-lfs.
+- **Longitudinal maneuvers**: [test/longitudinal_maneuvers/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/selfdrive/test/longitudinal_maneuvers) - simulation-style regression, not unit tests.
+- Device-only: `test_onroad.py`, `test_power_draw.py` (need real hardware/routes).
 
 ## ANTI-PATTERNS (THIS DIR)
 
@@ -61,11 +60,11 @@ python -m openpilot.selfdrive.controls.controlsd
 - **NEVER touch `monitoring/`** to disable driver attention - banned.
 - **DO NOT add UI features here** - prefer SP screens in [openpilot/selfdrive/ui/sunnypilot/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/selfdrive/ui/sunnypilot).
 - **DO NOT use `pyray.is_mouse_button_pressed/released`** - use `Widget._handle_mouse_press/release` (lint-banned via TID251).
-- **DO NOT include `third_party/raylib/include/raylib.h`** - use `system/ui/raylib/raylib.h` (lint-checked).
+- **DO NOT reintroduce a vendored raylib include path** - raylib comes from the `comma-deps-raylib` wheel; C++ uses a bare `#include "raylib.h"`.
 
 ## NOTES
 
 - `controlsd_ext.py` (in [openpilot/sunnypilot/selfdrive/controls/](file:///Users/cyonsun/Documents/Code/sunnypilot/openpilot/sunnypilot/selfdrive/controls)) wraps the stock `controlsd` to inject MADS, blinker pause, NNLC, lateral overrides.
 - `modeld` and SP `modeld_tinygrad` are mutually exclusive at runtime (toggled via `ModelManagerSP.Runner`).
-- `assets/icons/` has 61 files - large flat dir; do NOT add per-feature subdirs.
+- `assets/icons/` has 63 files - large flat dir; do NOT add per-feature subdirs.
 - `ui/translations/` are gettext .ts files - regenerate via SCons; do NOT hand-edit `.qm`.
