@@ -17,7 +17,8 @@ from openpilot.common.hardware.hw import Paths
 
 from openpilot.cereal import messaging, custom
 from openpilot.sunnypilot.models.fetcher import ModelFetcher
-from openpilot.sunnypilot.models.helpers import get_active_bundle, validate_active_bundle, verify_file
+from openpilot.sunnypilot.models.helpers import (ACTIVE_BUNDLE_KEYS, get_active_bundle, get_selected_bundle,
+                                                  resolve_bundle_by_ref, validate_active_bundles, verify_file)
 
 # (connect, read) seconds. read is per-request inactivity, not a total cap
 DOWNLOAD_TIMEOUT = (30, 30)
@@ -30,9 +31,12 @@ class ModelManagerSP:
     self.params = Params()
     self.model_fetcher = ModelFetcher(self.params)
     self.pm = messaging.PubMaster(["modelManagerSP"])
+    self.sm = messaging.SubMaster(["deviceState"])
+    self.chestnut_present = False
     self.available_models: list[custom.ModelManagerSP.ModelBundle] = []
+    self.source_models: dict[str, list[custom.ModelManagerSP.ModelBundle]] = {}
     self.selected_bundle: custom.ModelManagerSP.ModelBundle = None
-    self.active_bundle: custom.ModelManagerSP.ModelBundle = get_active_bundle(self.params)
+    self.active_bundle: custom.ModelManagerSP.ModelBundle = get_active_bundle(self.params, usbgpu=self.chestnut_present)
     self._chunk_size = 128 * 1000  # 128 KB chunks
     self._download_start_times: dict[str, float] = {}  # Track start time per model
 
@@ -76,7 +80,7 @@ class ModelManagerSP:
           f.write(chunk)
           bytes_downloaded += len(chunk)
 
-          if self.params.get("ModelManager_DownloadIndex") is None:
+          if self.params.get("ModelManager_DownloadRef") is None:
             raise Exception("Download cancelled")
 
           if total_size > 0:
@@ -114,7 +118,7 @@ class ModelManagerSP:
             for data in response.iter_content(chunk_size=self._chunk_size):
               f.write(data)
               chunk_downloaded += len(data)
-              if self.params.get("ModelManager_DownloadIndex") is None:
+              if self.params.get("ModelManager_DownloadRef") is None:
                 raise Exception("Download cancelled")
               intra = chunk_downloaded / max(chunk_size, 1)
               progress = min(99.0, ((i + intra) / num_chunks) * 100)
@@ -143,13 +147,17 @@ class ModelManagerSP:
       is_cached = False
       if len(artifact.chunks) > 0:
         from openpilot.common.file_chunker import get_chunk_name
+        num_chunks = len(artifact.chunks)
         chunks_valid = True
         for i, chunk in enumerate(artifact.chunks):
-          chunk_path = get_chunk_name(full_path, i, len(artifact.chunks))
+          chunk_path = get_chunk_name(full_path, i, num_chunks)
           if not await verify_file(chunk_path, chunk.sha256):
             chunks_valid = False
             break
-        if chunks_valid and len(artifact.chunks) > 0:
+          artifact.downloadProgress.progress = ((i + 1) / num_chunks) * 100
+          self._sync_artifact_progress(artifact)
+          self._report_status()
+        if chunks_valid and num_chunks > 0:
           is_cached = True
       else:
         if await verify_file(full_path, expected_hash):
@@ -212,10 +220,12 @@ class ModelManagerSP:
     model_manager_state.availableBundles = self.available_models
     self.pm.send('modelManagerSP', msg)
 
-  async def _download_bundle(self, model_bundle: custom.ModelManagerSP.ModelBundle, destination_path: str) -> None:
-    """Downloads all models in a bundle"""
+  async def _download_bundle(self, model_bundle: custom.ModelManagerSP.ModelBundle, destination_path: str, source: str) -> None:
     self.selected_bundle = model_bundle
     self.selected_bundle.status = custom.ModelManagerSP.DownloadStatus.downloading
+    for model in self.selected_bundle.models:
+      model.artifact.downloadProgress.status = custom.ModelManagerSP.DownloadStatus.downloading
+    self._report_status()
     os.makedirs(destination_path, exist_ok=True)
 
     try:
@@ -232,10 +242,9 @@ class ModelManagerSP:
           seen_artifacts.add(artifact.fileName)
           await self._process_artifact(artifact, destination_path)
 
-      self.active_bundle = self.selected_bundle
-      self.active_bundle.status = custom.ModelManagerSP.DownloadStatus.downloaded
-      self.params.put("ModelManager_ActiveBundle", self.active_bundle.to_dict(), block=True)
-      self.selected_bundle = None
+      self.selected_bundle.status = custom.ModelManagerSP.DownloadStatus.downloaded
+      self.params.put(ACTIVE_BUNDLE_KEYS[source], model_bundle.to_dict(), block=True)
+      self.active_bundle = get_active_bundle(self.params, usbgpu=self.chestnut_present)
 
     except Exception:
       if self.selected_bundle is not None:
@@ -245,9 +254,9 @@ class ModelManagerSP:
     finally:
       self._report_status()
 
-  def download(self, model_bundle: custom.ModelManagerSP.ModelBundle, destination_path: str) -> None:
+  def download(self, model_bundle: custom.ModelManagerSP.ModelBundle, destination_path: str, source: str) -> None:
     """Main entry point for downloading a model bundle"""
-    asyncio.run(self._download_bundle(model_bundle, destination_path))
+    asyncio.run(self._download_bundle(model_bundle, destination_path, source))
 
   def main_thread(self) -> None:
     """Main thread for model management"""
@@ -255,18 +264,22 @@ class ModelManagerSP:
 
     while True:
       try:
-        self.available_models = self.model_fetcher.get_available_bundles()
-        validate_active_bundle(self.params, self.available_models)
-        self.active_bundle = get_active_bundle(self.params)
+        self.sm.update(0)
+        self.chestnut_present = self.sm['deviceState'].chestnutPresent
+        self.source_models = {source: self.model_fetcher.get_bundles_for_source(source) for source in ModelFetcher.MODEL_SOURCES}
+        self.available_models = self.source_models[ModelFetcher.active_source(self.chestnut_present)]
+        validate_active_bundles(self.params, self.source_models)
+        self.active_bundle = get_active_bundle(self.params, usbgpu=self.chestnut_present)
 
-        if (index_to_download := self.params.get("ModelManager_DownloadIndex")) is not None:
-          if model_to_download := next((model for model in self.available_models if model.index == index_to_download), None):
+        if (ref_to_download := self.params.get("ModelManager_DownloadRef")) is not None:
+          if resolved := resolve_bundle_by_ref(ref_to_download, self.source_models):
+            model_to_download, source = resolved
             try:
-              self.download(model_to_download, Paths.model_root())
+              self.download(model_to_download, Paths.model_root(), source)
             except Exception as e:
               cloudlog.exception(e)
             finally:
-              self.params.remove("ModelManager_DownloadIndex")
+              self.params.remove("ModelManager_DownloadRef")
               self.selected_bundle = None
 
         if self.params.get("ModelManager_ClearCache"):
@@ -285,12 +298,14 @@ class ModelManagerSP:
     Clears the model cache directory of all files except those in the active model bundle.
     """
 
-    # Get list of files used by active model bundle
+    # Get list of files used by both slots' selected bundles (either may become
+    # the truly active bundle depending on hardware availability)
     active_files = []
-    if self.active_bundle is not None: # When the default model is active
-      for model in self.active_bundle.models:
-        if hasattr(model, 'artifact') and model.artifact.fileName:
-          active_files.append(model.artifact.fileName)
+    for source in ACTIVE_BUNDLE_KEYS:
+      if selected_bundle := get_selected_bundle(self.params, source):
+        for model in selected_bundle.models:
+          if model.artifact.fileName:
+            active_files.append(model.artifact.fileName)
 
     # Remove all files except active ones (including their chunk files)
     model_dir = Paths.model_root()

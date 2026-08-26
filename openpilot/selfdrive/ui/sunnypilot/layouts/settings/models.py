@@ -11,6 +11,8 @@ import pyray as rl
 
 from openpilot.cereal import custom
 from openpilot.sunnypilot.models.default_model import get_default_model
+from openpilot.sunnypilot.models.fetcher import ModelFetcher
+from openpilot.sunnypilot.models.helpers import ACTIVE_BUNDLE_KEYS
 from openpilot.common.constants import CV
 from openpilot.selfdrive.ui.ui_state import device, ui_state
 from openpilot.system.ui.lib.multilang import tr
@@ -68,7 +70,7 @@ class ModelsLayout(Widget):
       callback=self._clear_cache
     )
 
-    self.cancel_download_item = button_item(tr("Cancel Download"), tr("Cancel"), "", lambda: ui_state.params.remove("ModelManager_DownloadIndex"))
+    self.cancel_download_item = button_item(tr("Cancel Download"), tr("Cancel"), "", lambda: ui_state.params.remove("ModelManager_DownloadRef"))
 
     self.lane_turn_value_control = option_item_sp(tr("Adjust Lane Turn Speed"), "LaneTurnValue", 500, 2000,
                                                   tr("Set the maximum speed for lane turn desires. Default is 19 mph."),
@@ -115,8 +117,12 @@ class ModelsLayout(Widget):
   def calculate_cache_size():
     cache_size = 0.0
     if os.path.exists(CUSTOM_MODEL_PATH):
-      cache_size = sum(os.path.getsize(os.path.join(CUSTOM_MODEL_PATH, file)) for file in os.listdir(CUSTOM_MODEL_PATH)) / (1024**2)
-    return cache_size
+      for file in os.listdir(CUSTOM_MODEL_PATH):
+        try:
+          cache_size += os.path.getsize(os.path.join(CUSTOM_MODEL_PATH, file))
+        except OSError:
+          continue
+    return cache_size / (1024**2)
 
   def _clear_cache(self):
     def _callback(response):
@@ -142,7 +148,7 @@ class ModelsLayout(Widget):
     if not bundle:
       return
 
-    self.cancel_download_item.set_visible(bool(self.model_manager.selectedBundle) and ui_state.params.get("ModelManager_DownloadIndex") is not None)
+    self.cancel_download_item.set_visible(bool(self.model_manager.selectedBundle) and ui_state.params.get("ModelManager_DownloadRef") is not None)
 
     if (current_time := time.monotonic()) - self.last_cache_calc_time > 0.5:
       self.last_cache_calc_time = current_time
@@ -178,27 +184,15 @@ class ModelsLayout(Widget):
     # circled_slash is authored grey; tinting it again only darkens it
     return {"name": name, "text_color": rl.GRAY, "icon": "icons/circled_slash.png", "icon_color": rl.WHITE}
 
-  @staticmethod
-  def _show_reset_params_dialog():
-    def _callback(response):
-      if response == DialogResult.CONFIRM:
-        ui_state.params.remove("CalibrationParams")
-        ui_state.params.remove("LiveTorqueParameters")
-    msg = tr("Model download has started in the background. We suggest resetting calibration. Would you like to do that now?")
-    dialog = ConfirmDialog(msg, tr("Reset Calibration"), callback=_callback)
-    gui_app.push_widget(dialog)
-
   def _on_model_selected(self, result):
     if result != DialogResult.CONFIRM:
       return
     selected_ref = self.model_dialog.selection_ref
     if selected_ref == "Default":
-      ui_state.params.remove("ModelManager_ActiveBundle")
-      self._show_reset_params_dialog()
+      source = ModelFetcher.active_source(ui_state.sm["deviceState"].chestnutPresent)
+      ui_state.params.remove(ACTIVE_BUNDLE_KEYS[source])
     elif selected_bundle := next((bundle for bundle in self.model_manager.availableBundles if bundle.ref == selected_ref), None):
-      ui_state.params.put("ModelManager_DownloadIndex", selected_bundle.index)
-      if self.model_manager.activeBundle and selected_bundle.generation != self.model_manager.activeBundle.generation:
-        self._show_reset_params_dialog()
+      ui_state.params.put("ModelManager_DownloadRef", selected_bundle.ref)
     self.model_dialog = None
 
   @staticmethod
@@ -236,7 +230,7 @@ class ModelsLayout(Widget):
     advanced_controls: bool = ui_state.params.get_bool("ShowAdvancedControls")
     turn_desire: bool = ui_state.params.get_bool("LaneTurnDesire")
     live_delay: bool = ui_state.params.get_bool("LagdToggle")
-    camera_offset: bool = ui_state.params.get("ModelManager_ActiveBundle") is not None
+    camera_offset: bool = ui_state.active_bundle is not None
 
     self.lane_turn_desire_toggle.action_item.set_state(turn_desire)
     self.lane_turn_value_control.set_visible(turn_desire and advanced_controls)
@@ -250,8 +244,9 @@ class ModelsLayout(Widget):
     self._update_lagd_description(live_delay)
     self.model_manager = ui_state.sm["modelManagerSP"]
     self._handle_bundle_download_progress()
-    default_label = f"{get_default_model()} (Default)"
-    active_name = self.model_manager.activeBundle.displayName if self.model_manager and self.model_manager.activeBundle.ref else default_label
+    # read the slot through ui_state, not modelManagerSP: the manager republishes a
+    # tick after a chestnut change, and the stale bundle flashes the wrong model
+    active_name = (ui_state.active_bundle or {}).get("displayName") or f"{get_default_model()} (Default)"
     self.current_model_item.action_item.set_value(active_name)
 
     if not ui_state.is_offroad():
