@@ -56,6 +56,26 @@ def cleanup_old_osm_data(files_to_remove: list[str]) -> None:
       shutil.rmtree(file, ignore_errors=False)
 
 
+def clear_downloaded_maps() -> None:
+  """Deletes downloaded OSM map data and resets params."""
+  path = f"{Paths.mapd_root()}/offline"
+  if os.path.exists(path):
+    shutil.rmtree(path, ignore_errors=True)
+
+  for param in ("OsmDownloadedDate", "OsmLocal", "OsmLocationName", "OsmLocationTitle",
+                "OsmStateName", "OsmStateTitle", "OSMDownloadProgress"):
+    params.remove(param)
+
+  # Also clear mem_params so a half-finished download from a prior session does not
+  # auto-resume after the user explicitly asked to wipe everything.
+  mem_params.remove("OSMDownloadLocations")
+  mem_params.remove("OSMDownloadBounds")
+  # A pending db update would immediately re-download right after the wipe.
+  params.put_bool("OsmDbUpdatesCheck", False)
+
+  cloudlog.info("mapd: downloaded maps cleared")
+
+
 def request_refresh_osm_location_data(nations: list[str], states: list[str] | None = None) -> None:
   params.put("OsmDownloadedDate", str(datetime.now().timestamp()), block=True)
   params.put_bool("OsmDbUpdatesCheck", False, block=True)
@@ -150,6 +170,10 @@ def main_thread():
   while True:
     show_alert = bool(get_files_for_cleanup() and params.get_bool("OsmLocal"))
     set_offroad_alert("Offroad_OSMUpdateRequired", show_alert, "This alert will be cleared when new maps are downloaded.")
+
+    if params.get("Mapd_ClearCache"):
+      clear_downloaded_maps()
+      params.remove("Mapd_ClearCache")
 
     update_osm_db()
     live_map_sp.tick()

@@ -8,7 +8,6 @@ import datetime
 import os
 import platform
 import requests
-import shutil
 import threading
 from pathlib import Path
 from time import monotonic
@@ -84,26 +83,11 @@ class OSMLayout(Widget):
   def _update_map_size(self):
     threading.Thread(target=self.calculate_size, daemon=True).start()
 
-  def _do_delete_maps(self):
-    if MAP_PATH.exists():
-      shutil.rmtree(MAP_PATH)
-
-    for param in ("OsmDownloadedDate", "OsmLocal", "OsmLocationName", "OsmLocationTitle", "OsmStateName", "OsmStateTitle", "OSMDownloadProgress"):
-      ui_state.params.remove(param)
-    # Also clear mem_params so a half-finished download from a prior session does not
-    # auto-resume after the user explicitly asked to wipe everything.
-    self._mem_params.remove("OSMDownloadLocations")
-    self._mem_params.remove("OSMDownloadBounds")
-    ui_state.params.put_bool("OsmDbUpdatesCheck", False)
-
+  def _on_confirm_delete_maps(self):
+    ui_state.params.put_bool("Mapd_ClearCache", True)
     self._delete_maps_btn.action_item.set_enabled(True)
     self._delete_maps_btn.action_item.set_text(tr("DELETE"))
     self._update_map_size()
-
-  def _on_confirm_delete_maps(self):
-    self._delete_maps_btn.action_item.set_enabled(False)
-    self._delete_maps_btn.action_item.set_text(tr("DELETING..."))
-    threading.Thread(target=self._do_delete_maps).start()
 
   def _delete_maps(self):
     self._show_confirm(tr("This will delete ALL downloaded maps\n\nAre you sure you want to delete all maps?"),
